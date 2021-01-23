@@ -73,27 +73,25 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
   const handleAddToCart = useCallback(() => {
     if (!cardData) return;
 
-    const { quantity } = cardData;
-    const unitaryPrice = cardData.base_experience;
-    const totalPrice = quantity * unitaryPrice;
-
     const newCart = appContext[typeId].cart.slice(0); // copying cart array
     const cartIndex = newCart.findIndex(pokemon => pokemon.id === cardData.id);
 
     if (cartIndex >= 0) {
       newCart[cartIndex] = {
         ...newCart[cartIndex],
-        quantity,
-        unitaryPrice,
-        totalPrice,
+        unitaryPrice: cardData.base_experience,
+        quantity: cardData.quantity + newCart[cartIndex].quantity,
       };
+      newCart[cartIndex].totalPrice =
+        newCart[cartIndex].quantity * newCart[cartIndex].unitaryPrice;
     } else {
       newCart.push({
         id: cardData.id,
         name: cardData.name,
-        quantity,
-        unitaryPrice,
-        totalPrice,
+        imgurl: cardData.sprites.front_default,
+        unitaryPrice: cardData.base_experience,
+        quantity: cardData.quantity,
+        totalPrice: cardData.quantity * cardData.base_experience,
       });
     }
 

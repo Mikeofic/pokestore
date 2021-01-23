@@ -1,9 +1,18 @@
 import React, { useCallback, useContext } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { FiMinus } from 'react-icons/fi';
-import { CartItemType } from '../../pages/Page';
+import { IoMdCloseCircle } from 'react-icons/io';
 import CartItemContainer from './styles';
 import { AppContext } from '../../AppProvider';
+
+export interface CartItemType {
+  id: number;
+  name: string;
+  quantity: number;
+  unitaryPrice: number;
+  totalPrice: number;
+  imgurl: string;
+}
 
 interface CartItemProps {
   data: CartItemType;
@@ -11,7 +20,7 @@ interface CartItemProps {
 }
 
 const CartItem: React.FC<CartItemProps> = ({
-  data: { id, name, quantity, totalPrice },
+  data: { id, name, quantity, totalPrice, imgurl },
   typeId,
 }) => {
   const { appContext, setAppContext } = useContext(AppContext);
@@ -73,15 +82,17 @@ const CartItem: React.FC<CartItemProps> = ({
 
   return (
     <CartItemContainer>
-      <div>
-        <div>
-          <span>{quantity}x</span>
-          <span>{name}</span>
+      <div className="cart-container">
+        <img src={imgurl} alt={name} />
+        <div className="data-container">
+          <div className="name-container">{name}</div>
+          <div className="price-container">
+            Preço: <span>R$ {totalPrice}</span>
+          </div>
         </div>
-        <div>R$ {totalPrice}</div>
       </div>
-      <div>
-        <div>
+      <div className="buy-container">
+        <div className="quantity-container">
           <button type="button" onClick={handleMinusClick}>
             <FiMinus color="red" />
           </button>
@@ -91,6 +102,7 @@ const CartItem: React.FC<CartItemProps> = ({
           </button>
         </div>
         <button type="button" onClick={handleRemoveItem}>
+          <IoMdCloseCircle />
           Remover
         </button>
       </div>

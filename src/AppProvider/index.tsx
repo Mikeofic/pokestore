@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useState } from 'react';
-import { PokemonType, CartItemType } from '../pages/Page';
+import { PokemonType } from '../pages/Page';
+import { CartItemType } from '../components/CartItem';
 
 interface ContextData {
   appContext: ContextType;

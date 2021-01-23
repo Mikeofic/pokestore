@@ -17,14 +17,145 @@ export const PokemonSection = styled.section`
   justify-content: space-between;
 `;
 
-export const CarrinhoSection = styled.section`
+export const CartSection = styled.section`
   display: flex;
+  flex-direction: column;
   width: 300px;
   min-width: 300px;
   border-left: 1px solid #ececec;
   background-color: #f7f7f7;
   border-right: 1px solid #ececec;
   padding: 15px;
+`;
+
+export const CheckoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background-color: white;
+  border-radius: 4px;
+  border: 2px solid #ffaeae;
+  /* border: 1px solid #d4d4d4; */
+  margin: 0 -5px;
+  box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 4;
+
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    /* border-bottom: 1px dashed #e0e0e0; */
+    border-bottom: 1px dashed #ffaeae;
+    padding-top: 6px;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+  .checkout-container {
+    display: flex;
+    margin: 5px 0;
+
+    @media (max-width: 1049px) {
+      flex-direction: column;
+    }
+  }
+
+  .checkout-data {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font-size: 1.5rem;
+
+    .quantity {
+      margin-bottom: 5px;
+      font-weight: 300;
+
+      span {
+        font-weight: 600;
+        font-size: 1.7rem;
+      }
+    }
+
+    .price {
+      font-weight: 300;
+
+      span {
+        font-weight: 600;
+        color: red;
+        font-size: 1.7rem;
+      }
+    }
+  }
+
+  button {
+    margin-left: 10px;
+    padding: 12px 17px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    background-color: #ff3838;
+    color: white;
+    border-color: 2px solid transparent;
+    box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    justify-content: center;
+
+    :disabled,
+    :disabled:hover,
+    :disabled:focus {
+      background-color: #f7f7f7;
+      border: 2px solid transparent;
+      color: transparent;
+      box-shadow: unset;
+      transition: unset;
+      cursor: unset;
+    }
+
+    :hover,
+    :focus {
+      background-color: #ff6a6a;
+      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
+    }
+
+    svg {
+      margin-right: 5px;
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  @media (max-width: 1049px) {
+    flex-direction: column;
+
+    button {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
+
+  .empty-cart {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #5f5f5f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f95656;
+    padding: 10px 0;
+
+    svg {
+      height: 38px;
+      width: 38px;
+      padding: 6px;
+      background-color: #ffdfdf;
+      border-radius: 30px;
+      color: red;
+      margin-right: 10px;
+    }
+  }
 `;
 
 export default PageContainer;

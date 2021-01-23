@@ -1,8 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { BiCart } from 'react-icons/bi';
 import PokeCard from '../../components/PokeCard';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import PageContainer, { PokemonSection, CarrinhoSection } from './styles';
+import PageContainer, {
+  PokemonSection,
+  CartSection,
+  CheckoutContainer,
+} from './styles';
 import api from '../../services/api';
 import { AppContext } from '../../AppProvider';
 import CartItem from '../../components/CartItem';
@@ -13,14 +17,6 @@ export interface PokemonType {
     url: string;
   };
   slot: number;
-}
-
-export interface CartItemType {
-  id: number;
-  name: string;
-  quantity: number;
-  unitaryPrice: number;
-  totalPrice: number;
 }
 
 interface TypeData {
@@ -82,17 +78,50 @@ const Page: React.FC<PageProps> = ({ typeId, pageTitle }) => {
                 ),
             )}
         </PokemonSection>
-        <CarrinhoSection>
-          {appContext[typeId].cart.length > 0 ? (
+        <CartSection>
+          <CheckoutContainer>
+            {appContext[typeId].cart.length > 0 ? (
+              <>
+                <h3>Resumo do pedido:</h3>
+                <div className="checkout-container">
+                  <div className="checkout-data">
+                    <div className="quantity">
+                      Qtd:{' '}
+                      <span>
+                        {appContext[typeId].cart.reduce(
+                          (total, cartItem) => cartItem.quantity + total,
+                          0,
+                        )}{' '}
+                        pokémon
+                      </span>
+                    </div>
+                    <div className="price">
+                      Total:{' '}
+                      <span>
+                        R${' '}
+                        {appContext[typeId].cart.reduce(
+                          (total, cartItem) => cartItem.totalPrice + total,
+                          0,
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <button type="button">Finalizar</button>
+                </div>
+              </>
+            ) : (
+              <div className="empty-cart">
+                <BiCart /> Carrinho Vazio
+              </div>
+            )}
+          </CheckoutContainer>
+
+          {appContext[typeId].cart.length > 0 &&
             appContext[typeId].cart.map(itemData => (
               <CartItem key={itemData.id} data={itemData} typeId={typeId} />
-            ))
-          ) : (
-            <div>Carrinho Vazio</div>
-          )}
-        </CarrinhoSection>
+            ))}
+        </CartSection>
       </PageContainer>
-      <Footer />
     </>
   );
 };
