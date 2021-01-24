@@ -24,31 +24,41 @@ const CardContainer = styled.div`
   .img-container {
     height: 96px;
     width: 96px;
-    border-radius: 4px;
+    border-radius: 12px;
     margin: 20px auto 10px;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      background-color: #ffebeb;
+      border-radius: 12px;
     }
   }
 
   .price-container {
     font-weight: 300;
-    background-color: #ffe3e3;
-    padding: 6px 15px;
-    border-radius: 3px;
-    color: #d80013;
+    padding: 8px 15px 0;
+    color: #444444;
+    border-top: 2px solid #ffaeae;
+    border-radius: 0;
+    min-width: 98px;
+    display: flex;
+    justify-content: center;
 
     span {
       font-weight: 600;
+      margin-left: 4px;
     }
+  }
+
+  .price-container.gradient {
+    border-top-color: transparent;
   }
 
   .name-container,
   .price-container {
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     font-size: 1.8rem;
   }
 
@@ -77,9 +87,11 @@ const CardContainer = styled.div`
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
       padding: 5px;
 
-      > span {
+      form input {
         font-size: 1.6rem;
         font-weight: 500;
+        width: 2.5ch;
+        text-align: center;
       }
 
       > button {

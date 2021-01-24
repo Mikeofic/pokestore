@@ -238,4 +238,16 @@ export default createGlobalStyle`
     border: 0;
   }
 
+  /* Remove arrows from input number tags on Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Remove arrows from input number tags on Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
 `;

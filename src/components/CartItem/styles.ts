@@ -11,10 +11,10 @@ const CartItemContainer = styled.div`
     content: '';
     position: absolute;
     bottom: 0;
-    left: -15px;
-    right: -15px;
-    height: 1px;
-    background-color: #e9e9e9;
+    left: -5px;
+    right: -5px;
+    height: 0;
+    border-bottom: 2px dashed #e4e4e4;
   }
 
   .cart-container {
@@ -73,9 +73,11 @@ const CartItemContainer = styled.div`
       flex-grow: 1;
       background-color: white;
 
-      > span {
+      form input {
         font-size: 1.5rem;
         font-weight: 500;
+        width: 3.5ch;
+        text-align: center;
       }
 
       > button {

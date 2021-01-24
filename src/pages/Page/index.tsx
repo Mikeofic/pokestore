@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { BiCart } from 'react-icons/bi';
+import { FaAngleDoubleRight } from 'react-icons/fa';
 import PokeCard from '../../components/PokeCard';
 import Header from '../../components/Header';
 import PageContainer, {
@@ -10,6 +12,7 @@ import PageContainer, {
 import api from '../../services/api';
 import { AppContext } from '../../AppProvider';
 import CartItem from '../../components/CartItem';
+import Modal from '../../components/Modal';
 
 export interface PokemonType {
   pokemon: {
@@ -34,28 +37,45 @@ interface PageDataType {
 }
 
 const Page: React.FC<PageProps> = ({ typeId, pageTitle }) => {
+  const location = useLocation();
   const { appContext, setAppContext } = useContext(AppContext);
   const [pageData, setPageData] = useState<PageDataType | null>(null);
+  const [currentPathname, setCurrentPathname] = useState('');
+  const [previousPathname, setPreviousPathname] = useState('');
+
+  useEffect(() => {
+    if (!currentPathname && !previousPathname) {
+      setCurrentPathname(location.pathname);
+    } else {
+      setCurrentPathname(location.pathname);
+      setPreviousPathname(currentPathname);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   useEffect(() => {
     document.title = pageTitle;
 
     async function fetchData() {
-      const typeResponse = await api.get<TypeData>(`type/${typeId}`);
-      const { pokemon } = typeResponse.data;
+      try {
+        const typeResponse = await api.get<TypeData>(`type/${typeId}`);
+        const { pokemon } = typeResponse.data;
 
-      setAppContext({
-        ...appContext,
-        [typeId]: {
-          ...appContext[typeId],
-          pokemon,
-        },
-      });
+        setAppContext({
+          ...appContext,
+          [typeId]: {
+            ...appContext[typeId],
+            pokemon,
+          },
+        });
 
-      setPageData({
-        offset: 0,
-        quantity: 28,
-      });
+        setPageData({
+          offset: 0,
+          quantity: 28,
+        });
+      } catch (error) {
+        // TODO: show connection error
+      }
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,17 +86,19 @@ const Page: React.FC<PageProps> = ({ typeId, pageTitle }) => {
       <Header />
       <PageContainer>
         <PokemonSection>
-          {pageData &&
-            appContext[typeId].pokemon.map(
-              (pokemon, index) =>
-                pageData.offset + pageData.quantity > index + 1 && (
-                  <PokeCard
-                    key={pokemon.pokemon.url}
-                    url={pokemon.pokemon.url}
-                    typeId={typeId}
-                  />
-                ),
-            )}
+          <div>
+            {pageData &&
+              appContext[typeId].pokemon.map(
+                (pokemon, index) =>
+                  appContext[typeId].pokemon.length > index + 1 && (
+                    <PokeCard
+                      key={pokemon.pokemon.url}
+                      url={pokemon.pokemon.url}
+                      typeId={typeId}
+                    />
+                  ),
+              )}
+          </div>
         </PokemonSection>
         <CartSection>
           <CheckoutContainer>
@@ -106,7 +128,9 @@ const Page: React.FC<PageProps> = ({ typeId, pageTitle }) => {
                       </span>
                     </div>
                   </div>
-                  <button type="button">Finalizar</button>
+                  <Link to="#checkout">
+                    Finalizar <FaAngleDoubleRight />
+                  </Link>
                 </div>
               </>
             ) : (
@@ -122,6 +146,12 @@ const Page: React.FC<PageProps> = ({ typeId, pageTitle }) => {
             ))}
         </CartSection>
       </PageContainer>
+      <Modal
+        showModal={location.hash.includes('#checkout')}
+        previousPath={previousPathname}
+      >
+        <div>Teste</div>
+      </Modal>
     </>
   );
 };

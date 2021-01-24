@@ -9,12 +9,17 @@ const PageContainer = styled.main`
 
 export const PokemonSection = styled.section`
   display: flex;
+  flex-direction: column;
   margin-top: 15px;
   margin-bottom: 15px;
   flex-grow: 1;
   padding-right: 15px;
-  flex-wrap: wrap;
-  justify-content: space-between;
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 `;
 
 export const CartSection = styled.section`
@@ -22,10 +27,12 @@ export const CartSection = styled.section`
   flex-direction: column;
   width: 300px;
   min-width: 300px;
-  border-left: 1px solid #ececec;
+  /* border: 1px solid #ececec; */
+  border: 1px solid #e4e4e4;
   background-color: #f7f7f7;
-  border-right: 1px solid #ececec;
   padding: 15px;
+  margin: 15px 0;
+  border-radius: 5px;
 `;
 
 export const CheckoutContainer = styled.div`
@@ -45,8 +52,8 @@ export const CheckoutContainer = styled.div`
   h3 {
     font-size: 1.8rem;
     margin-bottom: 8px;
-    /* border-bottom: 1px dashed #e0e0e0; */
-    border-bottom: 1px dashed #ffaeae;
+    /* border-bottom: 1px dashed #ffaeae; */
+    border-bottom: 1px dashed #d6d6d6;
     padding-top: 6px;
     padding-bottom: 10px;
     text-align: center;
@@ -54,11 +61,8 @@ export const CheckoutContainer = styled.div`
 
   .checkout-container {
     display: flex;
+    flex-direction: column;
     margin: 5px 0;
-
-    @media (max-width: 1049px) {
-      flex-direction: column;
-    }
   }
 
   .checkout-data {
@@ -66,10 +70,14 @@ export const CheckoutContainer = styled.div`
     flex-direction: column;
     flex-grow: 1;
     font-size: 1.5rem;
+    justify-content: space-around;
+    height: 56px;
+    padding: 0 6px;
+    margin-bottom: 8px;
 
     .quantity {
-      margin-bottom: 5px;
       font-weight: 300;
+      font-size: 1.5rem;
 
       span {
         font-weight: 600;
@@ -79,19 +87,20 @@ export const CheckoutContainer = styled.div`
 
     .price {
       font-weight: 300;
+      font-size: 1.5rem;
 
       span {
         font-weight: 600;
-        color: red;
         font-size: 1.7rem;
+        color: red;
       }
     }
   }
 
-  button {
-    margin-left: 10px;
-    padding: 12px 17px;
-    font-size: 1.5rem;
+  a {
+    margin-left: 6px;
+    padding: 13px 16px;
+    font-size: 1.7rem;
     border-radius: 5px;
     background-color: #ff3838;
     color: white;
@@ -121,7 +130,7 @@ export const CheckoutContainer = styled.div`
     }
 
     svg {
-      margin-right: 5px;
+      margin-left: 4px;
       height: 20px;
       width: 20px;
     }
@@ -129,11 +138,6 @@ export const CheckoutContainer = styled.div`
 
   @media (max-width: 1049px) {
     flex-direction: column;
-
-    button {
-      margin-left: 0;
-      margin-top: 10px;
-    }
   }
 
   .empty-cart {

@@ -26,30 +26,81 @@ const CartItem: React.FC<CartItemProps> = ({
   const { appContext, setAppContext } = useContext(AppContext);
 
   const handlePlusClick = useCallback(() => {
-    if (quantity < 99) {
-      const newQuantity = quantity + 1;
-      const cart = appContext[typeId].cart.slice(0);
-      const itemIndex = cart.findIndex(cartItem => cartItem.id === id);
+    let newQuantity = quantity + 1;
 
-      cart[itemIndex] = {
-        ...cart[itemIndex],
-        quantity: newQuantity,
-        totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
-      };
-
-      setAppContext({
-        ...appContext,
-        [typeId]: {
-          ...appContext[typeId],
-          cart,
-        },
-      });
+    if (newQuantity > 999) {
+      newQuantity = 999;
+    } else if (newQuantity < 1) {
+      newQuantity = 1;
     }
+
+    if (Number.isNaN(newQuantity)) {
+      newQuantity = 1;
+    }
+
+    const cart = appContext[typeId].cart.slice(0);
+    const itemIndex = cart.findIndex(cartItem => cartItem.id === id);
+
+    cart[itemIndex] = {
+      ...cart[itemIndex],
+      quantity: newQuantity,
+      totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
+    };
+
+    setAppContext({
+      ...appContext,
+      [typeId]: {
+        ...appContext[typeId],
+        cart,
+      },
+    });
   }, [appContext, id, setAppContext, quantity, typeId]);
 
   const handleMinusClick = useCallback(() => {
-    if (quantity > 1) {
-      const newQuantity = quantity - 1;
+    let newQuantity = quantity - 1;
+
+    if (newQuantity > 999) {
+      newQuantity = 999;
+    } else if (newQuantity < 1) {
+      newQuantity = 1;
+    }
+
+    if (Number.isNaN(newQuantity)) {
+      newQuantity = 1;
+    }
+
+    const cart = appContext[typeId].cart.slice(0);
+    const itemIndex = cart.findIndex(cartItem => cartItem.id === id);
+
+    cart[itemIndex] = {
+      ...cart[itemIndex],
+      quantity: newQuantity,
+      totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
+    };
+
+    setAppContext({
+      ...appContext,
+      [typeId]: {
+        ...appContext[typeId],
+        cart,
+      },
+    });
+  }, [appContext, id, setAppContext, quantity, typeId]);
+
+  const handleQuantityChange = useCallback(
+    (newVal: number) => {
+      let newQuantity = newVal;
+
+      if (newQuantity > 999) {
+        newQuantity = 999;
+      } else if (newQuantity < 1) {
+        newQuantity = 1;
+      }
+
+      if (Number.isNaN(newVal) || Number.isNaN(newQuantity)) {
+        newQuantity = 1;
+      }
+
       const cart = appContext[typeId].cart.slice(0);
       const itemIndex = cart.findIndex(cartItem => cartItem.id === id);
 
@@ -66,8 +117,9 @@ const CartItem: React.FC<CartItemProps> = ({
           cart,
         },
       });
-    }
-  }, [appContext, id, setAppContext, quantity, typeId]);
+    },
+    [appContext, id, setAppContext, typeId],
+  );
 
   const handleRemoveItem = useCallback(() => {
     const cart = appContext[typeId].cart.filter(cartItem => cartItem.id !== id);
@@ -96,7 +148,21 @@ const CartItem: React.FC<CartItemProps> = ({
           <button type="button" onClick={handleMinusClick}>
             <FiMinus color="red" />
           </button>
-          <span>{quantity}</span>
+          <form
+            action="/"
+            onSubmit={e => {
+              e.preventDefault();
+            }}
+          >
+            <input
+              type="number"
+              min={1}
+              max={999}
+              step={1}
+              value={quantity}
+              onChange={e => handleQuantityChange(parseInt(e.target.value, 10))}
+            />
+          </form>
           <button type="button" onClick={handlePlusClick}>
             <HiPlus color="red" />
           </button>

@@ -30,44 +30,66 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await api.get<PokemonApiData>(url);
-      const newCardData = {
-        quantity: 1,
-        price: response.data.base_experience,
-        ...response.data,
-        name: response.data.name.trim(),
-      };
+      try {
+        const response = await api.get<PokemonApiData>(url);
+        const newCardData = {
+          quantity: 1,
+          price: response.data.base_experience,
+          ...response.data,
+          name: response.data.name.trim(),
+        };
 
-      // uppercase first letter
-      newCardData.name =
-        newCardData.name.charAt(0).toUpperCase() + newCardData.name.slice(1);
-      setCardData(newCardData);
+        // uppercase first letter
+        newCardData.name =
+          newCardData.name.charAt(0).toUpperCase() + newCardData.name.slice(1);
+        setCardData(newCardData);
+      } catch (error) {
+        // TODO: show connection error
+      }
     }
     fetchData();
   }, [url]);
 
   const handlePlusClick = useCallback(() => {
-    if (cardData && cardData.quantity < 99) {
-      const quantity = cardData.quantity + 1;
+    if (!cardData) return;
 
-      setCardData({
-        ...cardData,
-        quantity,
-        price: cardData.base_experience * quantity,
-      });
+    let quantity = cardData.quantity + 1;
+    if (quantity > 99) {
+      quantity = 99;
+    } else if (quantity < 1) {
+      quantity = 1;
     }
+
+    if (Number.isNaN(quantity)) {
+      quantity = 1;
+    }
+
+    setCardData({
+      ...cardData,
+      quantity,
+      price: cardData.base_experience * quantity,
+    });
   }, [cardData]);
 
   const handleMinusClick = useCallback(() => {
-    if (cardData && cardData.quantity > 1) {
-      const quantity = cardData.quantity - 1;
+    if (!cardData) return;
 
-      setCardData({
-        ...cardData,
-        quantity,
-        price: cardData.base_experience * quantity,
-      });
+    let quantity = cardData.quantity - 1;
+    if (quantity < 1) {
+      quantity = 1;
+    } else if (quantity > 99) {
+      quantity = 99;
     }
+
+    if (Number.isNaN(quantity)) {
+      quantity = 1;
+    }
+
+    setCardData({
+      ...cardData,
+      quantity,
+      price: cardData.base_experience * quantity,
+    });
   }, [cardData]);
 
   const handleAddToCart = useCallback(() => {
@@ -110,6 +132,31 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
     });
   }, [appContext, cardData, setAppContext, typeId]);
 
+  const handleQuantityChange = useCallback(
+    (newVal: number) => {
+      if (!cardData) return;
+
+      let quantity = newVal;
+      if (newVal > 99) {
+        quantity = 99;
+      } else if (newVal < 1) {
+        quantity = 1;
+      }
+
+      if (Number.isNaN(newVal) || Number.isNaN(quantity)) {
+        quantity = 1;
+      }
+
+      setCardData({
+        ...cardData,
+        quantity,
+        price: cardData.base_experience * quantity,
+      });
+    },
+
+    [cardData],
+  );
+
   if (!cardData) {
     return (
       <CardContainer>
@@ -145,7 +192,22 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
           <button type="button" onClick={handleMinusClick}>
             <FiMinus color="red" />
           </button>
-          <span>{cardData.quantity}</span>
+          <form
+            action="/"
+            onSubmit={e => {
+              e.preventDefault();
+              handleAddToCart();
+            }}
+          >
+            <input
+              type="number"
+              min={1}
+              max={99}
+              step={1}
+              value={cardData.quantity}
+              onChange={e => handleQuantityChange(parseInt(e.target.value, 10))}
+            />
+          </form>
           <button type="button" onClick={handlePlusClick}>
             <HiPlus color="red" />
           </button>
