@@ -6,9 +6,16 @@ import ModalContainer, { Background } from './style';
 interface ModalProps {
   showModal: boolean;
   previousPath: string;
+  onClosing(): void;
 }
 
-const Modal: React.FC<ModalProps> = ({ showModal, previousPath, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  showModal,
+  previousPath,
+  onClosing,
+  children,
+}) => {
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [scrollIsHidden, setScrollIsHidden] = useState(false);
   const history = useHistory();
@@ -16,6 +23,10 @@ const Modal: React.FC<ModalProps> = ({ showModal, previousPath, children }) => {
 
   useEffect(() => {
     if (showModal) {
+      if (hasLoaded === false) {
+        setHasLoaded(true);
+      }
+
       setShowContent(true);
       setTimeout(() => {
         document.body.style.overflow = 'hidden'; // hide body scroll
@@ -23,11 +34,16 @@ const Modal: React.FC<ModalProps> = ({ showModal, previousPath, children }) => {
       }, 350);
     } else {
       document.body.style.overflow = ''; // show body scroll
+      if (hasLoaded) {
+        onClosing();
+      }
+      setHasLoaded(false);
       setScrollIsHidden(false);
       setTimeout(() => {
         setShowContent(false);
       }, 350);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showModal]);
 
   const handleCloseModal = useCallback(() => {

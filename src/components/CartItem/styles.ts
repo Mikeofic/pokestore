@@ -93,8 +93,8 @@ const CartItemContainer = styled.div`
           height: 20px;
         }
 
-        :hover,
-        :focus {
+        &:hover,
+        &:focus {
           background-color: #f0f0f0;
         }
       }
@@ -115,9 +115,9 @@ const CartItemContainer = styled.div`
       font-weight: 500;
       justify-content: center;
 
-      :disabled,
-      :disabled:hover,
-      :disabled:focus {
+      &:disabled,
+      &:disabled:hover,
+      &:disabled:focus {
         background-color: #f7f7f7;
         border: 2px solid transparent;
         color: transparent;
@@ -126,8 +126,8 @@ const CartItemContainer = styled.div`
         cursor: unset;
       }
 
-      :hover,
-      :focus {
+      &:hover,
+      &:focus {
         background-color: #ff3838;
         border-color: transparent;
         color: white;

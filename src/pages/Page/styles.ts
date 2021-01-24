@@ -71,29 +71,36 @@ export const CheckoutContainer = styled.div`
     flex-grow: 1;
     font-size: 1.5rem;
     justify-content: space-around;
-    height: 56px;
     padding: 0 6px;
-    margin-bottom: 8px;
 
-    .quantity {
+    > div {
+      margin-bottom: 8px;
+    }
+
+    .quantity,
+    .price,
+    .cashback {
       font-weight: 300;
       font-size: 1.5rem;
 
       span {
         font-weight: 600;
-        font-size: 1.7rem;
+        font-size: 1.6rem;
       }
     }
 
-    .price {
+    .price > span {
+      color: red;
+    }
+
+    .cashback span span {
+      color: black;
       font-weight: 300;
       font-size: 1.5rem;
+    }
 
-      span {
-        font-weight: 600;
-        font-size: 1.7rem;
-        color: red;
-      }
+    .price span {
+      font-size: 1.85rem;
     }
   }
 
@@ -112,9 +119,9 @@ export const CheckoutContainer = styled.div`
     font-weight: 500;
     justify-content: center;
 
-    :disabled,
-    :disabled:hover,
-    :disabled:focus {
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:focus {
       background-color: #f7f7f7;
       border: 2px solid transparent;
       color: transparent;
@@ -123,8 +130,8 @@ export const CheckoutContainer = styled.div`
       cursor: unset;
     }
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
       background-color: #ff6a6a;
       box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
     }
@@ -158,6 +165,102 @@ export const CheckoutContainer = styled.div`
       border-radius: 30px;
       color: red;
       margin-right: 10px;
+    }
+  }
+`;
+
+export const ModalContainer = styled.div`
+  background: white;
+  padding: 60px 30px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+
+  * {
+    position: relative;
+    z-index: 2;
+  }
+
+  img {
+    position: absolute;
+    z-index: 1;
+    bottom: -1px;
+    left: -1px;
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  h2 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+  }
+
+  > div {
+    display: flex;
+    padding: 20px 0;
+    font-size: 1.6rem;
+    align-items: baseline;
+
+    & + div {
+      border-top: 2px dashed #d0d0d0;
+    }
+
+    span {
+      font-weight: 600;
+      font-size: 1.7rem;
+      color: red;
+      margin: 0 5px;
+    }
+
+    > svg {
+      display: inline-flex;
+      height: 1.8rem;
+      width: 1.8rem;
+      margin-right: 5px;
+    }
+  }
+
+  button {
+    padding: 10px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    color: white;
+    border: 2px solid #ff8686;
+    color: red;
+    box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    justify-content: center;
+
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:focus {
+      background-color: #f7f7f7;
+      border: 2px solid transparent;
+      color: transparent;
+      box-shadow: unset;
+      transition: unset;
+      cursor: unset;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: #ff3838;
+      border-color: transparent;
+      color: white;
+    }
+
+    svg {
+      margin-right: 5px;
+      height: 20px;
+      width: 20px;
     }
   }
 `;

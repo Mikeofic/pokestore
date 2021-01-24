@@ -46,8 +46,8 @@ export const SearchForm = styled.form`
     width: 50px;
     border-radius: 3px;
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
       background: #ffe8e8;
     }
 
@@ -57,8 +57,8 @@ export const SearchForm = styled.form`
       fill: #585858;
     }
 
-    :hover svg,
-    :focus svg {
+    &:hover svg,
+    &:focus svg {
       fill: #d40000;
     }
   }
@@ -158,8 +158,8 @@ export const NavContainer = styled.nav`
       align-items: center;
       border-radius: 100px;
 
-      :hover,
-      :focus {
+      &:hover,
+      &:focus {
         background-color: white;
       }
 

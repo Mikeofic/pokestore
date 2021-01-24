@@ -44,40 +44,42 @@ const ModalContainer = styled.div`
     opacity: 0;
   }
 
-  .modal {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    max-width: 830px;
-    border-radius: 4px;
-    padding: 15px;
-  }
-
-  > button.close {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 5;
-    background: unset;
-    border: 2px solid transparent;
-    border-radius: 60px;
-    padding: 8px;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.15);
+  > div {
+    .modal {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      max-width: 730px;
+      border-radius: 4px;
+      padding: 15px;
     }
 
-    &:focus {
-      border-color: #3c3c3c;
-    }
+    > button.close {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 5;
+      background: unset;
+      border: 2px solid transparent;
+      border-radius: 60px;
+      padding: 8px;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    svg {
-      color: #fff;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      &:focus {
+        border-color: #3c3c3c;
+      }
+
+      svg {
+        color: #fff;
+      }
     }
   }
 `;
