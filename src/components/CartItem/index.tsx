@@ -16,7 +16,7 @@ export interface CartItemType {
 
 interface CartItemProps {
   data: CartItemType;
-  typeId: 10 | 11 | 12 | 13; // 10 = fogo, 11 = água, 12 = grama, 13 = elétrico
+  typeId: number;
 }
 
 const CartItem: React.FC<CartItemProps> = ({

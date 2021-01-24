@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useState } from 'react';
-import { PokemonType } from '../pages/Page';
+import { PokemonType } from '../pages/PageFogo';
 import { CartItemType } from '../components/CartItem';
 
 interface ContextData {
@@ -7,26 +7,28 @@ interface ContextData {
   setAppContext(context: ContextType): void;
 }
 
+export interface MyOrdersType {
+  id: string;
+  timestamp: number;
+  quantity: number;
+  totalPrice: number;
+  cashback: number;
+  order: CartItemType[];
+}
+
+export const typeIds = {
+  fogo: 10,
+  agua: 11,
+  grama: 12,
+  eletrico: 13,
+};
+
 interface ContextType {
   // tipo fogo
-  10: {
+  [key: number]: {
     pokemon: PokemonType[];
     cart: CartItemType[];
-  };
-  // tipo agua
-  11: {
-    pokemon: PokemonType[];
-    cart: CartItemType[];
-  };
-  // tipo grama
-  12: {
-    pokemon: PokemonType[];
-    cart: CartItemType[];
-  };
-  // tipo eletrico
-  13: {
-    pokemon: PokemonType[];
-    cart: CartItemType[];
+    myOrders: MyOrdersType[];
   };
 }
 
@@ -47,21 +49,25 @@ const AppProvider: React.FC = ({ children }) => {
       10: {
         pokemon: [],
         cart: [],
+        myOrders: [],
       },
       // tipo agua
       11: {
         pokemon: [],
         cart: [],
+        myOrders: [],
       },
       // tipo grama
       12: {
         pokemon: [],
         cart: [],
+        myOrders: [],
       },
       // tipo eletrico
       13: {
         pokemon: [],
         cart: [],
+        myOrders: [],
       },
     };
   });

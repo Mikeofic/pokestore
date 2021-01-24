@@ -18,6 +18,37 @@ const HeaderContainer = styled.header`
     display: flex;
     margin-right: 20px;
   }
+
+  .my-orders {
+    display: flex;
+    color: white;
+    position: relative;
+    height: 51px;
+    width: 49px;
+    margin-left: 20px;
+
+    .order-length {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 21px;
+      background-color: #790101;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      border: 3px solid #e60014;
+      font-weight: 500;
+      transform: translate(-50%, -50%);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
 `;
 
 export const SearchForm = styled.form`
