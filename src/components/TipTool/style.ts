@@ -13,6 +13,7 @@ export interface TipToolProps {
 
 const TipToolContainer = styled.div<TipToolProps>`
   position: absolute;
+  z-index: 10;
   display: flex;
   top: calc(100% + 5px);
   ${props => alignment[props.align || 'center']}

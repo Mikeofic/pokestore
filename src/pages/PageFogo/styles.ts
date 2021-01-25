@@ -53,10 +53,14 @@ export const PokemonSection = styled.section`
         cursor: unset;
       }
 
-      &:hover,
-      &:focus {
+      &:hover {
         background-color: #ff6a6a;
         box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
+      }
+
+      &:focus {
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+          0 0 0 3px rgba(255, 0, 0, 0.19);
       }
 
       svg {
@@ -261,10 +265,14 @@ export const CheckoutContainer = styled.div`
       cursor: unset;
     }
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: #ff6a6a;
       box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
+    }
+
+    &:focus {
+      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+        0 0 0 3px rgba(255, 0, 0, 0.19);
     }
 
     svg {

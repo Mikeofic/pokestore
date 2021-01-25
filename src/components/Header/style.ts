@@ -17,6 +17,22 @@ const HeaderContainer = styled.header`
   .logo {
     display: flex;
     margin-right: 20px;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: -4px;
+      right: -4px;
+      background-color: #b10000;
+      height: 0px;
+      transition: height 0.2s;
+    }
+
+    &:focus:after {
+      height: 2px;
+    }
   }
 
   .my-orders {
@@ -26,6 +42,21 @@ const HeaderContainer = styled.header`
     height: 51px;
     width: 49px;
     margin-left: 20px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: -8px;
+      right: -4px;
+      background-color: #b10000;
+      height: 0px;
+      transition: height 0.2s;
+    }
+
+    &:focus:after {
+      height: 2px;
+    }
 
     .order-length {
       position: absolute;
@@ -60,6 +91,11 @@ export const SearchForm = styled.form`
   background-color: white;
   border-radius: 3px;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.2s;
+
+  &:focus-within {
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.15), 0 0 0 5px rgba(0, 0, 0, 0.2);
+  }
 
   input {
     flex-grow: 1;
