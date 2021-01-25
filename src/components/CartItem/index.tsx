@@ -23,7 +23,9 @@ const CartItem: React.FC<CartItemProps> = ({
   data: { id, name, quantity, totalPrice, imgurl },
   typeId,
 }) => {
-  const { appContext, setAppContext } = useContext(AppContext);
+  const { appContext, setAppContext, getStoredContext } = useContext(
+    AppContext,
+  );
 
   const handlePlusClick = useCallback(() => {
     let newQuantity = quantity + 1;
@@ -47,14 +49,16 @@ const CartItem: React.FC<CartItemProps> = ({
       totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
     };
 
+    const storedContext = getStoredContext();
+
     setAppContext({
-      ...appContext,
+      ...storedContext,
       [typeId]: {
-        ...appContext[typeId],
+        ...storedContext[typeId],
         cart,
       },
     });
-  }, [appContext, id, setAppContext, quantity, typeId]);
+  }, [appContext, id, setAppContext, quantity, typeId, getStoredContext]);
 
   const handleMinusClick = useCallback(() => {
     let newQuantity = quantity - 1;
@@ -78,14 +82,16 @@ const CartItem: React.FC<CartItemProps> = ({
       totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
     };
 
+    const storedContext = getStoredContext();
+
     setAppContext({
-      ...appContext,
+      ...storedContext,
       [typeId]: {
-        ...appContext[typeId],
+        ...storedContext[typeId],
         cart,
       },
     });
-  }, [appContext, id, setAppContext, quantity, typeId]);
+  }, [appContext, id, setAppContext, quantity, typeId, getStoredContext]);
 
   const handleQuantityChange = useCallback(
     (newVal: number) => {
@@ -110,27 +116,32 @@ const CartItem: React.FC<CartItemProps> = ({
         totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
       };
 
+      const storedContext = getStoredContext();
+
       setAppContext({
-        ...appContext,
+        ...storedContext,
         [typeId]: {
-          ...appContext[typeId],
+          ...storedContext[typeId],
           cart,
         },
       });
     },
-    [appContext, id, setAppContext, typeId],
+    [appContext, id, setAppContext, typeId, getStoredContext],
   );
 
   const handleRemoveItem = useCallback(() => {
     const cart = appContext[typeId].cart.filter(cartItem => cartItem.id !== id);
+
+    const storedContext = getStoredContext();
+
     setAppContext({
-      ...appContext,
+      ...storedContext,
       [typeId]: {
-        ...appContext[typeId],
+        ...storedContext[typeId],
         cart,
       },
     });
-  }, [appContext, id, setAppContext, typeId]);
+  }, [appContext, id, setAppContext, typeId, getStoredContext]);
 
   return (
     <CartItemContainer>

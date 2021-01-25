@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { BiCart } from 'react-icons/bi';
-import { IoMdArrowRoundBack } from 'react-icons/io';
+import { IoMdArrowRoundBack, IoIosArrowDown } from 'react-icons/io';
 import { FaAngleDoubleRight } from 'react-icons/fa';
+import { CgChevronDoubleDown } from 'react-icons/cg';
 import PokeCard from '../../components/PokeCard';
 import Header from '../../components/Header';
 import PageContainer, {
@@ -35,20 +36,15 @@ const Page: React.FC = () => {
   const [typeId] = useState(typeIds.fogo);
   const location = useLocation();
   const history = useHistory();
-  const { appContext, setAppContext } = useContext(AppContext);
+  const { appContext, setAppContext, getStoredContext } = useContext(
+    AppContext,
+  );
   const [pokemonToShow, setPokemonToShow] = useState(0);
-  const [currentPathname, setCurrentPathname] = useState('');
-  const [previousPathname, setPreviousPathname] = useState('');
-
-  useEffect(() => {
-    if (!currentPathname && !previousPathname) {
-      setCurrentPathname(location.pathname);
-    } else {
-      setCurrentPathname(location.pathname);
-      setPreviousPathname(currentPathname);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  const [currentCheckout, setCurretCheckout] = useState({
+    totalQuantity: 0,
+    totalPrice: 0,
+    cashback: 0,
+  });
 
   useEffect(() => {
     document.title = 'Poke Store Fogo - Temos que pegar!';
@@ -58,10 +54,12 @@ const Page: React.FC = () => {
         const typeResponse = await api.get<TypeData>(`type/${typeId}`);
         const { pokemon } = typeResponse.data;
 
+        const storedContext = getStoredContext();
+
         setAppContext({
-          ...appContext,
+          ...storedContext,
           [typeId]: {
-            ...appContext[typeId],
+            ...storedContext[typeId],
             pokemon,
           },
         });
@@ -76,47 +74,72 @@ const Page: React.FC = () => {
   }, [typeId]); // só é necessário atualizar quando o typeId mudar
 
   const handleCloseModal = useCallback(() => {
-    if (previousPathname === location.pathname) {
-      history.goBack();
-    } else {
-      history.push(location.pathname);
-    }
-  }, [history, location.pathname, previousPathname]);
+    history.push(location.pathname);
+  }, [history, location.pathname]);
 
-  const checkoutCart = useCallback(() => {
-    // TODO
-    const { cart } = appContext[typeId];
-    if (!cart.length) return;
+  const checkoutCart = useCallback(
+    (totalQuantity, totalPrice, cashback) => {
+      const { cart } = appContext[typeId];
+      if (!cart.length) return;
 
-    const timestamp = Date.now();
-    const quantity = cart.reduce(
+      const timestamp = Date.now();
+
+      const storedContext = getStoredContext();
+
+      const newMyOrders = storedContext[typeId].myOrders.slice(0);
+      newMyOrders.unshift({
+        id: `${timestamp}.${totalQuantity}.${totalPrice}.${cashback}.${newMyOrders.length}`,
+        timestamp,
+        quantity: totalQuantity,
+        totalPrice,
+        cashback,
+        order: cart,
+      });
+
+      setAppContext({
+        ...storedContext,
+        [typeId]: {
+          ...storedContext[typeId],
+          myOrders: newMyOrders,
+          cart: [],
+        },
+      });
+    },
+    [appContext, typeId, setAppContext, getStoredContext],
+  );
+
+  const handleCheckoutClick = useCallback(() => {
+    const totalQuantity = appContext[typeId].cart.reduce(
       (total, cartItem) => cartItem.quantity + total,
       0,
     );
-    const totalPrice = cart.reduce(
+    const totalPrice = appContext[typeId].cart.reduce(
       (total, cartItem) => cartItem.totalPrice + total,
       0,
     );
     const cashback = Math.ceil(totalPrice * 0.05);
-    const newMyOrders = appContext[typeId].myOrders.slice(0);
-    newMyOrders.unshift({
-      id: `${timestamp}.${quantity}.${totalPrice}.${cashback}.${newMyOrders.length}`,
-      timestamp,
-      quantity,
+    setCurretCheckout({
+      totalQuantity,
       totalPrice,
       cashback,
-      order: cart,
     });
 
-    setAppContext({
-      ...appContext,
-      [typeId]: {
-        ...appContext[typeId],
-        myOrders: newMyOrders,
-        cart: [],
-      },
-    });
-  }, [appContext, typeId, setAppContext]);
+    setTimeout(() => {
+      checkoutCart(totalQuantity, totalPrice, cashback);
+    }, 100);
+  }, [appContext, typeId, checkoutCart]);
+
+  const handleLoadMore = useCallback(() => {
+    const pokemonLength = appContext[typeId].pokemon.length;
+    if (pokemonLength <= pokemonToShow) return;
+
+    const newLimit = pokemonToShow + 30;
+    setPokemonToShow(
+      newLimit > pokemonLength
+        ? newLimit - (newLimit - pokemonLength)
+        : newLimit,
+    );
+  }, [appContext, pokemonToShow, typeId]);
 
   return (
     <>
@@ -135,6 +158,14 @@ const Page: React.FC = () => {
                 ),
             )}
           </div>
+          {pokemonToShow > 0 &&
+            appContext[typeId].pokemon.length > pokemonToShow && (
+              <p>
+                <button type="button" onClick={handleLoadMore}>
+                  Ver mais <CgChevronDoubleDown />
+                </button>
+              </p>
+            )}
         </PokemonSection>
         <CartSection>
           <CheckoutContainer>
@@ -168,7 +199,7 @@ const Page: React.FC = () => {
                           Total: <span>R$ {totalPrice}</span>
                         </div>
                       </div>
-                      <Link to="#checkout">
+                      <Link to="#checkout" onClick={handleCheckoutClick}>
                         Finalizar <FaAngleDoubleRight />
                       </Link>
                     </div>
@@ -190,41 +221,33 @@ const Page: React.FC = () => {
       </PageContainer>
       <Modal
         showModal={location.hash.includes('#checkout')}
-        previousPath={previousPathname}
-        onClosing={checkoutCart}
+        afterClosing={() => {
+          setCurretCheckout({
+            cashback: 0,
+            totalPrice: 0,
+            totalQuantity: 0,
+          });
+        }}
       >
-        {appContext[typeId].cart.length > 0 ? (
-          (() => {
-            const totalQuantity = appContext[typeId].cart.reduce(
-              (total, cartItem) => cartItem.quantity + total,
-              0,
-            );
-            const totalPrice = appContext[typeId].cart.reduce(
-              (total, cartItem) => cartItem.totalPrice + total,
-              0,
-            );
-            const cashback = Math.ceil(totalPrice * 0.05);
-
-            return (
-              <ModalContainer>
-                <img src={charmanderUrl} alt="Pokemon" />
-                <h2>Obrigado! 😍</h2>
-                <div>
-                  <PokeballSVG /> Você comprou{' '}
-                  <span> {totalQuantity} pokémon </span> pelo valor de{' '}
-                  <span>R$ {totalPrice}.</span>
-                </div>
-                <div>
-                  <MoneySVG /> Você ganhou de volta <span>R$ {cashback}.</span>
-                </div>
-                <div className="btn-container">
-                  <button type="button" onClick={handleCloseModal}>
-                    <IoMdArrowRoundBack /> Voltar às compras
-                  </button>
-                </div>
-              </ModalContainer>
-            );
-          })()
+        {currentCheckout.totalQuantity > 0 ? (
+          <ModalContainer>
+            <img src={charmanderUrl} alt="Pokemon" />
+            <h2>Obrigado! 😍</h2>
+            <div>
+              <PokeballSVG /> Você comprou{' '}
+              <span> {currentCheckout.totalQuantity} pokémon </span> pelo valor
+              de <span>R$ {currentCheckout.totalPrice}.</span>
+            </div>
+            <div>
+              <MoneySVG /> Você ganhou de volta{' '}
+              <span>R$ {currentCheckout.cashback}.</span>
+            </div>
+            <div className="btn-container">
+              <button type="button" onClick={handleCloseModal}>
+                <IoMdArrowRoundBack /> Voltar às compras
+              </button>
+            </div>
+          </ModalContainer>
         ) : (
           <ModalContainer>
             <img src={charmanderUrl} alt="Pokemon" />

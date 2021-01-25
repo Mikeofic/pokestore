@@ -15,9 +15,20 @@ const Orders: React.FC = () => {
       <Header typeId={typeId} />
       <PageContainer>
         <OrdersSection>
-          <h1>Minhas Compras:</h1>
-          {appContext[10].myOrders.length > 0 ? (
-            appContext[10].myOrders.map(orderData => (
+          <h1
+            className={
+              appContext[typeId].myOrders.length === 0 ? 'no-orders' : ''
+            }
+          >
+            Minhas Compras:
+          </h1>
+          {appContext[typeId].myOrders.length > 0 && (
+            <p>
+              Total: <span>{appContext[typeId].myOrders.length} compra(s)</span>
+            </p>
+          )}
+          {appContext[typeId].myOrders.length > 0 ? (
+            appContext[typeId].myOrders.map(orderData => (
               <OrderRow key={orderData.id} orderData={orderData} />
             ))
           ) : (

@@ -14,7 +14,7 @@ const OrderRow: React.FC<OrderRowProps> = ({
     <OrderRowContainer>
       <div className="title">
         <p>
-          <span>{quantity} pokémon</span> comprados por{' '}
+          <span>{quantity} pokémon</span> comprado(s) por{' '}
           <span>R$ {totalPrice}</span>.
         </p>
         <p>

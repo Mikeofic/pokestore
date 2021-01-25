@@ -5,6 +5,7 @@ import { CartItemType } from '../components/CartItem';
 interface ContextData {
   appContext: ContextType;
   setAppContext(context: ContextType): void;
+  getStoredContext(): ContextType;
 }
 
 export interface MyOrdersType {
@@ -34,6 +35,33 @@ interface ContextType {
 
 export const AppContext = createContext<ContextData>({} as ContextData);
 
+const defaultContextType = {
+  // tipo fogo
+  10: {
+    pokemon: [],
+    cart: [],
+    myOrders: [],
+  },
+  // tipo agua
+  11: {
+    pokemon: [],
+    cart: [],
+    myOrders: [],
+  },
+  // tipo grama
+  12: {
+    pokemon: [],
+    cart: [],
+    myOrders: [],
+  },
+  // tipo eletrico
+  13: {
+    pokemon: [],
+    cart: [],
+    myOrders: [],
+  },
+};
+
 const AppProvider: React.FC = ({ children }) => {
   const [appContext, changeAppContext] = useState(() => {
     const stored = localStorage.getItem('@pokestore:stored');
@@ -44,32 +72,7 @@ const AppProvider: React.FC = ({ children }) => {
     }
 
     // default data
-    return {
-      // tipo fogo
-      10: {
-        pokemon: [],
-        cart: [],
-        myOrders: [],
-      },
-      // tipo agua
-      11: {
-        pokemon: [],
-        cart: [],
-        myOrders: [],
-      },
-      // tipo grama
-      12: {
-        pokemon: [],
-        cart: [],
-        myOrders: [],
-      },
-      // tipo eletrico
-      13: {
-        pokemon: [],
-        cart: [],
-        myOrders: [],
-      },
-    };
+    return defaultContextType;
   });
 
   const setAppContext = useCallback((newContext: ContextType) => {
@@ -77,8 +80,20 @@ const AppProvider: React.FC = ({ children }) => {
     changeAppContext(newContext);
   }, []);
 
+  const getStoredContext = useCallback(() => {
+    const stored = localStorage.getItem('@pokestore:stored');
+
+    // stored data
+    if (stored) {
+      return JSON.parse(stored) as ContextType;
+    }
+    return defaultContextType;
+  }, []);
+
   return (
-    <AppContext.Provider value={{ appContext, setAppContext }}>
+    <AppContext.Provider
+      value={{ appContext, setAppContext, getStoredContext }}
+    >
       {children}
     </AppContext.Provider>
   );

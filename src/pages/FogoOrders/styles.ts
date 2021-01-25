@@ -22,9 +22,27 @@ export const OrdersSection = styled.section`
     font-size: 2.2rem;
     display: inline-flex;
     margin: 0 auto;
-    margin-bottom: 15px;
-    padding: 10px 15px;
+    padding: 10px 15px 0;
     border-radius: 0;
+
+    &.no-orders {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+    }
+  }
+
+  > p {
+    display: block;
+    text-align: right;
+    margin-bottom: 9px;
+    padding-right: 5px;
+    font-weight: 300;
+    font-size: 1.5rem;
+    color: #6d6d6d;
+
+    span {
+      font-weight: 500;
+    }
   }
 
   .empty-orders {

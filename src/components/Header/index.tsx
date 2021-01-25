@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ typeId }) => {
             <input
               type=""
               name="search"
-              placeholder="Qual pokémon você quer pegar?"
+              placeholder="Qual pokémon você procura?"
             />
             <button type="submit">
               <PokeLupa />

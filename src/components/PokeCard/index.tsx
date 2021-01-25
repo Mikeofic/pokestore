@@ -4,19 +4,29 @@ import { FiMinus, FiShoppingCart } from 'react-icons/fi';
 import CardContainer from './styles';
 import api from '../../services/api';
 import { AppContext } from '../../AppProvider';
+import DefaultPokemonImg from '../../assets/default_pokemon.png';
 
 interface PokemonApiData {
   id: number;
   base_experience: number;
   name: string;
   sprites: {
-    front_default: string;
+    front_default: string | null;
+    other: {
+      dream_world: {
+        front_default: string | null;
+      };
+      'official-artwork': {
+        front_default: string | null;
+      };
+    };
   };
 }
 
 interface PokemonData extends PokemonApiData {
   price: number;
   quantity: number;
+  img_url: string;
 }
 
 interface PokerCardProps {
@@ -25,18 +35,32 @@ interface PokerCardProps {
 }
 
 const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
-  const { appContext, setAppContext } = useContext(AppContext);
+  const { appContext, setAppContext, getStoredContext } = useContext(
+    AppContext,
+  );
   const [cardData, setCardData] = useState<PokemonData | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await api.get<PokemonApiData>(url);
+
+        const { sprites } = response.data;
+
+        let img_url = '';
+        if (sprites.front_default) img_url = sprites.front_default;
+        else if (sprites.other['official-artwork'].front_default)
+          img_url = sprites.other['official-artwork'].front_default;
+        else if (sprites.other.dream_world.front_default)
+          img_url = sprites.other.dream_world.front_default;
+        else img_url = DefaultPokemonImg;
+
         const newCardData = {
           quantity: 1,
           price: response.data.base_experience,
           ...response.data,
           name: response.data.name.trim(),
+          img_url,
         };
 
         // uppercase first letter
@@ -110,17 +134,19 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
       newCart.push({
         id: cardData.id,
         name: cardData.name,
-        imgurl: cardData.sprites.front_default,
+        imgurl: cardData.img_url,
         unitaryPrice: cardData.base_experience,
         quantity: cardData.quantity,
         totalPrice: cardData.quantity * cardData.base_experience,
       });
     }
 
+    const storedContext = getStoredContext();
+
     setAppContext({
-      ...appContext,
+      ...storedContext,
       [typeId]: {
-        ...appContext[typeId],
+        ...storedContext[typeId],
         cart: newCart,
       },
     });
@@ -130,7 +156,7 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
       quantity: 1,
       price: cardData.base_experience,
     });
-  }, [appContext, cardData, setAppContext, typeId]);
+  }, [appContext, cardData, setAppContext, typeId, getStoredContext]);
 
   const handleQuantityChange = useCallback(
     (newVal: number) => {
@@ -180,7 +206,7 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
     <CardContainer>
       <div className="card-container">
         <div className="img-container">
-          <img src={cardData.sprites.front_default} alt={cardData.name} />
+          <img src={cardData.img_url} alt={cardData.name} />
         </div>
         <div className="name-container">{cardData.name}</div>
         <div className="price-container">

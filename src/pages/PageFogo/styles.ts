@@ -20,6 +20,51 @@ export const PokemonSection = styled.section`
     flex-wrap: wrap;
     justify-content: space-between;
   }
+
+  > p {
+    padding-bottom: 60px;
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin-left: 6px;
+      padding: 9px 21px;
+      font-size: 1.7rem;
+      border-radius: 5px;
+      background-color: #ff3838;
+      color: white;
+      border-color: 2px solid transparent;
+      box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      justify-content: center;
+
+      &:disabled,
+      &:disabled:hover,
+      &:disabled:focus {
+        background-color: #f7f7f7;
+        border: 2px solid transparent;
+        color: transparent;
+        box-shadow: unset;
+        transition: unset;
+        cursor: unset;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: #ff6a6a;
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
+      }
+
+      svg {
+        margin-left: 4px;
+        height: 28px;
+        width: 28px;
+      }
+    }
+  }
 `;
 
 export const CartSection = styled.section`
