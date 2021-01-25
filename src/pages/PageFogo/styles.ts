@@ -14,11 +14,145 @@ export const PokemonSection = styled.section`
   margin-bottom: 15px;
   flex-grow: 1;
   padding-right: 15px;
+  position: relative;
 
   > div {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+  }
+
+  > p {
+    padding-bottom: 60px;
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin-left: 6px;
+      padding: 9px 21px;
+      font-size: 1.7rem;
+      border-radius: 5px;
+      background-color: #ff3838;
+      color: white;
+      border-color: 2px solid transparent;
+      box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      justify-content: center;
+
+      &:disabled,
+      &:disabled:hover,
+      &:disabled:focus {
+        background-color: #f7f7f7;
+        border: 2px solid transparent;
+        color: transparent;
+        box-shadow: unset;
+        transition: unset;
+        cursor: unset;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: #ff6a6a;
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
+      }
+
+      svg {
+        margin-left: 4px;
+        height: 28px;
+        width: 28px;
+      }
+    }
+  }
+
+  > span {
+    display: flex;
+    justify-content: center;
+
+    span {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      background-color: white;
+      border-radius: 4px;
+      border: 2px solid #ffaeae;
+      margin: 0 -5px;
+      box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
+      color: #f95656;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+  }
+
+  .loader {
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    opacity: 0.8;
+  }
+  .loader:after,
+  .loader:before {
+    display: block;
+  }
+  .loader-pokeball:before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: calc(50% - 6px);
+    left: calc(50% - 6px);
+    margin: -50px 0 0 -50px;
+    background: linear-gradient(180deg, red 42%, #000 0, #000 58%, #fff 0);
+    background-repeat: no-repeat;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1;
+    animation: movePokeball 1s linear infinite both;
+    border: 7px solid black;
+  }
+  .loader-pokeball:after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    left: 50%;
+    margin: -12px 0 0 -12px;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 2;
+    animation: movePokeball 1s linear infinite both,
+      flashPokeball 0.5s infinite alternate;
+    border: 2px solid #000;
+    box-shadow: 0 0 0 5px #fff, 0 0 0 10px #000;
+  }
+  @keyframes movePokeball {
+    0% {
+      transform: translateX(0) rotate(0);
+    }
+    15% {
+      transform: translatex(-10px) rotate(-5deg);
+    }
+    30% {
+      transform: translateX(10px) rotate(5deg);
+    }
+    45% {
+      transform: translatex(0) rotate(0);
+    }
+  }
+  @keyframes flashPokeball {
+    0% {
+      background-color: #fff;
+    }
+    to {
+      background-color: #fd0;
+    }
   }
 `;
 
@@ -27,7 +161,6 @@ export const CartSection = styled.section`
   flex-direction: column;
   width: 300px;
   min-width: 300px;
-  /* border: 1px solid #ececec; */
   border: 1px solid #e4e4e4;
   background-color: #f7f7f7;
   padding: 15px;
@@ -42,7 +175,6 @@ export const CheckoutContainer = styled.div`
   background-color: white;
   border-radius: 4px;
   border: 2px solid #ffaeae;
-  /* border: 1px solid #d4d4d4; */
   margin: 0 -5px;
   box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
   position: sticky;
@@ -52,7 +184,6 @@ export const CheckoutContainer = styled.div`
   h3 {
     font-size: 1.8rem;
     margin-bottom: 8px;
-    /* border-bottom: 1px dashed #ffaeae; */
     border-bottom: 1px dashed #d6d6d6;
     padding-top: 6px;
     padding-bottom: 10px;
