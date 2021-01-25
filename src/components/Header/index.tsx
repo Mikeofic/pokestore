@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { AppContext } from '../../AppProvider';
 import { ReactComponent as PokeLupa } from '../../assets/pokelupa.svg';
 import TipTool from '../TipTool';
@@ -17,18 +17,28 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ typeId }) => {
   const location = useLocation();
-  const { appContext } = useContext(AppContext);
+  const history = useHistory();
+  const { appContext, searchTerms, setSearchTerms } = useContext(AppContext);
   const [showOrdersTipTool, setShowOrdersTipTool] = useState(false);
 
   const handleSubmit = useCallback(() => {
-    // retrieve pokemons from api
-  }, []);
+    if (location.pathname !== '/fogo') {
+      history.push('/fogo');
+    }
+  }, [history, location.pathname]);
+
+  const handleSearchChange = useCallback(
+    (newTerms: string) => {
+      setSearchTerms(newTerms.slice(0, 100));
+    },
+    [setSearchTerms],
+  );
 
   return (
     <>
       <HeaderContainer>
         <div className="container">
-          <Link to="/fogo" className="logo">
+          <Link to="/fogo" className="logo" onClick={() => setSearchTerms('')}>
             <img src={FogoLogo} alt="Poke Store" />
           </Link>
 
@@ -41,8 +51,11 @@ const Header: React.FC<HeaderProps> = ({ typeId }) => {
           >
             <input
               type=""
+              maxLength={100}
               name="search"
               placeholder="Qual pokémon você procura?"
+              value={searchTerms}
+              onChange={e => handleSearchChange(e.target.value)}
             />
             <button type="submit">
               <PokeLupa />

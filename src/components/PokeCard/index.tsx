@@ -35,9 +35,12 @@ interface PokerCardProps {
 }
 
 const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
-  const { appContext, setAppContext, getStoredContext } = useContext(
-    AppContext,
-  );
+  const {
+    appContext,
+    setAppContext,
+    getStoredContext,
+    setToastMessage,
+  } = useContext(AppContext);
   const [cardData, setCardData] = useState<PokemonData | null>(null);
 
   useEffect(() => {
@@ -68,10 +71,11 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
           newCardData.name.charAt(0).toUpperCase() + newCardData.name.slice(1);
         setCardData(newCardData);
       } catch (error) {
-        // TODO: show connection error
+        setToastMessage('Não foi possível buscar os dados da API!');
       }
     }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   const handlePlusClick = useCallback(() => {

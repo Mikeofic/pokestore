@@ -42,8 +42,6 @@ const CartItemContainer = styled.div`
       font-size: 1.8rem;
       margin-bottom: 5px;
       font-weight: 500;
-      /* border-bottom: 1px solid #e8e8e8;
-      padding-bottom: 5px; */
     }
 
     .price-container {

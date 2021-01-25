@@ -6,6 +6,10 @@ interface ContextData {
   appContext: ContextType;
   setAppContext(context: ContextType): void;
   getStoredContext(): ContextType;
+  searchTerms: string;
+  setSearchTerms(terms: string): void;
+  toastMessage: string;
+  setToastMessage(message: string): void;
 }
 
 export interface MyOrdersType {
@@ -63,6 +67,8 @@ const defaultContextType = {
 };
 
 const AppProvider: React.FC = ({ children }) => {
+  const [searchTerms, setSearchTerms] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
   const [appContext, changeAppContext] = useState(() => {
     const stored = localStorage.getItem('@pokestore:stored');
 
@@ -92,7 +98,15 @@ const AppProvider: React.FC = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ appContext, setAppContext, getStoredContext }}
+      value={{
+        appContext,
+        setAppContext,
+        getStoredContext,
+        searchTerms,
+        setSearchTerms,
+        toastMessage,
+        setToastMessage,
+      }}
     >
       {children}
     </AppContext.Provider>

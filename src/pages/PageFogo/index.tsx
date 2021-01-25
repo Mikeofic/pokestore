@@ -1,7 +1,13 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+  useRef,
+} from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { BiCart } from 'react-icons/bi';
-import { IoMdArrowRoundBack, IoIosArrowDown } from 'react-icons/io';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 import { FaAngleDoubleRight } from 'react-icons/fa';
 import { CgChevronDoubleDown } from 'react-icons/cg';
 import PokeCard from '../../components/PokeCard';
@@ -29,22 +35,52 @@ export interface PokemonType {
 }
 
 interface TypeData {
-  pokemon: Array<PokemonType>;
+  pokemon: PokemonType[];
 }
 
 const Page: React.FC = () => {
+  const searchTimeout = useRef<number | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [typeId] = useState(typeIds.fogo);
   const location = useLocation();
   const history = useHistory();
-  const { appContext, setAppContext, getStoredContext } = useContext(
-    AppContext,
-  );
+  const {
+    appContext,
+    setAppContext,
+    getStoredContext,
+    searchTerms,
+    setToastMessage,
+  } = useContext(AppContext);
   const [pokemonToShow, setPokemonToShow] = useState(0);
+  const [searchedPokemon, setSearchedPokemon] = useState<PokemonType[]>([]);
   const [currentCheckout, setCurretCheckout] = useState({
     totalQuantity: 0,
     totalPrice: 0,
     cashback: 0,
   });
+
+  const runPokemonSeach = useCallback(
+    (pokemon: PokemonType[]) => {
+      if (!searchTerms.trim()) {
+        setSearchedPokemon(pokemon);
+        setPokemonToShow(pokemon.length >= 30 ? 30 : pokemon.length);
+      } else {
+        const newSearchedPokemon = pokemon.filter(poke =>
+          poke.pokemon.name
+            .toLowerCase()
+            .includes(searchTerms.trim().toLowerCase()),
+        );
+        setSearchedPokemon(newSearchedPokemon);
+        setPokemonToShow(
+          newSearchedPokemon.length >= 30 ? 30 : newSearchedPokemon.length,
+        );
+      }
+      setShowLoading(false);
+      setHasLoaded(true);
+    },
+    [searchTerms],
+  );
 
   useEffect(() => {
     document.title = 'Poke Store Fogo - Temos que pegar!';
@@ -64,14 +100,44 @@ const Page: React.FC = () => {
           },
         });
 
-        setPokemonToShow(pokemon.length >= 30 ? 30 : pokemon.length);
+        if (searchTimeout.current !== null) {
+          clearTimeout(searchTimeout.current);
+        }
+
+        if (!searchTerms.trim()) {
+          setSearchedPokemon(pokemon);
+          setPokemonToShow(pokemon.length >= 30 ? 30 : pokemon.length);
+          setShowLoading(false);
+          setHasLoaded(true);
+        } else {
+          runPokemonSeach(pokemon);
+        }
       } catch (error) {
-        // TODO: show connection error
+        setToastMessage('Não foi possível buscar os dados da API!');
       }
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typeId]); // só é necessário atualizar quando o typeId mudar
+  }, [typeId]);
+
+  useEffect(() => {
+    if (searchTimeout.current !== null) {
+      clearTimeout(searchTimeout.current);
+    }
+    setPokemonToShow(0);
+    setShowLoading(true);
+
+    searchTimeout.current = setTimeout(() => {
+      runPokemonSeach(appContext[typeId].pokemon);
+    }, 800);
+
+    return () => {
+      if (searchTimeout.current !== null) {
+        clearTimeout(searchTimeout.current);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerms]);
 
   const handleCloseModal = useCallback(() => {
     history.push(location.pathname);
@@ -130,7 +196,7 @@ const Page: React.FC = () => {
   }, [appContext, typeId, checkoutCart]);
 
   const handleLoadMore = useCallback(() => {
-    const pokemonLength = appContext[typeId].pokemon.length;
+    const pokemonLength = searchedPokemon.length;
     if (pokemonLength <= pokemonToShow) return;
 
     const newLimit = pokemonToShow + 30;
@@ -139,7 +205,7 @@ const Page: React.FC = () => {
         ? newLimit - (newLimit - pokemonLength)
         : newLimit,
     );
-  }, [appContext, pokemonToShow, typeId]);
+  }, [pokemonToShow, searchedPokemon.length]);
 
   return (
     <>
@@ -147,7 +213,7 @@ const Page: React.FC = () => {
       <PageContainer>
         <PokemonSection>
           <div>
-            {appContext[typeId].pokemon.map(
+            {searchedPokemon.map(
               (pokemon, index) =>
                 pokemonToShow > index && (
                   <PokeCard
@@ -158,14 +224,19 @@ const Page: React.FC = () => {
                 ),
             )}
           </div>
-          {pokemonToShow > 0 &&
-            appContext[typeId].pokemon.length > pokemonToShow && (
-              <p>
-                <button type="button" onClick={handleLoadMore}>
-                  Ver mais <CgChevronDoubleDown />
-                </button>
-              </p>
-            )}
+          {pokemonToShow > 0 && searchedPokemon.length > pokemonToShow && (
+            <p>
+              <button type="button" onClick={handleLoadMore}>
+                Ver mais <CgChevronDoubleDown />
+              </button>
+            </p>
+          )}
+          {showLoading && <div className="loader loader-pokeball" />}
+          {hasLoaded && searchedPokemon.length === 0 && !showLoading && (
+            <span className="not-found">
+              <span>Nenhum pokémon encontrado!</span>
+            </span>
+          )}
         </PokemonSection>
         <CartSection>
           <CheckoutContainer>
