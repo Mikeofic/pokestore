@@ -138,12 +138,20 @@ const CartItemContainer = styled.div`
       }
     }
 
-    @media (max-width: 1049px) {
+    @media (min-width: 768px) and (max-width: 1049px) {
       flex-direction: column;
 
       > button {
         margin-left: 0;
         margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      flex-direction: row;
+
+      > button {
+        padding: 12px 16px;
       }
     }
   }

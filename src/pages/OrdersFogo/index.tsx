@@ -4,11 +4,11 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import { CgChevronDoubleDown } from 'react-icons/cg';
 import Header from '../../components/Header';
 import PageContainer, { OrdersSection } from './styles';
-import { AppContext, typeIds } from '../../AppProvider';
+import { AppContext, typeIds, TypeNames } from '../../AppProvider';
 import OrderRow from '../../components/OrderRow';
 
-const Orders: React.FC = () => {
-  const [typeId] = useState(typeIds.fogo);
+const Orders: React.FC<TypeNames> = ({ typeName }) => {
+  const [typeId] = useState(typeIds[typeName]);
   const { appContext } = useContext(AppContext);
   const [ordersToShow, setOrdersToShow] = useState(0);
 
@@ -31,7 +31,7 @@ const Orders: React.FC = () => {
 
   return (
     <>
-      <Header typeId={typeId} />
+      <Header typeName={typeName} />
       <PageContainer>
         <OrdersSection>
           <h1

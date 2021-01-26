@@ -251,4 +251,10 @@ export default createGlobalStyle`
     -moz-appearance: textfield;
   }
 
+  @media (min-width: 768px) and (max-width: 1049px){
+    html {
+      font-size: 55%;
+    }
+  }
+
 `;

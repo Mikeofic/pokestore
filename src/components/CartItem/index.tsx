@@ -1,9 +1,9 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { FiMinus } from 'react-icons/fi';
 import { IoMdCloseCircle } from 'react-icons/io';
 import CartItemContainer from './styles';
-import { AppContext } from '../../AppProvider';
+import { AppContext, TypeNames, typeIds } from '../../AppProvider';
 
 export interface CartItemType {
   id: number;
@@ -14,15 +14,15 @@ export interface CartItemType {
   imgurl: string;
 }
 
-interface CartItemProps {
+interface CartItemProps extends TypeNames {
   data: CartItemType;
-  typeId: number;
 }
 
 const CartItem: React.FC<CartItemProps> = ({
   data: { id, name, quantity, totalPrice, imgurl },
-  typeId,
+  typeName,
 }) => {
+  const [typeId] = useState(typeIds[typeName]);
   const { appContext, setAppContext, getStoredContext } = useContext(
     AppContext,
   );

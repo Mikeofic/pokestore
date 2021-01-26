@@ -3,6 +3,14 @@ import styled from 'styled-components';
 const CardContainer = styled.div`
   display: flex;
   max-width: calc(33% - 10px);
+  @media (max-width: 767px) {
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) and (max-width: 1049px) {
+    max-width: calc(50% - 10px);
+  }
+
   width: 100%;
   flex-direction: column;
   align-items: center;
@@ -160,12 +168,20 @@ const CardContainer = styled.div`
       }
     }
 
-    @media (max-width: 1049px) {
+    @media (min-width: 768px) and (max-width: 1049px) {
       flex-direction: column;
 
       > button {
         margin-left: 0;
         margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      flex-direction: row;
+
+      > button {
+        padding: 12px 16px;
       }
     }
   }

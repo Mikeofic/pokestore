@@ -11,6 +11,10 @@ const OrderRowContainer = styled.div`
   border: 2px solid #ffaeae;
   box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
 
+  @media (max-width: 767px) {
+    padding: 10px;
+  }
+
   .title {
     padding: 10px;
     width: 100%;
@@ -23,15 +27,39 @@ const OrderRowContainer = styled.div`
     margin-bottom: 5px;
     margin-top: -10px;
 
+    @media (max-width: 767px) {
+      margin-left: -5px;
+      width: calc(100% + 10px);
+      margin-bottom: 5px;
+      margin-top: -5px;
+    }
+
     p {
       font-size: 1.4rem;
       font-weight: 400;
       line-height: 2.2rem;
 
+      @media (max-width: 767px) {
+        font-size: 1.3rem;
+        line-height: 1.8rem;
+      }
+
       span {
         font-size: 1.6rem;
         font-weight: 600;
         color: #fb0000;
+
+        @media (max-width: 767px) {
+          font-size: 1.5rem;
+        }
+      }
+
+      & + p {
+        @media (max-width: 767px) {
+          border-top: 1px dashed #ffc4c4;
+          margin-top: 6px;
+          padding-top: 6px;
+        }
       }
     }
   }
@@ -49,6 +77,13 @@ export const PokemonRow = styled.div`
     background-color: #ffdcdc;
     margin-right: 20px;
     padding: 4px;
+
+    @media (max-width: 767px) {
+      margin-right: 10px;
+      height: 96px;
+      width: 96px;
+      padding: 0;
+    }
   }
 
   & + div {
@@ -64,6 +99,9 @@ export const PokemonRow = styled.div`
     p {
       font-size: 1.3rem;
       font-weight: 400;
+      @media (max-width: 767px) {
+        font-size: 1.2rem;
+      }
 
       & + p {
         margin-top: 3px;
@@ -72,6 +110,10 @@ export const PokemonRow = styled.div`
       span {
         font-weight: 600;
         font-size: 1.4rem;
+
+        @media (max-width: 767px) {
+          font-size: 1.3rem;
+        }
       }
     }
     .name {
@@ -80,6 +122,10 @@ export const PokemonRow = styled.div`
       margin-bottom: 4px;
       padding-bottom: 4px;
       border-bottom: 1px solid #ffaeae;
+
+      @media (max-width: 767px) {
+        font-size: 1.8rem;
+      }
     }
   }
 `;

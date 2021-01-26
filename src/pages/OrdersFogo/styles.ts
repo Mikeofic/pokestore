@@ -25,6 +25,10 @@ export const OrdersSection = styled.section`
     padding: 10px 15px 0;
     border-radius: 0;
 
+    @media (max-width: 767px) {
+      padding-top: 3px;
+    }
+
     &.no-orders {
       margin-bottom: 15px;
       padding: 10px 15px;
@@ -39,6 +43,12 @@ export const OrdersSection = styled.section`
     font-weight: 300;
     font-size: 1.5rem;
     color: #6d6d6d;
+
+    @media (max-width: 767px) {
+      text-align: center;
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
 
     span {
       font-weight: 500;

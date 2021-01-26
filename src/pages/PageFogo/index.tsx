@@ -19,12 +19,13 @@ import PageContainer, {
   ModalContainer,
 } from './styles';
 import api from '../../services/api';
-import { AppContext, typeIds } from '../../AppProvider';
+import { AppContext, typeIds, TypeNames } from '../../AppProvider';
 import CartItem from '../../components/CartItem';
 import Modal from '../../components/Modal';
 import { ReactComponent as PokeballSVG } from '../../assets/pokeball.svg';
 import { ReactComponent as MoneySVG } from '../../assets/money.svg';
 import charmanderUrl from '../../assets/charmander.png';
+import SearchBar from '../../components/SearchBar';
 
 export interface PokemonType {
   pokemon: {
@@ -38,11 +39,11 @@ interface TypeData {
   pokemon: PokemonType[];
 }
 
-const Page: React.FC = () => {
+const Page: React.FC<TypeNames> = ({ typeName }) => {
   const searchTimeout = useRef<number | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [typeId] = useState(typeIds.fogo);
+  const [typeId] = useState(typeIds[typeName]);
   const location = useLocation();
   const history = useHistory();
   const {
@@ -209,9 +210,10 @@ const Page: React.FC = () => {
 
   return (
     <>
-      <Header typeId={typeId} />
+      <Header typeName={typeName} />
       <PageContainer>
         <PokemonSection>
+          <SearchBar typeName={typeName} />
           <div>
             {searchedPokemon.map(
               (pokemon, index) =>
@@ -219,7 +221,7 @@ const Page: React.FC = () => {
                   <PokeCard
                     key={pokemon.pokemon.url}
                     url={pokemon.pokemon.url}
-                    typeId={typeId}
+                    typeName={typeName}
                   />
                 ),
             )}
@@ -238,57 +240,78 @@ const Page: React.FC = () => {
             </span>
           )}
         </PokemonSection>
-        <CartSection>
-          <CheckoutContainer>
-            {appContext[typeId].cart.length > 0 ? (
-              (() => {
-                const totalQuantity = appContext[typeId].cart.reduce(
-                  (total, cartItem) => cartItem.quantity + total,
-                  0,
-                );
-                const totalPrice = appContext[typeId].cart.reduce(
-                  (total, cartItem) => cartItem.totalPrice + total,
-                  0,
-                );
-                const cashback = Math.ceil(totalPrice * 0.05);
+        <CartSection
+          className={location.hash.includes('#cart') ? 'show-on-mobile' : ''}
+        >
+          <div>
+            <CheckoutContainer>
+              {appContext[typeId].cart.length > 0 ? (
+                (() => {
+                  const totalQuantity = appContext[typeId].cart.reduce(
+                    (total, cartItem) => cartItem.quantity + total,
+                    0,
+                  );
+                  const totalPrice = appContext[typeId].cart.reduce(
+                    (total, cartItem) => cartItem.totalPrice + total,
+                    0,
+                  );
+                  const cashback = Math.ceil(totalPrice * 0.05);
 
-                return (
-                  <>
-                    <h3>Resumo do pedido:</h3>
-                    <div className="checkout-container">
-                      <div className="checkout-data">
-                        <div className="quantity">
-                          Qtd: <span>{totalQuantity} pokémon</span>
+                  return (
+                    <>
+                      <h3>Resumo do pedido:</h3>
+                      <div className="checkout-container">
+                        <div className="checkout-data">
+                          <div className="quantity">
+                            Qtd: <span>{totalQuantity} pokémon</span>
+                          </div>
+                          <div className="cashback">
+                            Cashback:{' '}
+                            <span>
+                              R$ {cashback} <span>(5%)</span>
+                            </span>
+                          </div>
+                          <div className="price">
+                            Total: <span>R$ {totalPrice}</span>
+                          </div>
                         </div>
-                        <div className="cashback">
-                          Cashback:{' '}
-                          <span>
-                            R$ {cashback} <span>(5%)</span>
-                          </span>
-                        </div>
-                        <div className="price">
-                          Total: <span>R$ {totalPrice}</span>
-                        </div>
+                        <Link to="#checkout" onClick={handleCheckoutClick}>
+                          Finalizar <FaAngleDoubleRight />
+                        </Link>
                       </div>
-                      <Link to="#checkout" onClick={handleCheckoutClick}>
-                        Finalizar <FaAngleDoubleRight />
-                      </Link>
-                    </div>
-                  </>
-                );
-              })()
-            ) : (
-              <div className="empty-cart">
-                <BiCart /> Carrinho Vazio
-              </div>
-            )}
-          </CheckoutContainer>
+                    </>
+                  );
+                })()
+              ) : (
+                <div className="empty-cart">
+                  <BiCart /> Carrinho Vazio
+                </div>
+              )}
+            </CheckoutContainer>
 
-          {appContext[typeId].cart.length > 0 &&
-            appContext[typeId].cart.map(itemData => (
-              <CartItem key={itemData.id} data={itemData} typeId={typeId} />
-            ))}
+            {appContext[typeId].cart.length > 0 &&
+              appContext[typeId].cart.map(itemData => (
+                <CartItem
+                  key={itemData.id}
+                  data={itemData}
+                  typeName={typeName}
+                />
+              ))}
+          </div>
         </CartSection>
+        <Link
+          className="cart-container"
+          to={location.hash.includes('#cart') ? location.pathname : '#cart'}
+        >
+          <BiCart />
+          {appContext[typeId].cart.length > 0 && (
+            <div>
+              {appContext[typeId].cart.length > 9
+                ? '9+'
+                : appContext[typeId].cart.length}
+            </div>
+          )}
+        </Link>
       </PageContainer>
       <Modal
         showModal={location.hash.includes('#checkout')}

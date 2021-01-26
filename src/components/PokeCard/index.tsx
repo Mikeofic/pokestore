@@ -3,7 +3,7 @@ import { HiPlus } from 'react-icons/hi';
 import { FiMinus, FiShoppingCart } from 'react-icons/fi';
 import CardContainer from './styles';
 import api from '../../services/api';
-import { AppContext } from '../../AppProvider';
+import { AppContext, typeIds, TypeNames } from '../../AppProvider';
 import DefaultPokemonImg from '../../assets/default_pokemon.png';
 
 interface PokemonApiData {
@@ -29,12 +29,12 @@ interface PokemonData extends PokemonApiData {
   img_url: string;
 }
 
-interface PokerCardProps {
+interface PokerCardProps extends TypeNames {
   url: string;
-  typeId: number;
 }
 
-const PokeCard: React.FC<PokerCardProps> = ({ url, typeId }) => {
+const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
+  const [typeId] = useState(typeIds[typeName]);
   const {
     appContext,
     setAppContext,

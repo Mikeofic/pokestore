@@ -31,7 +31,7 @@ const HeaderContainer = styled.header`
     }
 
     &:focus:after {
-      height: 2px;
+      height: 4px;
     }
   }
 
@@ -41,6 +41,7 @@ const HeaderContainer = styled.header`
     position: relative;
     height: 51px;
     width: 49px;
+    min-width: 49px;
     margin-left: 20px;
 
     &:after {
@@ -55,7 +56,7 @@ const HeaderContainer = styled.header`
     }
 
     &:focus:after {
-      height: 2px;
+      height: 4px;
     }
 
     .order-length {
@@ -80,53 +81,10 @@ const HeaderContainer = styled.header`
       height: 100%;
     }
   }
-`;
 
-export const SearchForm = styled.form`
-  display: flex;
-  margin: 0 auto;
-  max-width: 100%;
-  width: 600px;
-  height: 48px;
-  background-color: white;
-  border-radius: 3px;
-  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.2s;
-
-  &:focus-within {
-    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.15), 0 0 0 5px rgba(0, 0, 0, 0.2);
-  }
-
-  input {
-    flex-grow: 1;
-    padding-left: 10px;
-    font-size: 1.6rem;
-    font-weight: 300;
-
-    ::placeholder {
-      font-style: italic;
-      text-align: center;
-    }
-  }
-
-  button {
-    width: 50px;
-    border-radius: 3px;
-
-    &:hover,
-    &:focus {
-      background: #ffe8e8;
-    }
-
-    svg {
-      width: 32px;
-      height: 32px;
-      fill: #585858;
-    }
-
-    &:hover svg,
-    &:focus svg {
-      fill: #d40000;
+  @media (max-width: 767px) {
+    form {
+      display: none;
     }
   }
 `;
@@ -208,16 +166,39 @@ export const NavContainer = styled.nav`
   height: 46px;
   background-color: #ececec;
 
+  @media (max-width: 767px) {
+    border-bottom: 1px solid #dcdcdc;
+  }
+
   .container {
     ${widthContainer}
     display: flex;
-    align-items: center;
+    align-items: stretch;
 
     > span {
       font-weight: 600;
       font-size: 1.6rem;
       display: flex;
+      align-items: center;
       margin-right: 15px;
+      white-space: nowrap;
+    }
+
+    > div {
+      display: flex;
+      overflow: hidden;
+      overflow-x: auto;
+      align-items: center;
+      flex-grow: 1;
+
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
 
     a {
@@ -247,6 +228,7 @@ export const NavContainer = styled.nav`
         font-size: 1.4rem;
         margin-right: 15px;
         margin-left: 5px;
+        white-space: nowrap;
       }
     }
 

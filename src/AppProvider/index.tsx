@@ -28,8 +28,11 @@ export const typeIds = {
   eletrico: 13,
 };
 
+export interface TypeNames {
+  typeName: 'fogo' | 'agua' | 'grama' | 'eletrico';
+}
+
 interface ContextType {
-  // tipo fogo
   [key: number]: {
     pokemon: PokemonType[];
     cart: CartItemType[];
