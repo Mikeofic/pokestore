@@ -121,9 +121,14 @@ const CardContainer = styled.div`
           height: 20px;
         }
 
-        &:hover,
-        &:focus {
-          background-color: #f0f0f0;
+        &:hover {
+          background-color: #efefef;
+        }
+        &:focus-visible {
+          background-color: #efefef;
+        }
+        &:active {
+          background-color: #ffe2e2;
         }
       }
     }
@@ -142,7 +147,7 @@ const CardContainer = styled.div`
       border: 2px solid #ff8686;
       color: red;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: flex;
       align-items: center;
       font-size: 1.6rem;
@@ -160,8 +165,13 @@ const CardContainer = styled.div`
         cursor: unset;
       }
 
-      &:hover,
-      &:focus {
+      &:hover {
+        background-color: #ffe5e5;
+      }
+      &:focus-visible {
+        background-color: #ffe5e5;
+      }
+      &:active {
         background-color: #ff3838;
         border-color: transparent;
         color: white;

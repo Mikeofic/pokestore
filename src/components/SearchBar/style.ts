@@ -31,9 +31,14 @@ const SearchContainer = styled.form`
     width: 50px;
     border-radius: 3px;
 
-    &:hover,
-    &:focus {
+    &:hover {
       background: #ffe8e8;
+    }
+    &:focus-visible {
+      background: #ffe8e8;
+    }
+    &:active {
+      background: #ffbbbb;
     }
 
     svg {
@@ -44,7 +49,17 @@ const SearchContainer = styled.form`
 
     &:hover svg,
     &:focus svg {
-      fill: #d40000;
+      fill: #d42222;
+    }
+
+    &:hover svg {
+      fill: #d42222;
+    }
+    &:focus-visible svg {
+      fill: #c00000;
+    }
+    &:active svg {
+      fill: #c00000;
     }
   }
 `;

@@ -24,6 +24,34 @@ const PageContainer = styled.main`
     background: linear-gradient(90deg, rgb(193, 0, 0) 0%, rgb(255, 0, 0) 100%);
     box-shadow: 0 4px 10px -6px rgb(150, 0, 0);
 
+    &:hover {
+      background: linear-gradient(
+        90deg,
+        rgb(225, 0, 0) 0%,
+        rgb(255, 0, 0) 100%
+      );
+      box-shadow: 0 4px 10px -6px rgb(150, 0, 0),
+        0 0 0 3px rgba(113, 22, 22, 0.22);
+    }
+    &:focus-visible {
+      background: linear-gradient(
+        90deg,
+        rgb(225, 75, 75) 0%,
+        rgb(255, 75, 75) 100%
+      );
+      box-shadow: 0 4px 10px -6px rgb(150, 0, 0),
+        0 0 0 3px rgba(113, 22, 22, 0.22);
+    }
+    &:active {
+      background: linear-gradient(
+        90deg,
+        rgb(255, 75, 75) 0%,
+        rgb(255, 75, 75) 100%
+      );
+      box-shadow: 0 4px 10px -6px rgb(150, 0, 0),
+        0 0 0 3px rgba(113, 22, 22, 0.22);
+    }
+
     svg {
       width: 100%;
       height: 100%;
@@ -137,7 +165,7 @@ export const PokemonSection = styled.section`
       color: white;
       border-color: 2px solid transparent;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: flex;
       align-items: center;
       font-weight: 500;
@@ -154,12 +182,26 @@ export const PokemonSection = styled.section`
         cursor: unset;
       }
 
-      &:hover {
+      /* &:hover {
         background-color: #ff6a6a;
         box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
       }
 
       &:focus {
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+          0 0 0 3px rgba(255, 0, 0, 0.19);
+      } */
+
+      &:hover {
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+          0 0 0 3px rgba(255, 0, 0, 0.19);
+      }
+      &:focus-visible {
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+          0 0 0 3px rgba(255, 0, 0, 0.19);
+      }
+      &:active {
+        background-color: #ff6a6a;
         box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
           0 0 0 3px rgba(255, 0, 0, 0.19);
       }
@@ -424,7 +466,7 @@ export const CheckoutContainer = styled.div`
     color: white;
     border-color: 2px solid transparent;
     box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+    /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
     display: flex;
     align-items: center;
     font-weight: 500;
@@ -441,12 +483,26 @@ export const CheckoutContainer = styled.div`
       cursor: unset;
     }
 
-    &:hover {
+    /* &:hover {
       background-color: #ff6a6a;
       box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
     }
 
     &:focus {
+      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+        0 0 0 3px rgba(255, 0, 0, 0.19);
+    } */
+
+    &:hover {
+      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+        0 0 0 3px rgba(255, 0, 0, 0.19);
+    }
+    &:focus-visible {
+      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+        0 0 0 3px rgba(255, 0, 0, 0.19);
+    }
+    &:active {
+      background-color: #ff6a6a;
       box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
         0 0 0 3px rgba(255, 0, 0, 0.19);
     }
@@ -565,7 +621,7 @@ export const ModalContainer = styled.div`
     border: 2px solid #ff8686;
     color: red;
     box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+    /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
     display: flex;
     align-items: center;
     font-weight: 500;
@@ -582,8 +638,20 @@ export const ModalContainer = styled.div`
       cursor: unset;
     }
 
-    &:hover,
+    /* &:hover,
     &:focus {
+      background-color: #ff3838;
+      border-color: transparent;
+      color: white;
+    } */
+
+    &:hover {
+      background-color: #ffe5e5;
+    }
+    &:focus-visible {
+      background-color: #ffe5e5;
+    }
+    &:active {
       background-color: #ff3838;
       border-color: transparent;
       color: white;

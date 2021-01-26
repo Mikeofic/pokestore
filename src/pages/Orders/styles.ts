@@ -80,7 +80,7 @@ export const OrdersSection = styled.section`
       color: white;
       border-color: 2px solid transparent;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: flex;
       align-items: center;
       font-weight: 500;
@@ -98,11 +98,15 @@ export const OrdersSection = styled.section`
       }
 
       &:hover {
-        background-color: #ff6a6a;
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+          0 0 0 3px rgba(255, 0, 0, 0.19);
       }
-
-      &:focus {
+      &:focus-visible {
+        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
+          0 0 0 3px rgba(255, 0, 0, 0.19);
+      }
+      &:active {
+        background-color: #ff6a6a;
         box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
           0 0 0 3px rgba(255, 0, 0, 0.19);
       }
@@ -140,7 +144,7 @@ export const OrdersSection = styled.section`
       border: 2px solid #ff8686;
       color: red;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: inline-flex;
       align-items: center;
       font-weight: 500;
@@ -152,8 +156,13 @@ export const OrdersSection = styled.section`
         width: 20px;
       }
 
-      &:hover,
-      &:focus {
+      &:hover {
+        background-color: #ffe5e5;
+      }
+      &:focus-visible {
+        background-color: #ffe5e5;
+      }
+      &:active {
         background-color: #ff3838;
         border-color: transparent;
         color: white;

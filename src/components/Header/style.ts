@@ -216,7 +216,10 @@ export const NavContainer = styled.nav`
       border-radius: 100px;
 
       &:hover,
-      &:focus {
+      &:active {
+        background-color: white;
+      }
+      &:focus-visible {
         background-color: white;
       }
 
