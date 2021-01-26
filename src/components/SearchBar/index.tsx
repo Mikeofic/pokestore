@@ -1,26 +1,36 @@
 import React, { useCallback, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AppContext } from '../../AppProvider';
 import { TypeNames } from '../../services/interfaces';
 import { ReactComponent as PokeLupa } from '../../assets/pokelupa.svg';
 import SearchContainer from './style';
+import { AppContext } from '../../AppProvider';
 
 const SearchBar: React.FC<TypeNames> = ({ typeName }) => {
-  const location = useLocation();
+  const { searchBarTerms, setSearchBarTerms } = useContext(AppContext);
   const history = useHistory();
-  const { searchTerms, setSearchTerms } = useContext(AppContext);
+  const location = useLocation();
 
   const handleSubmit = useCallback(() => {
-    if (location.pathname !== `/${typeName}`) {
-      history.push(`/${typeName}`);
+    const query = new URLSearchParams(location.search).get('ps');
+    const browserQuery = query ? query.trim().toLowerCase() : '';
+    if (
+      (location.pathname !== `/${typeName}` &&
+        location.pathname !== `/${typeName}/`) ||
+      browserQuery !== searchBarTerms.trim().toLowerCase()
+    ) {
+      if (searchBarTerms.trim()) {
+        history.push(`/${typeName}/?ps=${searchBarTerms.trim()}`);
+      } else {
+        history.push(`/${typeName}`);
+      }
     }
-  }, [history, location.pathname, typeName]);
+  }, [history, typeName, searchBarTerms, location.pathname, location.search]);
 
   const handleSearchChange = useCallback(
-    (newTerms: string) => {
-      setSearchTerms(newTerms.slice(0, 100));
+    (terms: string) => {
+      setSearchBarTerms(terms.slice(0, 100));
     },
-    [setSearchTerms],
+    [setSearchBarTerms],
   );
 
   return (
@@ -34,9 +44,9 @@ const SearchBar: React.FC<TypeNames> = ({ typeName }) => {
       <input
         type=""
         maxLength={100}
-        name="search"
+        name="ps"
         placeholder="Qual pokémon você procura?"
-        value={searchTerms}
+        value={searchBarTerms}
         onChange={e => handleSearchChange(e.target.value)}
       />
       <button type="submit">

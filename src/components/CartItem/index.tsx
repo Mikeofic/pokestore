@@ -14,10 +14,10 @@ const CartItem: React.FC<CartItemProps> = ({
   data: { id, name, quantity, totalPrice, imgurl },
   typeName,
 }) => {
-  const [typeId] = useState(typeIds[typeName]);
   const { appContext, setAppContext, getStoredContext } = useContext(
     AppContext,
   );
+  const [typeId] = useState(typeIds[typeName]);
   const [itemQuantity, setItemQuantity] = useState(quantity.toString());
 
   const handlePlusClick = useCallback(() => {

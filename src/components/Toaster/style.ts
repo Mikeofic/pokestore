@@ -5,6 +5,8 @@ const ToastContainer = styled.div`
   display: flex;
   top: 20px;
   right: 20px;
+  width: 80vw;
+  max-width: 300px;
 
   @media (max-width: 767px) {
     top: 5px;
@@ -24,7 +26,7 @@ const ToastContainer = styled.div`
       : ''};
 
   > div {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.88);
     border-radius: 6px;
     box-shadow: 0 5px 10px -7px rgba(0, 0, 0, 1);
     text-align: center;
@@ -32,15 +34,15 @@ const ToastContainer = styled.div`
     padding: 16px;
     padding-right: 22px;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 500;
     display: flex;
     align-items: center;
+    line-height: 1.8rem;
 
     @media (max-width: 767px) {
       padding: 10px;
       padding-right: 16px;
-      font-size: 1rem;
     }
 
     &.show {
@@ -52,6 +54,8 @@ const ToastContainer = styled.div`
     }
 
     svg {
+      min-width: 24px;
+      min-height: 24px;
       width: 24px;
       height: 24px;
       color: #ff2e2e;

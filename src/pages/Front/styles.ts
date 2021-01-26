@@ -74,6 +74,27 @@ export const PokemonSection = styled.section`
     }
   }
 
+  > div.search {
+    justify-content: center;
+    margin-bottom: 15px;
+    font-size: 1.7rem;
+    font-weight: 300;
+
+    p {
+      padding: 7px 12px;
+      background-color: #f1f1f1;
+      border-radius: 4px;
+      color: #676767;
+      text-align: center;
+
+      span {
+        font-weight: 600;
+        font-size: 1.9rem;
+        color: #ff0000;
+      }
+    }
+  }
+
   > form {
     position: sticky;
     top: 0;

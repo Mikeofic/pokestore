@@ -15,11 +15,11 @@ const Modal: React.FC<ModalProps> = ({
   afterClosing,
   children,
 }) => {
+  const history = useHistory();
+  const location = useLocation();
   const [hasLoaded, setHasLoaded] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [scrollIsHidden, setScrollIsHidden] = useState(false);
-  const history = useHistory();
-  const location = useLocation();
 
   useEffect(() => {
     if (showModal) {

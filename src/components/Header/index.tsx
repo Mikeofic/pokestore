@@ -13,15 +13,19 @@ import { ReactComponent as ShopBagSVG } from '../../assets/bagred.svg';
 import SearchBar from '../SearchBar';
 
 const Header: React.FC<TypeNames> = ({ typeName }) => {
+  const { appContext, setSearchBarTerms } = useContext(AppContext);
   const [typeId] = useState(typeIds[typeName]);
-  const { appContext, setSearchTerms } = useContext(AppContext);
   const [showOrdersTipTool, setShowOrdersTipTool] = useState(false);
 
   return (
     <>
       <HeaderContainer>
         <div className="container">
-          <Link to="/fogo" className="logo" onClick={() => setSearchTerms('')}>
+          <Link
+            to="/fogo"
+            className="logo"
+            onClick={() => setSearchBarTerms('')}
+          >
             <img src={FogoLogo} alt="Poké Store" />
           </Link>
 

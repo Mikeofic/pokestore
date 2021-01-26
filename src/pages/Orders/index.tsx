@@ -9,8 +9,8 @@ import { typeIds, TypeNames } from '../../services/interfaces';
 import OrderRow from '../../components/OrderRow';
 
 const Orders: React.FC<TypeNames> = ({ typeName }) => {
-  const [typeId] = useState(typeIds[typeName]);
   const { appContext } = useContext(AppContext);
+  const [typeId] = useState(typeIds[typeName]);
   const [ordersToShow, setOrdersToShow] = useState(0);
 
   useEffect(() => {

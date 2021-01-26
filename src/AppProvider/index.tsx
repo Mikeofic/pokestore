@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   MyOrdersType,
   CartItemType,
@@ -9,8 +10,8 @@ interface ContextData {
   appContext: ContextType;
   setAppContext(context: ContextType): void;
   getStoredContext(): ContextType;
-  searchTerms: string;
-  setSearchTerms(terms: string): void;
+  searchBarTerms: string;
+  setSearchBarTerms(terms: string): void;
   toastMessage: string;
   setToastMessage(message: string): void;
 }
@@ -53,7 +54,11 @@ const defaultContextType = {
 };
 
 const AppProvider: React.FC = ({ children }) => {
-  const [searchTerms, setSearchTerms] = useState('');
+  const location = useLocation();
+  const [searchBarTerms, setSearchBarTerms] = useState(() => {
+    const query = new URLSearchParams(location.search).get('ps');
+    return query ? query.trim().toLowerCase() : '';
+  });
   const [toastMessage, setToastMessage] = useState('');
   const [appContext, changeAppContext] = useState(() => {
     const stored = localStorage.getItem('@pokestore:stored');
@@ -88,8 +93,8 @@ const AppProvider: React.FC = ({ children }) => {
         appContext,
         setAppContext,
         getStoredContext,
-        searchTerms,
-        setSearchTerms,
+        searchBarTerms,
+        setSearchBarTerms,
         toastMessage,
         setToastMessage,
       }}

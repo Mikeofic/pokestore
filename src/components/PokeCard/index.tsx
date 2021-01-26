@@ -35,14 +35,14 @@ interface PokerCardProps extends TypeNames {
 }
 
 const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
-  const [itemQuantity, setItemQuantity] = useState('1');
-  const [typeId] = useState(typeIds[typeName]);
   const {
     appContext,
     setAppContext,
     getStoredContext,
     setToastMessage,
   } = useContext(AppContext);
+  const [itemQuantity, setItemQuantity] = useState('1');
+  const [typeId] = useState(typeIds[typeName]);
   const [cardData, setCardData] = useState<PokemonData | null>(null);
 
   useEffect(() => {
@@ -76,7 +76,9 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
           newCardData.name.charAt(0).toUpperCase() + newCardData.name.slice(1);
         setCardData(newCardData);
       } catch (error) {
-        setToastMessage('Não foi possível buscar os dados da API!');
+        setToastMessage(
+          'Não foi possível se conectar à API. Tente novamente mais tarde.',
+        );
       }
     }
     fetchData();

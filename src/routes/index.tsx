@@ -52,12 +52,7 @@ const Routes: React.FC = () => {
         exact
         render={props => <Orders {...props} typeName="fogo" />}
       />
-      <Route
-        path="/"
-        exact
-        render={props => <Front {...props} typeName="fogo" />}
-      />
-      <Route path="/" component={() => <Redirect to="/" />} />
+      <Route path="/" component={() => <Redirect to="/fogo" />} />
     </Switch>
   );
 };

@@ -33,19 +33,19 @@ interface TypeData {
 }
 
 const Page: React.FC<TypeNames> = ({ typeName }) => {
-  const searchTimeout = useRef<number | null>(null);
-  const [hasLoaded, setHasLoaded] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
-  const [typeId] = useState(typeIds[typeName]);
   const location = useLocation();
   const history = useHistory();
   const {
     appContext,
     setAppContext,
     getStoredContext,
-    searchTerms,
+    searchBarTerms,
     setToastMessage,
   } = useContext(AppContext);
+  const searchTimeout = useRef<number | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
+  const [typeId] = useState(typeIds[typeName]);
   const [pokemonToShow, setPokemonToShow] = useState(0);
   const [searchedPokemon, setSearchedPokemon] = useState<PokemonType[]>([]);
   const [currentCheckout, setCurretCheckout] = useState({
@@ -53,28 +53,6 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
     totalPrice: 0,
     cashback: 0,
   });
-
-  const runPokemonSeach = useCallback(
-    (pokemon: PokemonType[]) => {
-      if (!searchTerms.trim()) {
-        setSearchedPokemon(pokemon);
-        setPokemonToShow(pokemon.length >= 30 ? 30 : pokemon.length);
-      } else {
-        const newSearchedPokemon = pokemon.filter(poke =>
-          poke.pokemon.name
-            .toLowerCase()
-            .includes(searchTerms.trim().toLowerCase()),
-        );
-        setSearchedPokemon(newSearchedPokemon);
-        setPokemonToShow(
-          newSearchedPokemon.length >= 30 ? 30 : newSearchedPokemon.length,
-        );
-      }
-      setShowLoading(false);
-      setHasLoaded(true);
-    },
-    [searchTerms],
-  );
 
   useEffect(() => {
     document.title = 'Poké Store Fogo - Temos que pegar!';
@@ -93,26 +71,55 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
             pokemon,
           },
         });
-
-        if (searchTimeout.current !== null) {
-          clearTimeout(searchTimeout.current);
-        }
-
-        if (!searchTerms.trim()) {
-          setSearchedPokemon(pokemon);
-          setPokemonToShow(pokemon.length >= 30 ? 30 : pokemon.length);
-          setShowLoading(false);
-          setHasLoaded(true);
-        } else {
-          runPokemonSeach(pokemon);
-        }
+        runPokemonSearch(pokemon);
       } catch (error) {
-        setToastMessage('Não foi possível buscar os dados da API!');
+        setToastMessage(
+          'Não foi possível se conectar à API. Tente novamente mais tarde.',
+        );
       }
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typeId]);
+
+  const runPokemonSearch = useCallback(
+    (allPokemon: PokemonType[] | null = null, pushHistory = false) => {
+      if (searchTimeout.current !== null) {
+        clearTimeout(searchTimeout.current);
+      }
+
+      const storedPokemon =
+        allPokemon !== null ? allPokemon : appContext[typeId].pokemon;
+
+      const query = new URLSearchParams(location.search).get('ps');
+      const searchedTerms = query ? query.trim().toLowerCase() : '';
+
+      if (!searchedTerms.trim()) {
+        setSearchedPokemon(storedPokemon);
+        setPokemonToShow(
+          storedPokemon.length >= 30 ? 30 : storedPokemon.length,
+        );
+      } else {
+        const newSearchedPokemon = storedPokemon.filter(pokemon =>
+          pokemon.pokemon.name.toLowerCase().includes(searchedTerms),
+        );
+        setSearchedPokemon(newSearchedPokemon);
+        setPokemonToShow(
+          newSearchedPokemon.length >= 30 ? 30 : newSearchedPokemon.length,
+        );
+      }
+      setShowLoading(false);
+      setHasLoaded(true);
+      if (pushHistory) {
+        if (searchBarTerms.trim()) {
+          history.push(`/${typeName}/?ps=${searchBarTerms.trim()}`);
+        } else {
+          history.push(`/${typeName}`);
+        }
+      }
+    },
+    [appContext, location.search, typeId, history, searchBarTerms, typeName],
+  );
 
   useEffect(() => {
     if (searchTimeout.current !== null) {
@@ -122,16 +129,11 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
     setShowLoading(true);
 
     searchTimeout.current = setTimeout(() => {
-      runPokemonSeach(appContext[typeId].pokemon);
+      runPokemonSearch(null, true);
     }, 800);
 
-    return () => {
-      if (searchTimeout.current !== null) {
-        clearTimeout(searchTimeout.current);
-      }
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerms]);
+  }, [searchBarTerms]);
 
   const handleCloseModal = useCallback(() => {
     history.push(location.pathname);
@@ -202,11 +204,8 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
   }, [pokemonToShow, searchedPokemon.length]);
 
   useEffect(() => {
-    const psQuery = new URLSearchParams(location.search).get('ps');
-    if (psQuery !== null) {
-      // const searchQuery = psQuery.trim().toLowerCase();
-      // TODO
-    }
+    runPokemonSearch(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
   useEffect(() => {
@@ -217,11 +216,17 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
     }
   }, [location.hash]);
 
-  // voltar com o scroll normal sempre que sair da Front Page
+  /**
+   * Run when component will unmount
+   */
   useEffect(() => {
     return () => {
       document.body.style.overflow = '';
       document.body.classList.remove('no-scroll-on-mobile');
+
+      if (searchTimeout.current !== null) {
+        clearTimeout(searchTimeout.current);
+      }
     };
   }, []);
 
@@ -231,6 +236,26 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
       <PageContainer>
         <PokemonSection>
           <SearchBar typeName={typeName} />
+          {(() => {
+            const query = new URLSearchParams(location.search).get('ps');
+            const browserQuery = query ? query.trim().toLowerCase() : '';
+
+            if (pokemonToShow > 0 && !!browserQuery) {
+              return (
+                <div className="search">
+                  <p>
+                    Resultados para{' '}
+                    <span>
+                      {browserQuery === searchBarTerms.trim().toLowerCase()
+                        ? searchBarTerms.trim()
+                        : browserQuery}
+                    </span>
+                  </p>
+                </div>
+              );
+            }
+            return false;
+          })()}
           <div>
             {searchedPokemon.map(
               (pokemon, index) =>
@@ -250,7 +275,8 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
               </button>
             </p>
           )}
-          {showLoading && <div className="loader loader-pokeball" />}
+          {((appContext[typeId].pokemon.length === 0 && !showLoading) ||
+            showLoading) && <div className="loader loader-pokeball" />}
           {appContext[typeId].pokemon.length > 0 &&
             hasLoaded &&
             searchedPokemon.length === 0 &&

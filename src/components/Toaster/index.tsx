@@ -5,10 +5,10 @@ import ToasterContainer from './style';
 
 const Toaster: React.FC = () => {
   const { toastMessage, setToastMessage } = useContext(AppContext);
-  const [show, setShow] = useState(false);
-  const [showContent, setShowContent] = useState(false);
   const showTimeout = useRef<number | null>(null);
   const showContentTimeout = useRef<number | null>(null);
+  const [show, setShow] = useState(false);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (show) {
