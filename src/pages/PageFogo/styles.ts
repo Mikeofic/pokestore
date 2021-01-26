@@ -477,9 +477,10 @@ export const ModalContainer = styled.div`
     z-index: 1;
     bottom: -1px;
     left: -1px;
-    width: 150px;
-    height: 193px;
-    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    object-position: left bottom;
 
     @media (max-width: 767px) {
       display: none;

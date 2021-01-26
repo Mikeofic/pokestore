@@ -25,7 +25,7 @@ const CartItemContainer = styled.div`
     img {
       width: 70px;
       height: 70px;
-      object-fit: cover;
+      object-fit: contain;
       background-color: #ffe3e3;
       border-radius: 12px;
     }

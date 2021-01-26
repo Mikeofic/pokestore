@@ -19,13 +19,13 @@ const HeaderContainer = styled.header`
     margin-right: 20px;
     position: relative;
 
-    width: 133px;
+    width: 139px;
     height: 93px;
 
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     &:after {
@@ -48,8 +48,8 @@ const HeaderContainer = styled.header`
     display: flex;
     color: white;
     position: relative;
-    height: 51px;
-    width: 49px;
+    height: 56px;
+    width: 55px;
     min-width: 49px;
     margin-left: 20px;
 
@@ -115,7 +115,7 @@ export const CartContainer = styled.button`
       position: absolute;
       width: 30px;
       height: 40px;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     > img:nth-child(1) {

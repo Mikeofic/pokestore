@@ -39,7 +39,7 @@ const CardContainer = styled.div`
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       background-color: #ffd9d9;
       border-radius: 12px;
     }
@@ -65,6 +65,9 @@ const CardContainer = styled.div`
     border-top-color: transparent;
   }
 
+  .name-container {
+    text-align: center;
+  }
   .name-container,
   .price-container {
     margin-bottom: 7px;
