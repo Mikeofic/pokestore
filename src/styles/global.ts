@@ -251,9 +251,15 @@ export default createGlobalStyle`
     -moz-appearance: textfield;
   }
 
-  @media (min-width: 768px) and (max-width: 1049px){
+  @media (min-width: 768px) and (max-width: 1149px){
     html {
       font-size: 55%;
+    }
+  }
+
+  body.no-scroll-on-mobile{
+    @media(max-width: 767px){
+      overflow: hidden;
     }
   }
 

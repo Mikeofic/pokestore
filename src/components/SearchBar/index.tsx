@@ -1,6 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AppContext, TypeNames } from '../../AppProvider';
+import { AppContext } from '../../AppProvider';
+import { TypeNames } from '../../services/interfaces';
 import { ReactComponent as PokeLupa } from '../../assets/pokelupa.svg';
 import SearchContainer from './style';
 

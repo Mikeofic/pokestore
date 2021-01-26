@@ -1,6 +1,6 @@
 import React from 'react';
 import OrderRowContainer, { PokemonRow } from './styles';
-import { MyOrdersType } from '../../AppProvider';
+import { MyOrdersType } from '../../services/interfaces';
 import { timeConverter } from '../../services/scripts';
 
 interface OrderRowProps {

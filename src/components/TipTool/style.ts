@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
+export interface TipToolProps {
+  align?: 'right' | 'left' | 'center';
+}
+
 const alignment = {
   right: `right: 0;`,
   left: `left: 0;`,
   center: `left: 50%;
   transform: translateX(-50%);`,
 };
-
-export interface TipToolProps {
-  align?: 'right' | 'left' | 'center';
-}
 
 const TipToolContainer = styled.div<TipToolProps>`
   position: absolute;

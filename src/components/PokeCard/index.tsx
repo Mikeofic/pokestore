@@ -3,7 +3,8 @@ import { HiPlus } from 'react-icons/hi';
 import { FiMinus, FiShoppingCart } from 'react-icons/fi';
 import CardContainer from './styles';
 import api from '../../services/api';
-import { AppContext, typeIds, TypeNames } from '../../AppProvider';
+import { AppContext } from '../../AppProvider';
+import { typeIds, TypeNames } from '../../services/interfaces';
 import DefaultPokemonImg from '../../assets/default_pokemon.png';
 
 interface PokemonApiData {
@@ -34,6 +35,7 @@ interface PokerCardProps extends TypeNames {
 }
 
 const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
+  const [itemQuantity, setItemQuantity] = useState('1');
   const [typeId] = useState(typeIds[typeName]);
   const {
     appContext,
@@ -100,6 +102,8 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
       quantity,
       price: cardData.base_experience * quantity,
     });
+
+    setItemQuantity(quantity.toString());
   }, [cardData]);
 
   const handleMinusClick = useCallback(() => {
@@ -121,6 +125,8 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
       quantity,
       price: cardData.base_experience * quantity,
     });
+
+    setItemQuantity(quantity.toString());
   }, [cardData]);
 
   const handleAddToCart = useCallback(() => {
@@ -163,20 +169,24 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
       quantity: 1,
       price: cardData.base_experience,
     });
+
+    setItemQuantity('1');
   }, [appContext, cardData, setAppContext, typeId, getStoredContext]);
 
   const handleQuantityChange = useCallback(
-    (newVal: number) => {
+    (newVal: string) => {
       if (!cardData) return;
 
-      let quantity = newVal;
-      if (newVal > 99) {
+      const newIntVal = parseInt(newVal, 10);
+
+      let quantity = newIntVal;
+      if (newIntVal > 99) {
         quantity = 99;
-      } else if (newVal < 1) {
+      } else if (newIntVal < 1) {
         quantity = 1;
       }
 
-      if (Number.isNaN(newVal) || Number.isNaN(quantity)) {
+      if (Number.isNaN(newIntVal) || Number.isNaN(quantity)) {
         quantity = 1;
       }
 
@@ -185,6 +195,8 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
         quantity,
         price: cardData.base_experience * quantity,
       });
+
+      setItemQuantity(newVal.trim() === '' ? '' : quantity.toString());
     },
 
     [cardData],
@@ -237,8 +249,13 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
               min={1}
               max={99}
               step={1}
-              value={cardData.quantity}
-              onChange={e => handleQuantityChange(parseInt(e.target.value, 10))}
+              value={itemQuantity}
+              onChange={e => handleQuantityChange(e.target.value)}
+              onBlur={() => {
+                if (!itemQuantity.trim()) {
+                  setItemQuantity('1');
+                }
+              }}
             />
           </form>
           <button type="button" onClick={handlePlusClick}>

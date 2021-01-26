@@ -19,21 +19,14 @@ import PageContainer, {
   ModalContainer,
 } from './styles';
 import api from '../../services/api';
-import { AppContext, typeIds, TypeNames } from '../../AppProvider';
+import { AppContext } from '../../AppProvider';
+import { typeIds, TypeNames, PokemonType } from '../../services/interfaces';
 import CartItem from '../../components/CartItem';
 import Modal from '../../components/Modal';
 import { ReactComponent as PokeballSVG } from '../../assets/pokeball.svg';
 import { ReactComponent as MoneySVG } from '../../assets/money.svg';
 import charmanderUrl from '../../assets/charmander.png';
 import SearchBar from '../../components/SearchBar';
-
-export interface PokemonType {
-  pokemon: {
-    name: string;
-    url: string;
-  };
-  slot: number;
-}
 
 interface TypeData {
   pokemon: PokemonType[];
@@ -208,6 +201,30 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
     );
   }, [pokemonToShow, searchedPokemon.length]);
 
+  useEffect(() => {
+    const psQuery = new URLSearchParams(location.search).get('ps');
+    if (psQuery !== null) {
+      // const searchQuery = psQuery.trim().toLowerCase();
+      // TODO
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (location.hash.includes('cart')) {
+      document.body.classList.add('no-scroll-on-mobile');
+    } else {
+      document.body.classList.remove('no-scroll-on-mobile');
+    }
+  }, [location.hash]);
+
+  // voltar com o scroll normal sempre que sair da Front Page
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+      document.body.classList.remove('no-scroll-on-mobile');
+    };
+  }, []);
+
   return (
     <>
       <Header typeName={typeName} />
@@ -234,11 +251,14 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
             </p>
           )}
           {showLoading && <div className="loader loader-pokeball" />}
-          {hasLoaded && searchedPokemon.length === 0 && !showLoading && (
-            <span className="not-found">
-              <span>Nenhum pokémon encontrado!</span>
-            </span>
-          )}
+          {appContext[typeId].pokemon.length > 0 &&
+            hasLoaded &&
+            searchedPokemon.length === 0 &&
+            !showLoading && (
+              <span className="not-found">
+                <span>Nenhum pokémon encontrado!</span>
+              </span>
+            )}
         </PokemonSection>
         <CartSection
           className={location.hash.includes('#cart') ? 'show-on-mobile' : ''}

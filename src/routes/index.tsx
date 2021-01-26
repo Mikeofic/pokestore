@@ -1,9 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import PageFogo from '../pages/PageFogo';
-import OrdersFogo from '../pages/OrdersFogo';
-
-const RedirectRoute: React.FC = () => <Redirect to="/" />;
+import Front from '../pages/Front';
+import Orders from '../pages/Orders';
 
 const Routes: React.FC = () => {
   return (
@@ -11,49 +9,55 @@ const Routes: React.FC = () => {
       <Route
         path="/eletrico"
         exact
-        render={props => <PageFogo {...props} typeName="fogo" />}
+        render={props => <Front {...props} typeName="eletrico" />}
       />
       <Route
         path="/eletrico/orders"
         exact
-        render={props => <OrdersFogo {...props} typeName="fogo" />}
+        render={props => <Orders {...props} typeName="eletrico" />}
       />
+      <Route path="/eletrico/" component={() => <Redirect to="/eletrico" />} />
+
       <Route
         path="/grama"
         exact
-        render={props => <PageFogo {...props} typeName="fogo" />}
+        render={props => <Front {...props} typeName="grama" />}
       />
       <Route
         path="/grama/orders"
         exact
-        render={props => <OrdersFogo {...props} typeName="fogo" />}
+        render={props => <Orders {...props} typeName="grama" />}
       />
+      <Route path="/grama/" component={() => <Redirect to="/grama" />} />
+
       <Route
         path="/agua"
         exact
-        render={props => <PageFogo {...props} typeName="fogo" />}
+        render={props => <Front {...props} typeName="agua" />}
       />
       <Route
         path="/agua/orders"
         exact
-        render={props => <OrdersFogo {...props} typeName="fogo" />}
+        render={props => <Orders {...props} typeName="agua" />}
       />
+      <Route path="/agua/" component={() => <Redirect to="/agua" />} />
+
       <Route
         path="/fogo"
         exact
-        render={props => <PageFogo {...props} typeName="fogo" />}
+        render={props => <Front {...props} typeName="fogo" />}
       />
       <Route
         path="/fogo/orders"
         exact
-        render={props => <OrdersFogo {...props} typeName="fogo" />}
+        render={props => <Orders {...props} typeName="fogo" />}
       />
       <Route
         path="/"
         exact
-        render={props => <PageFogo {...props} typeName="fogo" />}
+        render={props => <Front {...props} typeName="fogo" />}
       />
-      <Route path="/" component={RedirectRoute} />
+      <Route path="/" component={() => <Redirect to="/" />} />
     </Switch>
   );
 };

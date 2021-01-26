@@ -3,16 +3,8 @@ import { HiPlus } from 'react-icons/hi';
 import { FiMinus } from 'react-icons/fi';
 import { IoMdCloseCircle } from 'react-icons/io';
 import CartItemContainer from './styles';
-import { AppContext, TypeNames, typeIds } from '../../AppProvider';
-
-export interface CartItemType {
-  id: number;
-  name: string;
-  quantity: number;
-  unitaryPrice: number;
-  totalPrice: number;
-  imgurl: string;
-}
+import { AppContext } from '../../AppProvider';
+import { typeIds, TypeNames, CartItemType } from '../../services/interfaces';
 
 interface CartItemProps extends TypeNames {
   data: CartItemType;
@@ -26,6 +18,7 @@ const CartItem: React.FC<CartItemProps> = ({
   const { appContext, setAppContext, getStoredContext } = useContext(
     AppContext,
   );
+  const [itemQuantity, setItemQuantity] = useState(quantity.toString());
 
   const handlePlusClick = useCallback(() => {
     let newQuantity = quantity + 1;
@@ -48,6 +41,8 @@ const CartItem: React.FC<CartItemProps> = ({
       quantity: newQuantity,
       totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
     };
+
+    setItemQuantity(newQuantity.toString());
 
     const storedContext = getStoredContext();
 
@@ -82,6 +77,8 @@ const CartItem: React.FC<CartItemProps> = ({
       totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
     };
 
+    setItemQuantity(newQuantity.toString());
+
     const storedContext = getStoredContext();
 
     setAppContext({
@@ -94,8 +91,10 @@ const CartItem: React.FC<CartItemProps> = ({
   }, [appContext, id, setAppContext, quantity, typeId, getStoredContext]);
 
   const handleQuantityChange = useCallback(
-    (newVal: number) => {
-      let newQuantity = newVal;
+    (newVal: string) => {
+      const newIntVal = parseInt(newVal, 10);
+
+      let newQuantity = newIntVal;
 
       if (newQuantity > 999) {
         newQuantity = 999;
@@ -103,7 +102,7 @@ const CartItem: React.FC<CartItemProps> = ({
         newQuantity = 1;
       }
 
-      if (Number.isNaN(newVal) || Number.isNaN(newQuantity)) {
+      if (Number.isNaN(newIntVal) || Number.isNaN(newQuantity)) {
         newQuantity = 1;
       }
 
@@ -115,6 +114,8 @@ const CartItem: React.FC<CartItemProps> = ({
         quantity: newQuantity,
         totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
       };
+
+      setItemQuantity(newVal.trim() === '' ? '' : newQuantity.toString());
 
       const storedContext = getStoredContext();
 
@@ -170,8 +171,13 @@ const CartItem: React.FC<CartItemProps> = ({
               min={1}
               max={999}
               step={1}
-              value={quantity}
-              onChange={e => handleQuantityChange(parseInt(e.target.value, 10))}
+              value={itemQuantity}
+              onChange={e => handleQuantityChange(e.target.value)}
+              onBlur={() => {
+                if (!itemQuantity.trim()) {
+                  setItemQuantity('1');
+                }
+              }}
             />
           </form>
           <button type="button" onClick={handlePlusClick}>

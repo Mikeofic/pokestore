@@ -1,6 +1,9 @@
 import React, { createContext, useCallback, useState } from 'react';
-import { PokemonType } from '../pages/PageFogo';
-import { CartItemType } from '../components/CartItem';
+import {
+  MyOrdersType,
+  CartItemType,
+  PokemonType,
+} from '../services/interfaces';
 
 interface ContextData {
   appContext: ContextType;
@@ -10,26 +13,6 @@ interface ContextData {
   setSearchTerms(terms: string): void;
   toastMessage: string;
   setToastMessage(message: string): void;
-}
-
-export interface MyOrdersType {
-  id: string;
-  timestamp: number;
-  quantity: number;
-  totalPrice: number;
-  cashback: number;
-  order: CartItemType[];
-}
-
-export const typeIds = {
-  fogo: 10,
-  agua: 11,
-  grama: 12,
-  eletrico: 13,
-};
-
-export interface TypeNames {
-  typeName: 'fogo' | 'agua' | 'grama' | 'eletrico';
 }
 
 interface ContextType {

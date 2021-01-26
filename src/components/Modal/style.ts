@@ -5,6 +5,8 @@ const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
+  margin-bottom: -60px;
+  padding-bottom: 60px;
   z-index: 4;
   top: 0;
   right: 0;

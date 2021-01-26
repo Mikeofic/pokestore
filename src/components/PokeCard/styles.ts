@@ -8,7 +8,7 @@ const CardContainer = styled.div`
     max-width: calc(50% - 5px);
   }
 
-  @media (min-width: 768px) and (max-width: 1049px) {
+  @media (min-width: 768px) and (max-width: 1149px) {
     max-width: calc(50% - 10px);
   }
 
@@ -92,23 +92,25 @@ const CardContainer = styled.div`
     .quantity-container {
       flex-grow: 1;
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: space-around;
       border: 1px solid #e0e0e0;
       border-radius: 5px;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      padding: 5px;
+      padding: 3px;
 
       form input {
         font-size: 1.6rem;
         font-weight: 500;
-        width: 2.5ch;
+        width: 3.5ch;
         text-align: center;
+        height: 100%;
       }
 
       > button {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -172,7 +174,7 @@ const CardContainer = styled.div`
       }
     }
 
-    @media (max-width: 1049px) {
+    @media (max-width: 1149px) {
       flex-direction: column;
 
       > button {

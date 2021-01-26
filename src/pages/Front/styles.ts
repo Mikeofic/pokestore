@@ -185,7 +185,7 @@ export const PokemonSection = styled.section`
     overflow: hidden;
     opacity: 0.8;
 
-    @media (max-width: 1049px) {
+    @media (max-width: 1149px) {
       transform: scale(0.75);
     }
   }
@@ -266,7 +266,7 @@ export const CartSection = styled.section`
     flex-grow: 1;
   }
 
-  @media (min-width: 768px) and (max-width: 1049px) {
+  @media (min-width: 768px) and (max-width: 1149px) {
     width: 250px;
     min-width: 250px;
   }
@@ -283,6 +283,8 @@ export const CartSection = styled.section`
     border: 0;
     border-radius: 0;
     transition: top 0.5s ease-in-out;
+    margin-bottom: -60px;
+    padding-bottom: 60px;
 
     > div {
       display: flex;
@@ -291,6 +293,14 @@ export const CartSection = styled.section`
       overflow: hidden;
       overflow-y: auto;
       min-height: 100%;
+
+      &:after {
+        content: '';
+        width: 100%;
+        min-height: 89px;
+        max-height: 90px;
+        display: flex;
+      }
     }
 
     &.show-on-mobile {
@@ -427,7 +437,7 @@ export const CheckoutContainer = styled.div`
     }
   }
 
-  @media (max-width: 1049px) {
+  @media (max-width: 1149px) {
     flex-direction: column;
   }
 
@@ -490,22 +500,22 @@ export const ModalContainer = styled.div`
   h2 {
     font-size: 2.8rem;
     margin-bottom: 15px;
+    text-align: center;
   }
 
   > div {
-    display: flex;
+    display: block;
     padding: 20px 0;
     font-size: 1.6rem;
     align-items: baseline;
+    > svg {
+      margin-bottom: -3px;
+    }
 
     @media (max-width: 767px) {
       display: block;
       text-align: center;
       line-height: 2.2rem;
-
-      > svg {
-        margin-bottom: -2px;
-      }
     }
 
     & + div {
@@ -516,7 +526,6 @@ export const ModalContainer = styled.div`
       font-weight: 600;
       font-size: 1.7rem;
       color: red;
-      margin: 0 5px;
     }
 
     > svg {

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { AppContext, typeIds, TypeNames } from '../../AppProvider';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../../AppProvider';
+import { typeIds, TypeNames } from '../../services/interfaces';
 import TipTool from '../TipTool';
 import HeaderContainer, { NavContainer } from './style';
 import FogoLogo from '../../assets/header_fogo.png';
@@ -13,7 +14,6 @@ import SearchBar from '../SearchBar';
 
 const Header: React.FC<TypeNames> = ({ typeName }) => {
   const [typeId] = useState(typeIds[typeName]);
-  const location = useLocation();
   const { appContext, setSearchTerms } = useContext(AppContext);
   const [showOrdersTipTool, setShowOrdersTipTool] = useState(false);
 
@@ -52,38 +52,25 @@ const Header: React.FC<TypeNames> = ({ typeName }) => {
         <div className="container">
           <span>Outras Lojas:</span>
           <div>
-            {!(
-              location.pathname === '/' ||
-              location.pathname === '/fogo' ||
-              location.pathname.startsWith('/fogo/')
-            ) && (
+            {typeName !== 'fogo' && (
               <Link to="/fogo" className="fogo">
                 <FogoSVG />
                 <span>Loja Fogo</span>
               </Link>
             )}
-            {!(
-              location.pathname === '/agua' ||
-              location.pathname.startsWith('/agua/')
-            ) && (
+            {typeName !== 'agua' && (
               <Link to="/agua" className="agua">
                 <AguaSVG />
                 <span>Loja Água</span>
               </Link>
             )}
-            {!(
-              location.pathname === '/grama' ||
-              location.pathname.startsWith('/grama/')
-            ) && (
+            {typeName !== 'grama' && (
               <Link to="/grama" className="grama">
                 <GramaSVG />
                 <span>Loja Grama</span>
               </Link>
             )}
-            {!(
-              location.pathname === '/eletrico' ||
-              location.pathname.startsWith('/eletrico/')
-            ) && (
+            {typeName !== 'eletrico' && (
               <Link to="/eletrico" className="eletrico">
                 <EletricoSVG />
                 <span>Loja Elétrico</span>

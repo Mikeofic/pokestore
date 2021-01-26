@@ -4,7 +4,8 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import { CgChevronDoubleDown } from 'react-icons/cg';
 import Header from '../../components/Header';
 import PageContainer, { OrdersSection } from './styles';
-import { AppContext, typeIds, TypeNames } from '../../AppProvider';
+import { AppContext } from '../../AppProvider';
+import { typeIds, TypeNames } from '../../services/interfaces';
 import OrderRow from '../../components/OrderRow';
 
 const Orders: React.FC<TypeNames> = ({ typeName }) => {

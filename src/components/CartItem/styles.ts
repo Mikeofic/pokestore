@@ -62,25 +62,26 @@ const CartItemContainer = styled.div`
 
     .quantity-container {
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: space-around;
       border: 1px solid #e0e0e0;
       border-radius: 5px;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      padding: 5px;
+      padding: 3px;
       flex-grow: 1;
       background-color: white;
 
       form input {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         font-weight: 500;
-        width: 3.5ch;
+        width: 4.5ch;
         text-align: center;
+        height: 100%;
       }
 
       > button {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -138,7 +139,7 @@ const CartItemContainer = styled.div`
       }
     }
 
-    @media (min-width: 768px) and (max-width: 1049px) {
+    @media (min-width: 768px) and (max-width: 1149px) {
       flex-direction: column;
 
       > button {
