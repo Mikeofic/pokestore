@@ -19,6 +19,15 @@ const HeaderContainer = styled.header`
     margin-right: 20px;
     position: relative;
 
+    width: 133px;
+    height: 93px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     &:after {
       content: '';
       position: absolute;

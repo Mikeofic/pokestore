@@ -21,13 +21,13 @@ const PageContainer = styled.main`
     align-items: center;
     justify-content: center;
     padding: 14px;
-    background-color: #ffe7e7;
-    border-bottom: 2px solid #ffaeae;
+    background: linear-gradient(90deg, rgb(193, 0, 0) 0%, rgb(255, 0, 0) 100%);
+    box-shadow: 0 4px 10px -6px rgb(150, 0, 0);
 
     svg {
       width: 100%;
       height: 100%;
-      color: red;
+      color: white;
     }
 
     > div {
@@ -38,14 +38,14 @@ const PageContainer = styled.main`
       width: 27px;
       height: 27px;
       transform: translate(-35%, -35%);
-      background: #d05050;
+      background-color: #ff0000;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
       font-weight: 500;
-      box-shadow: 0 4px 10px -6px rgb(150 0 0);
+      box-shadow: 0 4px 10px -6px black;
     }
   }
 `;
@@ -85,14 +85,14 @@ export const PokemonSection = styled.section`
     border-radius: 0;
     padding: 5px;
     height: 58px;
-    box-shadow: 0 8px 8px -10px rgb(0 0 0 / 50%);
+    box-shadow: 0 8px 8px -10px rgba(0, 0, 0, 0.5);
 
     svg {
       fill: #f74c5b;
     }
 
     &:focus-within {
-      box-shadow: 0 8px 8px -10px rgb(0 0 0 / 50%);
+      box-shadow: 0 8px 8px -10px rgba(0, 0, 0, 0.5);
     }
   }
 
@@ -175,8 +175,13 @@ export const PokemonSection = styled.section`
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     left: 0;
-    top: 0;
+    top: 20px;
     overflow: hidden;
     opacity: 0.8;
 
@@ -472,6 +477,9 @@ export const ModalContainer = styled.div`
     z-index: 1;
     bottom: -1px;
     left: -1px;
+    width: 150px;
+    height: 193px;
+    object-fit: cover;
 
     @media (max-width: 767px) {
       display: none;

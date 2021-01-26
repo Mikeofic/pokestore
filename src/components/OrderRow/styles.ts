@@ -28,10 +28,10 @@ const OrderRowContainer = styled.div`
     margin-top: -10px;
 
     @media (max-width: 767px) {
-      margin-left: -5px;
-      width: calc(100% + 10px);
-      margin-bottom: 5px;
-      margin-top: -5px;
+      margin-left: 0;
+      width: 100%;
+      margin-bottom: 0;
+      margin-top: 0;
     }
 
     p {

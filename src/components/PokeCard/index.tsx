@@ -51,12 +51,15 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
         const { sprites } = response.data;
 
         let img_url = '';
-        if (sprites.front_default) img_url = sprites.front_default;
-        else if (sprites.other['official-artwork'].front_default)
+        if (sprites.other['official-artwork'].front_default) {
           img_url = sprites.other['official-artwork'].front_default;
-        else if (sprites.other.dream_world.front_default)
+        } else if (sprites.other.dream_world.front_default) {
           img_url = sprites.other.dream_world.front_default;
-        else img_url = DefaultPokemonImg;
+        } else if (sprites.front_default) {
+          img_url = sprites.front_default;
+        } else {
+          img_url = DefaultPokemonImg;
+        }
 
         const newCardData = {
           quantity: 1,

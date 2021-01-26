@@ -84,7 +84,7 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
   );
 
   useEffect(() => {
-    document.title = 'Poke Store Fogo - Temos que pegar!';
+    document.title = 'Poké Store Fogo - Temos que pegar!';
 
     async function fetchData() {
       try {

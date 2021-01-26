@@ -22,7 +22,7 @@ const Header: React.FC<TypeNames> = ({ typeName }) => {
       <HeaderContainer>
         <div className="container">
           <Link to="/fogo" className="logo" onClick={() => setSearchTerms('')}>
-            <img src={FogoLogo} alt="Poke Store" />
+            <img src={FogoLogo} alt="Poké Store" />
           </Link>
 
           <SearchBar typeName={typeName} />

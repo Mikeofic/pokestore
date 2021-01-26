@@ -3,8 +3,9 @@ import styled from 'styled-components';
 const CardContainer = styled.div`
   display: flex;
   max-width: calc(33% - 10px);
+
   @media (max-width: 767px) {
-    max-width: 100%;
+    max-width: calc(50% - 5px);
   }
 
   @media (min-width: 768px) and (max-width: 1049px) {
@@ -39,7 +40,7 @@ const CardContainer = styled.div`
       width: 100%;
       height: 100%;
       object-fit: cover;
-      background-color: #ffebeb;
+      background-color: #ffd9d9;
       border-radius: 12px;
     }
   }
@@ -168,20 +169,12 @@ const CardContainer = styled.div`
       }
     }
 
-    @media (min-width: 768px) and (max-width: 1049px) {
+    @media (max-width: 1049px) {
       flex-direction: column;
 
       > button {
         margin-left: 0;
         margin-top: 10px;
-      }
-    }
-
-    @media (max-width: 767px) {
-      flex-direction: row;
-
-      > button {
-        padding: 12px 16px;
       }
     }
   }
