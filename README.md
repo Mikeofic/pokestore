@@ -4,7 +4,7 @@
 
 # Poké Store
 
-**Veja o App em funcionamento**: https://pokestore-blond.vercel.app/
+👉 **Veja o App em funcionamento**: https://pokestore-blond.vercel.app/ 👈
 
 ---
 
