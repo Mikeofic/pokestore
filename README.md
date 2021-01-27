@@ -1,4 +1,4 @@
-<h2>
+<h2 align="center">
     <img width='250px' height='125px' alt="Logo Poké Store" title="#logo" src=".github/logo.png" />
 </h2>
 
@@ -9,41 +9,30 @@
 ---
 
 A **Poké Store** é um web app para o desafio da B2W. São **4 lojas** em que você pode comprar pokémon de diferentes estilos. O web app permite que você filtre pokémons, veja sua lista de compras e salve os dados localmente.
-A Poké Store foi feito com **ReactJS**, utilizando **JavaScript com Typescript**, e o acesso aos dados dos Pokémon é feito pela REST API **<a href="https://pokeapi.co"">PokéAPI</a>**.
+A Poké Store foi feito com **ReactJS**, utilizando **JavaScript com Typescript**, e o acesso aos dados dos Pokémon é feito pela REST API **[PokéAPI](https://pokeapi.co)**.
 
 ---
-
-## Vídeo
-
-<h5 align="center">
-  <video width='90%' controls="true" title="#video" allowfullscreen="true" poster=".github/poster_image.png">
-    <source src=".github/video.mp4" type="video/mp4">
-  </video>
-</h5>
 
 ## Desktop
 
 <h5 align="center">
-  <img width='90%' alt="Desktop Thumb" title="#web1" src=".github/desktop.png" />
+  <img width='100%' alt="Desktop Thumb" title="#web1" src=".github/desktop.png" />
 </h5>
 
 <h5 align="center">
-  <img width='90%' alt="Desktop Thumb" title="#web2" src=".github/desktop1.png" />
-</h1>
-
-<h5 align="center">
-  <img width='90%' alt="Desktop Thumb" title="#web2" src=".github/desktop2.png" />
-</h1>
-
-<h5 align="center">
-  <img width='90%' alt="Desktop Thumb" title="#web2" src=".github/desktop3.png" />
+  <img width='100%' alt="Desktop Thumb" title="#web2" src=".github/desktop1.png" />
 </h1>
 
 ## Mobile
 
 <h5 align="center">
-  <img width='90%' alt="Mobile Thumb" title="#mobile" src=".github/mobile.png" />
+  <img width='100%' alt="Mobile Thumb" title="#mobile" src=".github/mobile.png" />
 </h5>
+
+## Demo
+
+[![Watch the video](http://i3.ytimg.com/vi/T-76qenQ2rPd8/maxresdefault.jpg)](https://youtu.be/T-76qenQ2rPd8)
+
 
 ---
 
