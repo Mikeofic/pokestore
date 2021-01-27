@@ -13,30 +13,28 @@ A Poké Store foi feito com **ReactJS**, utilizando **JavaScript com Typescript*
 
 ---
 
-## Desktop
+## 💻 Desktop
 
 <h5 align="center">
-  <img width='100%' alt="Desktop Thumb" title="#web1" src=".github/desktop.png" />
+  <img width='100%' alt="Desktop Thumb" title="#web" src=".github/desktop.png" />
 </h5>
 
-<h5 align="center">
-  <img width='100%' alt="Desktop Thumb" title="#web2" src=".github/desktop1.png" />
-</h1>
-
-## Mobile
+## 📱 Mobile
 
 <h5 align="center">
   <img width='100%' alt="Mobile Thumb" title="#mobile" src=".github/mobile.png" />
 </h5>
 
-## Demo
+## ▶️ Demo
 
-[![Watch the video](http://i3.ytimg.com/vi/T-76qenQ2rPd8/maxresdefault.jpg)](https://youtu.be/T-76qenQ2rPd8)
+<h5 align="center">
+  <img width='85%' alt="Mobile Thumb" title="#demo" src=".github/demo.gif" />
+</h5>
 
 
 ---
 
-## Instalação
+## 💾 Instalação
 
 Você precisará ter o **Yarn** instalado no seu computador. Após instalar:
 1. Clone o Repositório.
@@ -45,7 +43,7 @@ Você precisará ter o **Yarn** instalado no seu computador. Após instalar:
 
 ---
 
-## Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas
 
 - ReactJS.
 - JavaScript/TypeScript.
