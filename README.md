@@ -8,7 +8,7 @@
 
 ---
 
-A **Poké Store** é um web app para o desafio da **B2W**. São **4 lojas** em que você pode comprar pokémons de diferentes estilos.
+A **Poké Store** é um web app que simula uma **loja online** de Pokémons. São **4 lojas** em que você pode comprar pokémons de diferentes estilos.
 
 O web app permite que você **filtre pokémons**, veja sua **lista de compras** e **salve os dados localmente**.
 
