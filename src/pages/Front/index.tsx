@@ -166,10 +166,6 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchBarTerms]);
 
-  // const handleCloseModal = useCallback(() => {
-  //   history.push(location.pathname);
-  // }, [history, location.pathname]);
-
   const checkoutCart = useCallback(
     (totalQuantity, totalPrice, cashback) => {
       const { cart } = appContext[typeId];
