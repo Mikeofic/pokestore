@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { FiMinus } from 'react-icons/fi';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -19,6 +19,13 @@ const CartItem: React.FC<CartItemProps> = ({
   );
   const [typeId] = useState(typeIds[typeName].id);
   const [itemQuantity, setItemQuantity] = useState(quantity.toString());
+
+  useEffect(() => {
+    if (itemQuantity !== '') {
+      setItemQuantity(quantity.toString());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantity]);
 
   const handlePlusClick = useCallback(() => {
     let newQuantity = quantity + 1;
