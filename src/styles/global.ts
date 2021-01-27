@@ -263,13 +263,87 @@ export default createGlobalStyle`
     }
   }
 
-  /* Removing hightlight on tap on android devices */
+  /* Removing highlight on tap on android devices */
   input,
   textarea,
   button,
   select,
   a {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+
+
+  /* VARIÁVEIS */
+  html{
+    --header-color: #e60014;
+    --light-text-color: #f95656;
+    --button-icon-color: red;
+    --button-active-background-color: #ff6a6a;
+    --button-border-color: #ff8686;
+    --button-border-color-light: #ffaeae;
+    --button-filled-background-color: #ff3838;
+    --default-color-lightest: #ffdfdf;
+    --default-color-ever-lightest: #ffefef;
+    --default-color-darkest: #790101;
+    --default-color-darkest-transparent: rgba(113, 22, 22, 0.22);
+    --logo-focus-color: rgb(160, 0, 14);
+    --logo-focus-color-lighter: rgb(193, 0, 0);
+    --button-box-shadow-color: rgba(236, 0, 0, 0.7);
+    --button-hover-outline-color: rgba(255, 0, 0, 0.19);
+
+    &.agua{
+      --header-color: #00ade6;
+      --light-text-color: #5699f9;
+      --button-icon-color: #0079ff;
+      --button-active-background-color: #7ca4e8;
+      --button-border-color: #86b3ff;
+      --button-border-color-light: #aed5ff;
+      --button-filled-background-color: #3879ff;
+      --default-color-lightest: #dfe8ff;
+      --default-color-ever-lightest: #ebf0ff;
+      --default-color-darkest: #014479;
+      --default-color-darkest-transparent: rgba(0, 44, 144, 0.21);
+      --logo-focus-color: rgb(0, 128, 169);
+      --logo-focus-color-lighter: rgb(13, 138, 179);
+      --button-box-shadow-color: rgba(0, 84, 236, 0.7);
+      --button-hover-outline-color: rgba(0, 78, 255, 0.21);
+    }
+
+    &.grama{
+      --header-color: #08bd00;
+      --light-text-color: #25ce1e;
+      --button-icon-color: #0fa500;
+      --button-active-background-color: #31c32a;
+      --button-border-color: #09d800;
+      --button-border-color-light: #27da1f;
+      --button-filled-background-color: #08b300;
+      --default-color-lightest: #c4f9cb;
+      --default-color-ever-lightest: #ddffe1;
+      --default-color-darkest: #045600;
+      --default-color-darkest-transparent: rgba(0, 80, 6, 0.19);
+      --logo-focus-color: rgb(9, 125, 0);
+      --logo-focus-color-lighter: rgb(6,132,0);
+      --button-box-shadow-color: rgba(0, 142, 4, 0.7);
+    --button-hover-outline-color: rgba(0, 146, 11, 0.19);
+    }
+
+    &.eletrico{
+      --header-color: #f1c000;
+      --light-text-color: #eaba37;
+      --button-icon-color: #d29602;
+      --button-active-background-color: #ffca6a;
+      --button-border-color: #ffbe18;
+      --button-border-color-light: #ffd15a;
+      --button-filled-background-color: #d09000;
+      --default-color-lightest: #ffefb2;
+      --default-color-ever-lightest: #ffefef;
+      --default-color-darkest: #633e00;
+      --default-color-darkest-transparent: rgba(113, 85, 22, 0.22);
+      --logo-focus-color: rgb(160, 124, 0);
+      --logo-focus-color-lighter: rgb(193, 156, 0);
+      --button-box-shadow-color: rgba(236, 163, 0, 0.7);
+      --button-hover-outline-color: rgba(125, 92, 0, 0.22);
+    }
   }
 
 `;

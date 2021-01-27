@@ -12,16 +12,14 @@ const ModalContainer = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  ${props =>
-    props.className?.includes('remove')
-      ? `
+
+  &.remove {
     max-width: 0 !important;
     max-height: 0 !important;
     overflow: hidden !important;
     padding: 0 !important;
     margin: 0 !important;
-  `
-      : ''};
+  }
 
   > div {
     display: flex;

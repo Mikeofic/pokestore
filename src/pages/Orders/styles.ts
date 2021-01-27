@@ -76,11 +76,10 @@ export const OrdersSection = styled.section`
       padding: 9px 21px;
       font-size: 1.7rem;
       border-radius: 5px;
-      background-color: #ff3838;
+      background-color: var(--button-filled-background-color);
       color: white;
       border-color: 2px solid transparent;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: flex;
       align-items: center;
       font-weight: 500;
@@ -98,17 +97,17 @@ export const OrdersSection = styled.section`
       }
 
       &:hover {
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-          0 0 0 3px rgba(255, 0, 0, 0.19);
+        box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+          0 0 0 3px var(--button-hover-outline-color);
       }
       &:focus-visible {
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-          0 0 0 3px rgba(255, 0, 0, 0.19);
+        box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+          0 0 0 3px var(--button-hover-outline-color);
       }
       &:active {
-        background-color: #ff6a6a;
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-          0 0 0 3px rgba(255, 0, 0, 0.19);
+        background-color: var(--button-active-background-color);
+        box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+          0 0 0 3px var(--button-hover-outline-color);
       }
 
       svg {
@@ -141,10 +140,9 @@ export const OrdersSection = styled.section`
       font-size: 1.5rem;
       border-radius: 5px;
       color: white;
-      border: 2px solid #ff8686;
-      color: red;
+      border: 2px solid var(--button-border-color);
+      color: var(--button-icon-color);
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: inline-flex;
       align-items: center;
       font-weight: 500;
@@ -157,13 +155,13 @@ export const OrdersSection = styled.section`
       }
 
       &:hover {
-        background-color: #ffe5e5;
+        background-color: var(--default-color-lightest);
       }
       &:focus-visible {
-        background-color: #ffe5e5;
+        background-color: var(--default-color-lightest);
       }
       &:active {
-        background-color: #ff3838;
+        background-color: var(--button-filled-background-color);
         border-color: transparent;
         color: white;
       }

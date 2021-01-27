@@ -26,7 +26,7 @@ const CartItemContainer = styled.div`
       width: 70px;
       height: 70px;
       object-fit: contain;
-      background-color: #ffe3e3;
+      background-color: var(--default-color-lightest);
       border-radius: 12px;
     }
 
@@ -50,7 +50,7 @@ const CartItemContainer = styled.div`
 
       span {
         font-weight: 600;
-        color: red;
+        color: var(--button-icon-color);
         font-size: 1.7rem;
       }
     }
@@ -90,6 +90,7 @@ const CartItemContainer = styled.div`
         > svg {
           width: 20px;
           height: 20px;
+          color: var(--button-icon-color);
         }
 
         &:hover {
@@ -99,7 +100,7 @@ const CartItemContainer = styled.div`
           background-color: #efefef;
         }
         &:active {
-          background-color: #ffe2e2;
+          background-color: var(--default-color-lightest);
         }
       }
     }
@@ -110,10 +111,9 @@ const CartItemContainer = styled.div`
       font-size: 1.5rem;
       border-radius: 5px;
       color: white;
-      border: 2px solid #ff8686;
-      color: red;
+      border: 2px solid var(--button-border-color);
+      color: var(--button-icon-color);
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: flex;
       align-items: center;
       font-weight: 500;
@@ -131,13 +131,13 @@ const CartItemContainer = styled.div`
       }
 
       &:hover {
-        background-color: #ffe5e5;
+        background-color: var(--default-color-lightest);
       }
       &:focus-visible {
-        background-color: #ffe5e5;
+        background-color: var(--default-color-lightest);
       }
       &:active {
-        background-color: #ff3838;
+        background-color: var(--button-filled-background-color);
         border-color: transparent;
         color: white;
       }

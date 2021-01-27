@@ -8,7 +8,7 @@ const OrderRowContainer = styled.div`
   width: 100%;
   background-color: white;
   border-radius: 4px;
-  border: 2px solid #ffaeae;
+  border: 2px solid var(--button-border-color-light);
   box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 767px) {
@@ -18,9 +18,9 @@ const OrderRowContainer = styled.div`
   .title {
     padding: 10px;
     width: 100%;
-    background-color: #ffefef;
+    background-color: var(--default-color-ever-lightest);
     border-radius: 4px;
-    border: 1px solid #ffaeae;
+    border: 1px solid var(--button-border-color-light);
     box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
     margin-left: -10px;
     width: calc(100% + 20px);
@@ -47,7 +47,7 @@ const OrderRowContainer = styled.div`
       span {
         font-size: 1.6rem;
         font-weight: 600;
-        color: #fb0000;
+        color: var(--button-filled-background-color);
 
         @media (max-width: 767px) {
           font-size: 1.5rem;
@@ -74,7 +74,7 @@ export const PokemonRow = styled.div`
     height: 104px;
     width: 104px;
     border-radius: 12px;
-    background-color: #ffdcdc;
+    background-color: var(--default-color-lightest);
     margin-right: 20px;
     padding: 4px;
 
@@ -121,7 +121,7 @@ export const PokemonRow = styled.div`
       font-size: 2.2rem;
       margin-bottom: 4px;
       padding-bottom: 4px;
-      border-bottom: 1px solid #ffaeae;
+      border-bottom: 1px solid var(--button-border-color-light);
 
       @media (max-width: 767px) {
         font-size: 1.8rem;

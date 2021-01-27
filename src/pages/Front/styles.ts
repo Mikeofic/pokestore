@@ -6,6 +6,10 @@ const PageContainer = styled.main`
   ${widthContainer}
   flex-grow: 1;
 
+  &.cart-on-left {
+    flex-direction: row-reverse;
+  }
+
   > a.cart-container {
     display: none;
     @media (max-width: 767px) {
@@ -21,35 +25,39 @@ const PageContainer = styled.main`
     align-items: center;
     justify-content: center;
     padding: 14px;
-    background: linear-gradient(90deg, rgb(193, 0, 0) 0%, rgb(255, 0, 0) 100%);
-    box-shadow: 0 4px 10px -6px rgb(150, 0, 0);
+    background: linear-gradient(
+      90deg,
+      var(--logo-focus-color-lighter) 0%,
+      var(--header-color) 100%
+    );
+    box-shadow: 0 4px 10px -6px var(--logo-focus-color);
 
     &:hover {
       background: linear-gradient(
         90deg,
-        rgb(225, 0, 0) 0%,
-        rgb(255, 0, 0) 100%
+        var(--header-color) 0%,
+        var(--header-color) 100%
       );
-      box-shadow: 0 4px 10px -6px rgb(150, 0, 0),
-        0 0 0 3px rgba(113, 22, 22, 0.22);
+      box-shadow: 0 4px 10px -6px var(--logo-focus-color),
+        0 0 0 3px var(--default-color-darkest-transparent);
     }
     &:focus-visible {
       background: linear-gradient(
         90deg,
-        rgb(225, 75, 75) 0%,
-        rgb(255, 75, 75) 100%
+        var(--light-text-color) 0%,
+        var(--light-text-color) 100%
       );
-      box-shadow: 0 4px 10px -6px rgb(150, 0, 0),
-        0 0 0 3px rgba(113, 22, 22, 0.22);
+      box-shadow: 0 4px 10px -6px var(--logo-focus-color),
+        0 0 0 3px var(--default-color-darkest-transparent);
     }
     &:active {
       background: linear-gradient(
         90deg,
-        rgb(255, 75, 75) 0%,
-        rgb(255, 75, 75) 100%
+        var(--light-text-color) 0%,
+        var(--light-text-color) 100%
       );
-      box-shadow: 0 4px 10px -6px rgb(150, 0, 0),
-        0 0 0 3px rgba(113, 22, 22, 0.22);
+      box-shadow: 0 4px 10px -6px var(--logo-focus-color),
+        0 0 0 3px var(--default-color-darkest-transparent);
     }
 
     svg {
@@ -66,7 +74,7 @@ const PageContainer = styled.main`
       width: 27px;
       height: 27px;
       transform: translate(-35%, -35%);
-      background-color: #ff0000;
+      background-color: var(--button-icon-color);
       color: white;
       display: flex;
       align-items: center;
@@ -86,6 +94,11 @@ export const PokemonSection = styled.section`
   flex-grow: 1;
   padding-right: 15px;
   position: relative;
+
+  &.cart-on-left {
+    padding-right: 0;
+    padding-left: 15px;
+  }
 
   @media (max-width: 767px) {
     padding-right: 0;
@@ -118,7 +131,7 @@ export const PokemonSection = styled.section`
       span {
         font-weight: 600;
         font-size: 1.9rem;
-        color: #ff0000;
+        color: var(--button-icon-color);
       }
     }
   }
@@ -135,10 +148,6 @@ export const PokemonSection = styled.section`
     padding: 5px;
     height: 58px;
     box-shadow: 0 8px 8px -10px rgba(0, 0, 0, 0.5);
-
-    svg {
-      fill: #f74c5b;
-    }
 
     &:focus-within {
       box-shadow: 0 8px 8px -10px rgba(0, 0, 0, 0.5);
@@ -161,11 +170,10 @@ export const PokemonSection = styled.section`
       padding: 9px 21px;
       font-size: 1.7rem;
       border-radius: 5px;
-      background-color: #ff3838;
+      background-color: var(--button-filled-background-color);
       color: white;
       border-color: 2px solid transparent;
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: flex;
       align-items: center;
       font-weight: 500;
@@ -182,28 +190,18 @@ export const PokemonSection = styled.section`
         cursor: unset;
       }
 
-      /* &:hover {
-        background-color: #ff6a6a;
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
-      }
-
-      &:focus {
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-          0 0 0 3px rgba(255, 0, 0, 0.19);
-      } */
-
       &:hover {
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-          0 0 0 3px rgba(255, 0, 0, 0.19);
+        box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+          0 0 0 3px var(--button-hover-outline-color);
       }
       &:focus-visible {
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-          0 0 0 3px rgba(255, 0, 0, 0.19);
+        box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+          0 0 0 3px var(--button-hover-outline-color);
       }
       &:active {
-        background-color: #ff6a6a;
-        box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-          0 0 0 3px rgba(255, 0, 0, 0.19);
+        background-color: var(--button-active-background-color);
+        box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+          0 0 0 3px var(--button-hover-outline-color);
       }
 
       svg {
@@ -224,10 +222,10 @@ export const PokemonSection = styled.section`
       padding: 16px;
       background-color: white;
       border-radius: 4px;
-      border: 2px solid #ffaeae;
+      border: 2px solid var(--button-border-color-light);
       margin: 0 -5px;
       box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
-      color: #f95656;
+      color: var(--light-text-color);
       font-size: 1.5rem;
       font-weight: 500;
     }
@@ -378,7 +376,7 @@ export const CheckoutContainer = styled.div`
   padding: 8px;
   background-color: white;
   border-radius: 4px;
-  border: 2px solid #ffaeae;
+  border: 2px solid var(--button-border-color-light);
   margin: 0 -5px;
   box-shadow: 0 10px 14px -12px rgba(0, 0, 0, 0.3);
   position: sticky;
@@ -439,7 +437,7 @@ export const CheckoutContainer = styled.div`
     }
 
     .price > span {
-      color: red;
+      color: var(--button-icon-color);
     }
 
     .cashback span span {
@@ -462,11 +460,10 @@ export const CheckoutContainer = styled.div`
     }
     font-size: 1.7rem;
     border-radius: 5px;
-    background-color: #ff3838;
+    background-color: var(--button-filled-background-color);
     color: white;
     border-color: 2px solid transparent;
     box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-    /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
     display: flex;
     align-items: center;
     font-weight: 500;
@@ -483,28 +480,18 @@ export const CheckoutContainer = styled.div`
       cursor: unset;
     }
 
-    /* &:hover {
-      background-color: #ff6a6a;
-      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7);
-    }
-
-    &:focus {
-      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-        0 0 0 3px rgba(255, 0, 0, 0.19);
-    } */
-
     &:hover {
-      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-        0 0 0 3px rgba(255, 0, 0, 0.19);
+      box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+        0 0 0 3px var(--button-hover-outline-color);
     }
     &:focus-visible {
-      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-        0 0 0 3px rgba(255, 0, 0, 0.19);
+      box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+        0 0 0 3px var(--button-hover-outline-color);
     }
     &:active {
-      background-color: #ff6a6a;
-      box-shadow: 0 10px 10px -12px rgba(236, 0, 0, 0.7),
-        0 0 0 3px rgba(255, 0, 0, 0.19);
+      background-color: var(--button-active-background-color);
+      box-shadow: 0 10px 10px -12px var(--button-box-shadow-color),
+        0 0 0 3px var(--button-hover-outline-color);
     }
 
     svg {
@@ -525,16 +512,16 @@ export const CheckoutContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f95656;
+    color: var(--light-text-color);
     padding: 10px 0;
 
     svg {
       height: 38px;
       width: 38px;
       padding: 6px;
-      background-color: #ffdfdf;
+      background-color: var(--default-color-lightest);
       border-radius: 30px;
-      color: red;
+      color: var(--button-icon-color);
       margin-right: 10px;
     }
   }
@@ -602,7 +589,7 @@ export const ModalContainer = styled.div`
     span {
       font-weight: 600;
       font-size: 1.7rem;
-      color: red;
+      color: var(--button-icon-color);
     }
 
     > svg {
@@ -618,10 +605,9 @@ export const ModalContainer = styled.div`
     font-size: 1.5rem;
     border-radius: 5px;
     color: white;
-    border: 2px solid #ff8686;
-    color: red;
+    border: 2px solid var(--button-border-color);
+    color: var(--button-icon-color);
     box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-    /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
     display: flex;
     align-items: center;
     font-weight: 500;
@@ -638,21 +624,14 @@ export const ModalContainer = styled.div`
       cursor: unset;
     }
 
-    /* &:hover,
-    &:focus {
-      background-color: #ff3838;
-      border-color: transparent;
-      color: white;
-    } */
-
     &:hover {
-      background-color: #ffe5e5;
+      background-color: var(--default-color-lightest);
     }
     &:focus-visible {
-      background-color: #ffe5e5;
+      background-color: var(--default-color-lightest);
     }
     &:active {
-      background-color: #ff3838;
+      background-color: var(--button-filled-background-color);
       border-color: transparent;
       color: white;
     }

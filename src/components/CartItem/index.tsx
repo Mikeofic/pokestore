@@ -17,7 +17,7 @@ const CartItem: React.FC<CartItemProps> = ({
   const { appContext, setAppContext, getStoredContext } = useContext(
     AppContext,
   );
-  const [typeId] = useState(typeIds[typeName]);
+  const [typeId] = useState(typeIds[typeName].id);
   const [itemQuantity, setItemQuantity] = useState(quantity.toString());
 
   const handlePlusClick = useCallback(() => {
@@ -158,7 +158,7 @@ const CartItem: React.FC<CartItemProps> = ({
       <div className="buy-container">
         <div className="quantity-container">
           <button type="button" onClick={handleMinusClick}>
-            <FiMinus color="red" />
+            <FiMinus />
           </button>
           <form
             action="/"
@@ -181,7 +181,7 @@ const CartItem: React.FC<CartItemProps> = ({
             />
           </form>
           <button type="button" onClick={handlePlusClick}>
-            <HiPlus color="red" />
+            <HiPlus />
           </button>
         </div>
         <button type="button" onClick={handleRemoveItem}>

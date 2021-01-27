@@ -21,10 +21,22 @@ export interface TypeNames {
 }
 
 export const typeIds = {
-  fogo: 10,
-  agua: 11,
-  grama: 12,
-  eletrico: 13,
+  fogo: {
+    id: 10,
+    title: 'Poké Store Fogo - Temos que pegar!',
+  },
+  agua: {
+    id: 11,
+    title: 'Poké Store Água - Temos que pegar!',
+  },
+  grama: {
+    id: 12,
+    title: 'Poké Store Grama - Temos que pegar!',
+  },
+  eletrico: {
+    id: 13,
+    title: 'Poké Store Elétrico - Temos que pegar!',
+  },
 };
 
 export interface PokemonType {

@@ -42,7 +42,7 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
     setToastMessage,
   } = useContext(AppContext);
   const [itemQuantity, setItemQuantity] = useState('1');
-  const [typeId] = useState(typeIds[typeName]);
+  const [typeId] = useState(typeIds[typeName].id);
   const [cardData, setCardData] = useState<PokemonData | null>(null);
 
   useEffect(() => {
@@ -237,7 +237,7 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
       <div className="buy-container">
         <div className="quantity-container">
           <button type="button" onClick={handleMinusClick}>
-            <FiMinus color="red" />
+            <FiMinus />
           </button>
           <form
             action="/"
@@ -261,7 +261,7 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
             />
           </form>
           <button type="button" onClick={handlePlusClick}>
-            <HiPlus color="red" />
+            <HiPlus />
           </button>
         </div>
         <button type="button" onClick={handleAddToCart}>

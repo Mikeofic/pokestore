@@ -26,6 +26,9 @@ import Modal from '../../components/Modal';
 import { ReactComponent as PokeballSVG } from '../../assets/pokeball.svg';
 import { ReactComponent as MoneySVG } from '../../assets/money.svg';
 import charmanderUrl from '../../assets/charmander.png';
+import pikachuUrl from '../../assets/pikachu.png';
+import bulbasaurUrl from '../../assets/bulbasaur.png';
+import squirtleUrl from '../../assets/squirtle.png';
 import SearchBar from '../../components/SearchBar';
 
 interface TypeData {
@@ -45,7 +48,13 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
   const searchTimeout = useRef<number | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [typeId] = useState(typeIds[typeName]);
+  const [typeId, setTypeId] = useState(() => {
+    Object.keys(typeIds).forEach(key =>
+      document.documentElement.classList.remove(key),
+    );
+    document.documentElement.classList.add(typeName);
+    return typeIds[typeName].id;
+  });
   const [pokemonToShow, setPokemonToShow] = useState(0);
   const [searchedPokemon, setSearchedPokemon] = useState<PokemonType[]>([]);
   const [currentCheckout, setCurretCheckout] = useState({
@@ -55,7 +64,18 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
   });
 
   useEffect(() => {
-    document.title = 'Poké Store Fogo - Temos que pegar!';
+    setCurretCheckout({
+      cashback: 0,
+      totalPrice: 0,
+      totalQuantity: 0,
+    });
+    setSearchedPokemon([]);
+    setPokemonToShow(0);
+    setShowLoading(false);
+    setHasLoaded(false);
+    if (searchTimeout.current !== null) {
+      clearTimeout(searchTimeout.current);
+    }
 
     async function fetchData() {
       try {
@@ -79,8 +99,19 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
       }
     }
     fetchData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typeId]);
+
+  useEffect(() => {
+    Object.keys(typeIds).forEach(key =>
+      document.documentElement.classList.remove(key),
+    );
+    document.documentElement.classList.add(typeName);
+    document.title = typeIds[typeName].title;
+
+    setTypeId(typeIds[typeName].id);
+  }, [typeName]);
 
   const runPokemonSearch = useCallback(
     (allPokemon: PokemonType[] | null = null, pushHistory = false) => {
@@ -233,8 +264,16 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
   return (
     <>
       <Header typeName={typeName} />
-      <PageContainer>
-        <PokemonSection>
+      <PageContainer
+        className={
+          typeName === 'agua' || typeName === 'eletrico' ? 'cart-on-left' : ''
+        }
+      >
+        <PokemonSection
+          className={
+            typeName === 'agua' || typeName === 'eletrico' ? 'cart-on-left' : ''
+          }
+        >
           <SearchBar typeName={typeName} />
           {(() => {
             const query = new URLSearchParams(location.search).get('ps');
@@ -371,7 +410,15 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
       >
         {currentCheckout.totalQuantity > 0 ? (
           <ModalContainer>
-            <img src={charmanderUrl} alt="Pokemon" />
+            <img
+              src={(() => {
+                if (typeName === 'agua') return squirtleUrl;
+                if (typeName === 'grama') return bulbasaurUrl;
+                if (typeName === 'eletrico') return pikachuUrl;
+                return charmanderUrl;
+              })()}
+              alt="Pokemon"
+            />
             <h2>Obrigado! 😍</h2>
             <div>
               <PokeballSVG /> Você comprou{' '}

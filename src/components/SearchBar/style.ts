@@ -32,13 +32,13 @@ const SearchContainer = styled.form`
     border-radius: 3px;
 
     &:hover {
-      background: #ffe8e8;
+      background: var(--default-color-lightest);
     }
     &:focus-visible {
-      background: #ffe8e8;
+      background: var(--default-color-lightest);
     }
     &:active {
-      background: #ffbbbb;
+      background: var(--button-border-color-light);
     }
 
     svg {
@@ -47,19 +47,14 @@ const SearchContainer = styled.form`
       fill: #585858;
     }
 
-    &:hover svg,
-    &:focus svg {
-      fill: #d42222;
-    }
-
     &:hover svg {
-      fill: #d42222;
+      fill: var(--header-color);
     }
     &:focus-visible svg {
-      fill: #c00000;
+      fill: var(--button-box-shadow-color);
     }
     &:active svg {
-      fill: #c00000;
+      fill: var(--button-box-shadow-color);
     }
   }
 `;

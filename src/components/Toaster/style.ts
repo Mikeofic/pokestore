@@ -14,16 +14,14 @@ const ToastContainer = styled.div`
   }
 
   z-index: 9;
-  ${props =>
-    props.className?.includes('remove')
-      ? `
+
+  &.remove {
     max-width: 0 !important;
     max-height: 0 !important;
     overflow: hidden !important;
     padding: 0 !important;
     margin: 0 !important;
-  `
-      : ''};
+  }
 
   > div {
     background-color: rgba(0, 0, 0, 0.88);

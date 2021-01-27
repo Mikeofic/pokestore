@@ -40,7 +40,7 @@ const CardContainer = styled.div`
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background-color: #ffd9d9;
+      background-color: var(--default-color-lightest);
       border-radius: 12px;
     }
   }
@@ -49,7 +49,7 @@ const CardContainer = styled.div`
     font-weight: 300;
     padding: 8px 15px 0;
     color: #444444;
-    border-top: 2px solid #ffaeae;
+    border-top: 2px solid var(--button-border-color-light);
     border-radius: 0;
     min-width: 98px;
     display: flex;
@@ -119,6 +119,7 @@ const CardContainer = styled.div`
         > svg {
           width: 20px;
           height: 20px;
+          color: var(--button-icon-color);
         }
 
         &:hover {
@@ -128,7 +129,7 @@ const CardContainer = styled.div`
           background-color: #efefef;
         }
         &:active {
-          background-color: #ffe2e2;
+          background-color: var(--default-color-lightest);
         }
       }
     }
@@ -144,10 +145,9 @@ const CardContainer = styled.div`
       font-size: 1.7rem;
       border-radius: 5px;
       color: white;
-      border: 2px solid #ff8686;
-      color: red;
+      border: 2px solid var(--button-border-color);
+      color: var(--button-icon-color);
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
-      /* transition: border-color 0.05s, background-color 0.05s, color 0.05s; */
       display: flex;
       align-items: center;
       font-size: 1.6rem;
@@ -166,13 +166,13 @@ const CardContainer = styled.div`
       }
 
       &:hover {
-        background-color: #ffe5e5;
+        background-color: var(--default-color-lightest);
       }
       &:focus-visible {
-        background-color: #ffe5e5;
+        background-color: var(--default-color-lightest);
       }
       &:active {
-        background-color: #ff3838;
+        background-color: var(--button-filled-background-color);
         border-color: transparent;
         color: white;
       }

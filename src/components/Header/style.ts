@@ -4,7 +4,7 @@ import { widthContainer } from '../../styles/global';
 
 const HeaderContainer = styled.header`
   display: flex;
-  background-color: #e60014;
+  background-color: var(--header-color);
   height: 120px;
 
   > div.container {
@@ -34,7 +34,7 @@ const HeaderContainer = styled.header`
       bottom: -4px;
       left: -4px;
       right: -4px;
-      background-color: #b10000;
+      background-color: var(--logo-focus-color);
       height: 0px;
       transition: height 0.2s;
     }
@@ -59,7 +59,7 @@ const HeaderContainer = styled.header`
       bottom: -8px;
       left: -8px;
       right: -4px;
-      background-color: #b10000;
+      background-color: var(--logo-focus-color);
       height: 0px;
       transition: height 0.2s;
     }
@@ -75,12 +75,12 @@ const HeaderContainer = styled.header`
       width: 30px;
       height: 30px;
       border-radius: 21px;
-      background-color: #790101;
+      background-color: var(--default-color-darkest);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
-      border: 3px solid #e60014;
+      border: 3px solid var(--header-color);
       font-weight: 500;
       transform: translate(-50%, -50%);
     }
@@ -95,78 +95,6 @@ const HeaderContainer = styled.header`
     form {
       display: none;
     }
-  }
-`;
-
-export const CartContainer = styled.button`
-  display: flex;
-  position: relative;
-  margin-left: 20px;
-
-  > div {
-    position: absolute;
-    z-index: 1;
-    margin: 0 auto;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-
-    img {
-      position: absolute;
-      width: 30px;
-      height: 40px;
-      object-fit: contain;
-    }
-
-    > img:nth-child(1) {
-      bottom: 0;
-      left: calc(100% - 18px);
-      transform: translateX(-50%);
-      z-index: 3;
-    }
-
-    > img:nth-child(2) {
-      bottom: 4px;
-      right: calc(50% - 3px);
-      transform: translateX(50%);
-      z-index: 2;
-    }
-
-    > img:nth-child(3) {
-      bottom: 7px;
-      right: calc(100% - 8px);
-      transform: translateX(100%);
-      z-index: 1;
-    }
-  }
-
-  svg {
-    position: relative;
-    z-index: 2;
-    width: 50px;
-    height: 50px;
-    color: #ffffff;
-  }
-
-  > span {
-    position: absolute;
-    top: 100%;
-    left: calc(100% - 7px);
-    transform: translate(-50%, -75%);
-    z-index: 3;
-    background-color: #6b0009;
-    width: 34px;
-    height: 34px;
-    border-radius: 100px;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    border: 3px solid #e60014;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 1.2rem;
   }
 `;
 
@@ -215,12 +143,14 @@ export const NavContainer = styled.nav`
       align-items: center;
       border-radius: 100px;
 
-      &:hover,
-      &:active {
+      &:hover {
         background-color: white;
       }
       &:focus-visible {
         background-color: white;
+      }
+      &:active {
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
       }
 
       + a {

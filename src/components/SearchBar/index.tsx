@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TypeNames } from '../../services/interfaces';
 import { ReactComponent as PokeLupa } from '../../assets/pokelupa.svg';
@@ -9,6 +9,15 @@ const SearchBar: React.FC<TypeNames> = ({ typeName }) => {
   const { searchBarTerms, setSearchBarTerms } = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
+  const [hasloaded, setHasloaded] = useState(false);
+
+  useEffect(() => {
+    if (hasloaded) {
+      setSearchBarTerms('');
+    }
+    setHasloaded(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [typeName]);
 
   const handleSubmit = useCallback(() => {
     const query = new URLSearchParams(location.search).get('ps');
