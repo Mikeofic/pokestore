@@ -33,7 +33,7 @@ A Poké Store foi feito com **ReactJS**, utilizando **JavaScript com Typescript*
 
 ## 💾 Instalação
 
-Você precisará ter o **Yarn** instalado no seu computador. Após instalar:
+Você precisará ter o **Yarn** instalado no seu computador. Após instalá-lo:
 1. Clone o Repositório.
 2. Vá até o diretório do Repositório e rode ``yarn``.
 3. Rode ``yarn start`` para iniciar o ReactJS.
