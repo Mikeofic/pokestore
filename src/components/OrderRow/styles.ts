@@ -56,7 +56,7 @@ const OrderRowContainer = styled.div`
 
       & + p {
         @media (max-width: 767px) {
-          border-top: 1px dashed #ffc4c4;
+          border-top: 1px dashed var(--button-border-color-light);
           margin-top: 6px;
           padding-top: 6px;
         }

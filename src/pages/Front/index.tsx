@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { BiCart } from 'react-icons/bi';
-import { IoMdArrowRoundBack } from 'react-icons/io';
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 import { FaAngleDoubleRight } from 'react-icons/fa';
 import { CgChevronDoubleDown } from 'react-icons/cg';
 import PokeCard from '../../components/PokeCard';
@@ -166,9 +166,9 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchBarTerms]);
 
-  const handleCloseModal = useCallback(() => {
-    history.push(location.pathname);
-  }, [history, location.pathname]);
+  // const handleCloseModal = useCallback(() => {
+  //   history.push(location.pathname);
+  // }, [history, location.pathname]);
 
   const checkoutCart = useCallback(
     (totalQuantity, totalPrice, cashback) => {
@@ -430,8 +430,24 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
               <span>R$ {currentCheckout.cashback}.</span>
             </div>
             <div className="btn-container">
-              <button type="button" onClick={handleCloseModal}>
+              <button
+                type="button"
+                onClick={() => {
+                  history.push(`/${typeName}/orders`);
+                }}
+              >
                 <IoMdArrowRoundBack /> Voltar às compras
+              </button>
+            </div>
+            <div className="btn-container">
+              <button
+                type="button"
+                className="icon-on-right gray-style"
+                onClick={() => {
+                  history.push(`/${typeName}/orders`);
+                }}
+              >
+                Ver compras realizadas <IoMdArrowRoundForward />
               </button>
             </div>
           </ModalContainer>
@@ -440,8 +456,24 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
             <img src={charmanderUrl} alt="Pokemon" />
             <h2>O seu Carrinho está vazio</h2>
             <div className="btn-container">
-              <button type="button" onClick={handleCloseModal}>
+              <button
+                type="button"
+                onClick={() => {
+                  history.push(location.pathname);
+                }}
+              >
                 <IoMdArrowRoundBack /> Voltar às compras
+              </button>
+            </div>
+            <div className="btn-container">
+              <button
+                type="button"
+                className="icon-on-right gray-style"
+                onClick={() => {
+                  history.push(`/${typeName}/orders`);
+                }}
+              >
+                Ver compras realizadas <IoMdArrowRoundForward />
               </button>
             </div>
           </ModalContainer>

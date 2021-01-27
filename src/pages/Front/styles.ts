@@ -104,6 +104,11 @@ export const PokemonSection = styled.section`
     padding-right: 0;
     margin-top: 0;
 
+    &.cart-on-left {
+      padding-right: 0;
+      padding-left: 0;
+    }
+
     > form {
       display: flex;
     }
@@ -636,10 +641,32 @@ export const ModalContainer = styled.div`
       color: white;
     }
 
+    &.gray-style {
+      border-color: #d4d4d4;
+      color: #757575;
+
+      &:hover {
+        background-color: #efefef;
+      }
+      &:focus-visible {
+        background-color: #efefef;
+      }
+      &:active {
+        background-color: #d4d4d4;
+        border-color: transparent;
+        color: white;
+      }
+    }
+
     svg {
       margin-right: 5px;
       height: 20px;
       width: 20px;
+    }
+
+    &.icon-on-right svg {
+      margin-right: 0;
+      margin-left: 5px;
     }
   }
 `;
