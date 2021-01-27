@@ -8,8 +8,9 @@
 
 ---
 
-A **Poké Store** é um web app para o desafio da **B2W**. São **4 lojas** em que você pode comprar pokémon de diferentes estilos. O web app permite que você filtre pokémons, veja sua lista de compras e salve os dados localmente.
-A Poké Store foi feito com **ReactJS**, utilizando **JavaScript com Typescript**, e o acesso aos dados dos Pokémon é feito pela REST API **[PokéAPI](https://pokeapi.co)**.
+A **Poké Store** é um web app para o desafio da **B2W**. São **4 lojas** em que você pode comprar pokémons de diferentes estilos.
+O web app permite que você **filtre** pokémons, veja sua **lista de compras** e **salve os dados localmente**.
+A Poké Store foi feito com **ReactJS**, utilizando **JavaScript com Typescript**, e o acesso aos dados dos pokémons é feito pela REST API **[PokéAPI](https://pokeapi.co)**.
 
 ---
 
