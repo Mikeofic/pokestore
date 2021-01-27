@@ -433,7 +433,7 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
               <button
                 type="button"
                 onClick={() => {
-                  history.push(`/${typeName}/orders`);
+                  history.push(`/${typeName}`);
                 }}
               >
                 <IoMdArrowRoundBack /> Voltar às compras
@@ -459,7 +459,7 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
               <button
                 type="button"
                 onClick={() => {
-                  history.push(location.pathname);
+                  history.push(`/${typeName}`);
                 }}
               >
                 <IoMdArrowRoundBack /> Voltar às compras
