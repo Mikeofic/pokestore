@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useState, useContext } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { FiMinus, FiShoppingCart } from 'react-icons/fi';
 import CardContainer from './styles';
-import api from '../../services/api';
-import { AppContext } from '../../AppProvider';
+import { useAppContext } from '../../AppProvider';
 import { typeIds, TypeNames } from '../../services/interfaces';
-import DefaultPokemonImg from '../../assets/default_pokemon.png';
 
-interface PokemonApiData {
+export interface PokemonApiData {
   id: number;
   base_experience: number;
   name: string;
@@ -24,7 +22,7 @@ interface PokemonApiData {
   };
 }
 
-interface PokemonData extends PokemonApiData {
+export interface PokemonData extends PokemonApiData {
   price: number;
   quantity: number;
   img_url: string;
@@ -39,49 +37,19 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
     appContext,
     setAppContext,
     getStoredContext,
-    setToastMessage,
-  } = useContext(AppContext);
+    fetchPokemonData,
+  } = useAppContext();
+
   const [itemQuantity, setItemQuantity] = useState('1');
   const [typeId] = useState(typeIds[typeName].id);
   const [cardData, setCardData] = useState<PokemonData | null>(null);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get<PokemonApiData>(url);
+    (async () => {
+      const newCardData = await fetchPokemonData(url);
+      setCardData(newCardData);
+    })();
 
-        const { sprites } = response.data;
-
-        let img_url = '';
-        if (sprites.other['official-artwork'].front_default) {
-          img_url = sprites.other['official-artwork'].front_default;
-        } else if (sprites.other.dream_world.front_default) {
-          img_url = sprites.other.dream_world.front_default;
-        } else if (sprites.front_default) {
-          img_url = sprites.front_default;
-        } else {
-          img_url = DefaultPokemonImg;
-        }
-
-        const newCardData = {
-          quantity: 1,
-          price: response.data.base_experience,
-          ...response.data,
-          name: response.data.name.trim(),
-          img_url,
-        };
-
-        // uppercase first letter
-        newCardData.name =
-          newCardData.name.charAt(0).toUpperCase() + newCardData.name.slice(1);
-        setCardData(newCardData);
-      } catch (error) {
-        setToastMessage(
-          'Não foi possível se conectar à API. Tente novamente mais tarde.',
-        );
-      }
-    }
-    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
@@ -158,13 +126,14 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
 
     const storedContext = getStoredContext();
 
-    setAppContext({
+    const newAppContext = {
       ...storedContext,
       [typeId]: {
         ...storedContext[typeId],
         cart: newCart,
       },
-    });
+    };
+    setAppContext(newAppContext);
 
     setCardData({
       ...cardData,

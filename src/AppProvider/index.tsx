@@ -1,14 +1,19 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   MyOrdersType,
   CartItemType,
   PokemonType,
 } from '../services/interfaces';
+import api from '../services/api';
+import { PokemonData, PokemonApiData } from '../components/PokeCard';
+import DefaultPokemonImg from '../assets/default_pokemon.png';
 
-interface ContextData {
+export interface ContextData {
   appContext: ContextType;
   setAppContext(context: ContextType): void;
+  fetchPokemonTypeData(typeId: number): Promise<PokemonType[]>;
+  fetchPokemonData(url: string): Promise<PokemonData | null>;
   getStoredContext(): ContextType;
   searchBarTerms: string;
   setSearchBarTerms(terms: string): void;
@@ -16,7 +21,7 @@ interface ContextData {
   setToastMessage(message: string): void;
 }
 
-interface ContextType {
+export interface ContextType {
   [key: number]: {
     pokemon: PokemonType[];
     cart: CartItemType[];
@@ -87,6 +92,72 @@ const AppProvider: React.FC = ({ children }) => {
     return defaultContextType;
   }, []);
 
+  const fetchPokemonTypeData = useCallback(
+    async (typeId: number): Promise<PokemonType[]> => {
+      try {
+        const typeResponse = await api.get<{ pokemon: PokemonType[] }>(
+          `type/${typeId}`,
+        );
+
+        const { pokemon } = typeResponse.data;
+
+        const storedContext = getStoredContext();
+
+        setAppContext({
+          ...storedContext,
+          [typeId]: {
+            ...storedContext[typeId],
+            pokemon,
+          },
+        });
+
+        return pokemon;
+      } catch (error) {
+        setToastMessage(
+          'Não foi possível se conectar à API. Tente novamente mais tarde.',
+        );
+        return [];
+      }
+    },
+    [getStoredContext, setAppContext],
+  );
+
+  const fetchPokemonData = useCallback(
+    async (url: string): Promise<PokemonData | null> => {
+      try {
+        const response = await api.get<PokemonApiData>(url);
+
+        const { sprites } = response.data;
+
+        const img_url =
+          sprites.other['official-artwork'].front_default ||
+          sprites.other.dream_world.front_default ||
+          sprites.front_default ||
+          DefaultPokemonImg;
+
+        const newCardData = {
+          quantity: 1,
+          price: response.data.base_experience,
+          ...response.data,
+          name: response.data.name.trim(),
+          img_url,
+        };
+
+        // uppercase first letter
+        newCardData.name =
+          newCardData.name.charAt(0).toUpperCase() + newCardData.name.slice(1);
+
+        return newCardData;
+      } catch (error) {
+        setToastMessage(
+          'Não foi possível se conectar à API. Tente novamente mais tarde.',
+        );
+        return null;
+      }
+    },
+    [],
+  );
+
   return (
     <AppContext.Provider
       value={{
@@ -97,11 +168,23 @@ const AppProvider: React.FC = ({ children }) => {
         setSearchBarTerms,
         toastMessage,
         setToastMessage,
+        fetchPokemonTypeData,
+        fetchPokemonData,
       }}
     >
       {children}
     </AppContext.Provider>
   );
+};
+
+export const useAppContext = (): ContextData => {
+  const context = useContext(AppContext);
+
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context;
 };
 
 export default AppProvider;

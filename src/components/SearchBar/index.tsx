@@ -1,12 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TypeNames } from '../../services/interfaces';
 import { ReactComponent as PokeLupa } from '../../assets/pokelupa.svg';
 import SearchContainer from './style';
-import { AppContext } from '../../AppProvider';
+import { useAppContext } from '../../AppProvider';
 
 const SearchBar: React.FC<TypeNames> = ({ typeName }) => {
-  const { searchBarTerms, setSearchBarTerms } = useContext(AppContext);
+  const { searchBarTerms, setSearchBarTerms } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [hasloaded, setHasloaded] = useState(false);

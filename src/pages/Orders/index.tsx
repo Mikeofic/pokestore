@@ -1,15 +1,16 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { CgChevronDoubleDown } from 'react-icons/cg';
 import Header from '../../components/Header';
 import PageContainer, { OrdersSection } from './styles';
-import { AppContext } from '../../AppProvider';
+import { useAppContext } from '../../AppProvider';
 import { typeIds, TypeNames } from '../../services/interfaces';
 import OrderRow from '../../components/OrderRow';
 
 const Orders: React.FC<TypeNames> = ({ typeName }) => {
-  const { appContext } = useContext(AppContext);
+  const { appContext } = useAppContext();
+
   const [typeId, setTypeId] = useState(() => {
     Object.keys(typeIds).forEach(key =>
       document.documentElement.classList.remove(key),

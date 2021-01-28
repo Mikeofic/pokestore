@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoMdAlert } from 'react-icons/io';
-import { AppContext } from '../../AppProvider';
+import { useAppContext } from '../../AppProvider';
 import ToasterContainer from './style';
 
 const Toaster: React.FC = () => {
-  const { toastMessage, setToastMessage } = useContext(AppContext);
+  const { toastMessage, setToastMessage } = useAppContext();
   const showTimeout = useRef<number | null>(null);
   const showContentTimeout = useRef<number | null>(null);
   const [show, setShow] = useState(false);

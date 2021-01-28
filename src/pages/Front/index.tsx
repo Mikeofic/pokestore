@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useContext,
-  useCallback,
-  useRef,
-} from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { BiCart } from 'react-icons/bi';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
@@ -18,8 +12,7 @@ import PageContainer, {
   CheckoutContainer,
   ModalContainer,
 } from './styles';
-import api from '../../services/api';
-import { AppContext } from '../../AppProvider';
+import { useAppContext } from '../../AppProvider';
 import { typeIds, TypeNames, PokemonType } from '../../services/interfaces';
 import CartItem from '../../components/CartItem';
 import Modal from '../../components/Modal';
@@ -31,20 +24,18 @@ import bulbasaurUrl from '../../assets/bulbasaur.png';
 import squirtleUrl from '../../assets/squirtle.png';
 import SearchBar from '../../components/SearchBar';
 
-interface TypeData {
-  pokemon: PokemonType[];
-}
-
-const Page: React.FC<TypeNames> = ({ typeName }) => {
+const Front: React.FC<TypeNames> = ({ typeName }) => {
   const location = useLocation();
   const history = useHistory();
+
   const {
     appContext,
     setAppContext,
     getStoredContext,
     searchBarTerms,
-    setToastMessage,
-  } = useContext(AppContext);
+    fetchPokemonTypeData,
+  } = useAppContext();
+
   const searchTimeout = useRef<number | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -77,28 +68,10 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
       clearTimeout(searchTimeout.current);
     }
 
-    async function fetchData() {
-      try {
-        const typeResponse = await api.get<TypeData>(`type/${typeId}`);
-        const { pokemon } = typeResponse.data;
-
-        const storedContext = getStoredContext();
-
-        setAppContext({
-          ...storedContext,
-          [typeId]: {
-            ...storedContext[typeId],
-            pokemon,
-          },
-        });
-        runPokemonSearch(pokemon);
-      } catch (error) {
-        setToastMessage(
-          'Não foi possível se conectar à API. Tente novamente mais tarde.',
-        );
-      }
-    }
-    fetchData();
+    (async () => {
+      const pokemondata = await fetchPokemonTypeData(typeId);
+      runPokemonSearch(pokemondata);
+    })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typeId]);
@@ -185,14 +158,15 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
         order: cart,
       });
 
-      setAppContext({
+      const newAppContext = {
         ...storedContext,
         [typeId]: {
           ...storedContext[typeId],
           myOrders: newMyOrders,
           cart: [],
         },
-      });
+      };
+      setAppContext(newAppContext);
     },
     [appContext, typeId, setAppContext, getStoredContext],
   );
@@ -479,4 +453,4 @@ const Page: React.FC<TypeNames> = ({ typeName }) => {
   );
 };
 
-export default Page;
+export default Front;

@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AppContext } from '../../AppProvider';
+import { useAppContext } from '../../AppProvider';
 import { typeIds, TypeNames } from '../../services/interfaces';
 import TipTool from '../TipTool';
 import HeaderContainer, { NavContainer } from './style';
@@ -19,7 +19,8 @@ import { ReactComponent as YellowShopBagSVG } from '../../assets/bagyellow.svg';
 import SearchBar from '../SearchBar';
 
 const Header: React.FC<TypeNames> = ({ typeName }) => {
-  const { appContext, setSearchBarTerms } = useContext(AppContext);
+  const { appContext, setSearchBarTerms } = useAppContext();
+
   const [typeId, setTypeId] = useState(typeIds[typeName].id);
   const [showOrdersTipTool, setShowOrdersTipTool] = useState(false);
 

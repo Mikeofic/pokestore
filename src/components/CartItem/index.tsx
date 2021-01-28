@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { FiMinus } from 'react-icons/fi';
 import { IoMdCloseCircle } from 'react-icons/io';
 import CartItemContainer from './styles';
-import { AppContext } from '../../AppProvider';
+import { useAppContext } from '../../AppProvider';
 import { typeIds, TypeNames, CartItemType } from '../../services/interfaces';
 
 interface CartItemProps extends TypeNames {
@@ -14,9 +14,8 @@ const CartItem: React.FC<CartItemProps> = ({
   data: { id, name, quantity, totalPrice, imgurl },
   typeName,
 }) => {
-  const { appContext, setAppContext, getStoredContext } = useContext(
-    AppContext,
-  );
+  const { appContext, setAppContext, getStoredContext } = useAppContext();
+
   const [typeId] = useState(typeIds[typeName].id);
   const [itemQuantity, setItemQuantity] = useState(quantity.toString());
 
@@ -53,13 +52,14 @@ const CartItem: React.FC<CartItemProps> = ({
 
     const storedContext = getStoredContext();
 
-    setAppContext({
+    const newAppContext = {
       ...storedContext,
       [typeId]: {
         ...storedContext[typeId],
         cart,
       },
-    });
+    };
+    setAppContext(newAppContext);
   }, [appContext, id, setAppContext, quantity, typeId, getStoredContext]);
 
   const handleMinusClick = useCallback(() => {
@@ -88,13 +88,14 @@ const CartItem: React.FC<CartItemProps> = ({
 
     const storedContext = getStoredContext();
 
-    setAppContext({
+    const newAppContext = {
       ...storedContext,
       [typeId]: {
         ...storedContext[typeId],
         cart,
       },
-    });
+    };
+    setAppContext(newAppContext);
   }, [appContext, id, setAppContext, quantity, typeId, getStoredContext]);
 
   const handleQuantityChange = useCallback(
@@ -126,13 +127,14 @@ const CartItem: React.FC<CartItemProps> = ({
 
       const storedContext = getStoredContext();
 
-      setAppContext({
+      const newAppContext = {
         ...storedContext,
         [typeId]: {
           ...storedContext[typeId],
           cart,
         },
-      });
+      };
+      setAppContext(newAppContext);
     },
     [appContext, id, setAppContext, typeId, getStoredContext],
   );
@@ -142,13 +144,14 @@ const CartItem: React.FC<CartItemProps> = ({
 
     const storedContext = getStoredContext();
 
-    setAppContext({
+    const newAppContext = {
       ...storedContext,
       [typeId]: {
         ...storedContext[typeId],
         cart,
       },
-    });
+    };
+    setAppContext(newAppContext);
   }, [appContext, id, setAppContext, typeId, getStoredContext]);
 
   return (
