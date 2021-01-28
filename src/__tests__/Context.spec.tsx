@@ -1,10 +1,9 @@
-import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
 import { renderHook } from '@testing-library/react-hooks';
-import api from '../../services/api';
-import { typeIds } from '../../services/interfaces';
-import AppProvider, { useAppContext } from '../../AppProvider';
-import DefaultPokemonImg from '../../assets/default_pokemon.png';
+import api from '../services/api';
+import { mock_typeIds } from '../services/interfaces';
+import AppProvider, { useAppContext } from '../AppProvider';
+import DefaultPokemonImg from '../assets/default_pokemon.png';
 
 const apiMock = new MockAdapter(api);
 
@@ -14,14 +13,10 @@ jest.mock('react-router-dom', () => {
       search: '',
       hash: '',
     }),
-    useHistory: () => ({
-      push: jest.fn(),
-    }),
-    Link: ({ children }: { children: React.ReactNode }) => children,
   };
 });
 
-describe('Front Page', () => {
+describe('App Provider', () => {
   it('should be able to fetch pokemon type data from API and store it', async () => {
     const response = {
       pokemon: [
@@ -46,19 +41,19 @@ describe('Front Page', () => {
       ],
     };
 
-    apiMock.onGet(`type/${typeIds.fogo.id}`).reply(200, response);
+    apiMock.onGet(`type/${mock_typeIds.fogo.id}`).reply(200, response);
 
     const { result, waitForValueToChange } = renderHook(() => useAppContext(), {
       wrapper: AppProvider,
     });
 
-    result.current.fetchPokemonTypeData(typeIds.fogo.id);
+    result.current.fetchPokemonTypeData(mock_typeIds.fogo.id);
 
     await waitForValueToChange(
-      () => result.current.appContext[typeIds.fogo.id].pokemon,
+      () => result.current.appContext[mock_typeIds.fogo.id].pokemon,
     );
 
-    expect(result.current.appContext[typeIds.fogo.id].pokemon).toEqual(
+    expect(result.current.appContext[mock_typeIds.fogo.id].pokemon).toEqual(
       response.pokemon,
     );
   });
@@ -106,5 +101,34 @@ describe('Front Page', () => {
         response.sprites.front_default ||
         DefaultPokemonImg,
     });
+  });
+
+  it('add 1 item when plus button is clicked on cart item', () => {
+    const { result } = renderHook(() => useAppContext(), {
+      wrapper: AppProvider,
+    });
+
+    const newAppContext = {
+      ...result.current.appContext,
+      10: {
+        ...result.current.appContext[10],
+        cart: [
+          {
+            id: 4,
+            name: 'Charmander',
+            imgurl:
+              'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
+            unitaryPrice: 62,
+            quantity: 5,
+            totalPrice: 310,
+          },
+        ],
+      },
+    };
+    result.current.setAppContext(newAppContext);
+
+    result.current.plusOneOnCart(10, 5, 4);
+
+    expect(result.current.appContext[10].cart[0].quantity).toEqual(6);
   });
 });

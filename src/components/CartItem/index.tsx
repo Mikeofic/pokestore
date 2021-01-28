@@ -14,7 +14,13 @@ const CartItem: React.FC<CartItemProps> = ({
   data: { id, name, quantity, totalPrice, imgurl },
   typeName,
 }) => {
-  const { appContext, setAppContext, getStoredContext } = useAppContext();
+  const {
+    appContext,
+    setAppContext,
+    getStoredContext,
+    minusOneOnCart,
+    plusOneOnCart,
+  } = useAppContext();
 
   const [typeId] = useState(typeIds[typeName].id);
   const [itemQuantity, setItemQuantity] = useState(quantity.toString());
@@ -27,76 +33,16 @@ const CartItem: React.FC<CartItemProps> = ({
   }, [quantity]);
 
   const handlePlusClick = useCallback(() => {
-    let newQuantity = quantity + 1;
-
-    if (newQuantity > 999) {
-      newQuantity = 999;
-    } else if (newQuantity < 1) {
-      newQuantity = 1;
-    }
-
-    if (Number.isNaN(newQuantity)) {
-      newQuantity = 1;
-    }
-
-    const cart = appContext[typeId].cart.slice(0);
-    const itemIndex = cart.findIndex(cartItem => cartItem.id === id);
-
-    cart[itemIndex] = {
-      ...cart[itemIndex],
-      quantity: newQuantity,
-      totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
-    };
-
-    setItemQuantity(newQuantity.toString());
-
-    const storedContext = getStoredContext();
-
-    const newAppContext = {
-      ...storedContext,
-      [typeId]: {
-        ...storedContext[typeId],
-        cart,
-      },
-    };
-    setAppContext(newAppContext);
-  }, [appContext, id, setAppContext, quantity, typeId, getStoredContext]);
+    plusOneOnCart(typeId, quantity, id, (newQuantity: number) => {
+      setItemQuantity(newQuantity.toString());
+    });
+  }, [id, plusOneOnCart, quantity, typeId]);
 
   const handleMinusClick = useCallback(() => {
-    let newQuantity = quantity - 1;
-
-    if (newQuantity > 999) {
-      newQuantity = 999;
-    } else if (newQuantity < 1) {
-      newQuantity = 1;
-    }
-
-    if (Number.isNaN(newQuantity)) {
-      newQuantity = 1;
-    }
-
-    const cart = appContext[typeId].cart.slice(0);
-    const itemIndex = cart.findIndex(cartItem => cartItem.id === id);
-
-    cart[itemIndex] = {
-      ...cart[itemIndex],
-      quantity: newQuantity,
-      totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
-    };
-
-    setItemQuantity(newQuantity.toString());
-
-    const storedContext = getStoredContext();
-
-    const newAppContext = {
-      ...storedContext,
-      [typeId]: {
-        ...storedContext[typeId],
-        cart,
-      },
-    };
-    setAppContext(newAppContext);
-  }, [appContext, id, setAppContext, quantity, typeId, getStoredContext]);
+    minusOneOnCart(typeId, quantity, id, (newQuantity: number) => {
+      setItemQuantity(newQuantity.toString());
+    });
+  }, [id, minusOneOnCart, quantity, typeId]);
 
   const handleQuantityChange = useCallback(
     (newVal: string) => {

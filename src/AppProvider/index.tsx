@@ -19,6 +19,18 @@ export interface ContextData {
   setSearchBarTerms(terms: string): void;
   toastMessage: string;
   setToastMessage(message: string): void;
+  minusOneOnCart(
+    typeId: number,
+    quantity: number,
+    cartItemId: number,
+    fn?: (n: number) => void,
+  ): void;
+  plusOneOnCart(
+    typeId: number,
+    quantity: number,
+    cartItemId: number,
+    fn?: (n: number) => void,
+  ): void;
 }
 
 export interface ContextType {
@@ -158,6 +170,98 @@ const AppProvider: React.FC = ({ children }) => {
     [],
   );
 
+  const minusOneOnCart = useCallback(
+    (
+      typeId: number,
+      quantity: number,
+      cartItemId: number,
+      fn?: (n: number) => void,
+    ) => {
+      let newQuantity = quantity - 1;
+
+      if (newQuantity > 999) {
+        newQuantity = 999;
+      } else if (newQuantity < 1) {
+        newQuantity = 1;
+      }
+
+      if (Number.isNaN(newQuantity)) {
+        newQuantity = 1;
+      }
+
+      const cart = appContext[typeId].cart.slice(0);
+      const itemIndex = cart.findIndex(cartItem => cartItem.id === cartItemId);
+
+      cart[itemIndex] = {
+        ...cart[itemIndex],
+        quantity: newQuantity,
+        totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
+      };
+
+      if (fn) {
+        fn(newQuantity);
+      }
+
+      const storedContext = getStoredContext();
+
+      const newAppContext = {
+        ...storedContext,
+        [typeId]: {
+          ...storedContext[typeId],
+          cart,
+        },
+      };
+      setAppContext(newAppContext);
+    },
+    [appContext, getStoredContext, setAppContext],
+  );
+
+  const plusOneOnCart = useCallback(
+    (
+      typeId: number,
+      quantity: number,
+      cartItemId: number,
+      fn?: (n: number) => void,
+    ) => {
+      let newQuantity = quantity + 1;
+
+      if (newQuantity > 999) {
+        newQuantity = 999;
+      } else if (newQuantity < 1) {
+        newQuantity = 1;
+      }
+
+      if (Number.isNaN(newQuantity)) {
+        newQuantity = 1;
+      }
+
+      const cart = appContext[typeId].cart.slice(0);
+      const itemIndex = cart.findIndex(cartItem => cartItem.id === cartItemId);
+
+      cart[itemIndex] = {
+        ...cart[itemIndex],
+        quantity: newQuantity,
+        totalPrice: newQuantity * cart[itemIndex].unitaryPrice,
+      };
+
+      if (fn) {
+        fn(newQuantity);
+      }
+
+      const storedContext = getStoredContext();
+
+      const newAppContext = {
+        ...storedContext,
+        [typeId]: {
+          ...storedContext[typeId],
+          cart,
+        },
+      };
+      setAppContext(newAppContext);
+    },
+    [appContext, getStoredContext, setAppContext],
+  );
+
   return (
     <AppContext.Provider
       value={{
@@ -170,6 +274,8 @@ const AppProvider: React.FC = ({ children }) => {
         setToastMessage,
         fetchPokemonTypeData,
         fetchPokemonData,
+        minusOneOnCart,
+        plusOneOnCart,
       }}
     >
       {children}
@@ -177,11 +283,12 @@ const AppProvider: React.FC = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useAppContext = (): ContextData => {
   const context = useContext(AppContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAppContext must be used within an AppProvider');
   }
 
   return context;

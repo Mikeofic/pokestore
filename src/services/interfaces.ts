@@ -39,6 +39,8 @@ export const typeIds = {
   },
 };
 
+export const mock_typeIds = typeIds;
+
 export interface PokemonType {
   pokemon: {
     name: string;
