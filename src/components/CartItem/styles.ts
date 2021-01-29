@@ -71,6 +71,15 @@ const CartItemContainer = styled.div`
       flex-grow: 1;
       background-color: white;
 
+      form label {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        max-width: 0;
+        max-width: 0;
+        position: absolute;
+      }
+
       form input {
         font-size: 1.6rem;
         font-weight: 500;

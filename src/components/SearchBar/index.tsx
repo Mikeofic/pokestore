@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 import { TypeNames } from '../../services/interfaces';
 import { ReactComponent as PokeLupa } from '../../assets/pokelupa.svg';
 import SearchContainer from './style';
@@ -10,6 +11,7 @@ const SearchBar: React.FC<TypeNames> = ({ typeName }) => {
   const history = useHistory();
   const location = useLocation();
   const [hasloaded, setHasloaded] = useState(false);
+  const [input_id] = useState(uuid());
 
   useEffect(() => {
     if (hasloaded) {
@@ -52,13 +54,15 @@ const SearchBar: React.FC<TypeNames> = ({ typeName }) => {
     >
       <input
         type=""
+        id={`search_bar_${input_id}`}
         maxLength={100}
         name="ps"
         placeholder="Qual pokémon você procura?"
         value={searchBarTerms}
         onChange={e => handleSearchChange(e.target.value)}
       />
-      <button type="submit">
+      <label htmlFor={`search_bar_${input_id}`}>Quantidade</label>
+      <button aria-label="Search" type="submit">
         <PokeLupa />
       </button>
     </SearchContainer>

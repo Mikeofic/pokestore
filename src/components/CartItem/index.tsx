@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { FiMinus } from 'react-icons/fi';
 import { IoMdCloseCircle } from 'react-icons/io';
+import { v4 as uuid } from 'uuid';
 import CartItemContainer from './styles';
 import { useAppContext } from '../../AppProvider';
 import { typeIds, TypeNames, CartItemType } from '../../services/interfaces';
@@ -24,6 +25,7 @@ const CartItem: React.FC<CartItemProps> = ({
 
   const [typeId] = useState(typeIds[typeName].id);
   const [itemQuantity, setItemQuantity] = useState(quantity.toString());
+  const [input_id] = useState(uuid());
 
   useEffect(() => {
     if (itemQuantity !== '') {
@@ -113,7 +115,11 @@ const CartItem: React.FC<CartItemProps> = ({
       </div>
       <div className="buy-container">
         <div className="quantity-container">
-          <button type="button" onClick={handleMinusClick}>
+          <button
+            aria-label="Reduce Quantity"
+            type="button"
+            onClick={handleMinusClick}
+          >
             <FiMinus />
           </button>
           <form
@@ -124,6 +130,7 @@ const CartItem: React.FC<CartItemProps> = ({
           >
             <input
               type="number"
+              id={`cart_quantity_${input_id}`}
               min={1}
               max={999}
               step={1}
@@ -135,12 +142,21 @@ const CartItem: React.FC<CartItemProps> = ({
                 }
               }}
             />
+            <label htmlFor={`cart_quantity_${input_id}`}>Quantidade</label>
           </form>
-          <button type="button" onClick={handlePlusClick}>
+          <button
+            aria-label="Increase Quantity"
+            type="button"
+            onClick={handlePlusClick}
+          >
             <HiPlus />
           </button>
         </div>
-        <button type="button" onClick={handleRemoveItem}>
+        <button
+          aria-label="Remove Item"
+          type="button"
+          onClick={handleRemoveItem}
+        >
           <IoMdCloseCircle />
           Remover
         </button>

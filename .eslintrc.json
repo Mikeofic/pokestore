@@ -48,7 +48,8 @@
       "react/jsx-props-no-spreading": "off",
       "react/prop-types": "off",
       "no-unused-expressions": "off",
-      "no-plusplus": "off"
+      "no-plusplus": "off",
+      "jsx-a11y/label-has-associated-control": "off"
     },
     "settings": {
       "import/resolver": {

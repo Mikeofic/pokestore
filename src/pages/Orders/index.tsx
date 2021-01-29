@@ -83,7 +83,11 @@ const Orders: React.FC<TypeNames> = ({ typeName }) => {
           {ordersToShow > 0 &&
             appContext[typeId].myOrders.length > ordersToShow && (
               <p className="load-more">
-                <button type="button" onClick={handleLoadMore}>
+                <button
+                  aria-label="Load More"
+                  type="button"
+                  onClick={handleLoadMore}
+                >
                   Ver mais <CgChevronDoubleDown />
                 </button>
               </p>

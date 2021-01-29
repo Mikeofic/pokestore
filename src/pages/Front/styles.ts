@@ -605,7 +605,7 @@ export const ModalContainer = styled.div`
     }
   }
 
-  button {
+  .btn-container > a {
     padding: 10px;
     font-size: 1.5rem;
     border-radius: 5px;

@@ -279,7 +279,11 @@ const Front: React.FC<TypeNames> = ({ typeName }) => {
           </div>
           {pokemonToShow > 0 && searchedPokemon.length > pokemonToShow && (
             <p>
-              <button type="button" onClick={handleLoadMore}>
+              <button
+                aria-label="Load More"
+                type="button"
+                onClick={handleLoadMore}
+              >
                 Ver mais <CgChevronDoubleDown />
               </button>
             </p>
@@ -400,25 +404,17 @@ const Front: React.FC<TypeNames> = ({ typeName }) => {
               <span>R$ {currentCheckout.cashback}.</span>
             </div>
             <div className="btn-container">
-              <button
-                type="button"
-                onClick={() => {
-                  history.push(`/${typeName}`);
-                }}
-              >
+              <Link to={`/${typeName}`}>
                 <IoMdArrowRoundBack /> Voltar às compras
-              </button>
+              </Link>
             </div>
             <div className="btn-container">
-              <button
-                type="button"
+              <Link
+                to={`/${typeName}/orders`}
                 className="icon-on-right gray-style"
-                onClick={() => {
-                  history.push(`/${typeName}/orders`);
-                }}
               >
                 Ver compras realizadas <IoMdArrowRoundForward />
-              </button>
+              </Link>
             </div>
           </ModalContainer>
         ) : (
@@ -426,25 +422,17 @@ const Front: React.FC<TypeNames> = ({ typeName }) => {
             <img src={charmanderUrl} alt="Pokemon" />
             <h2>O seu Carrinho está vazio</h2>
             <div className="btn-container">
-              <button
-                type="button"
-                onClick={() => {
-                  history.push(`/${typeName}`);
-                }}
-              >
+              <Link to={`/${typeName}`}>
                 <IoMdArrowRoundBack /> Voltar às compras
-              </button>
+              </Link>
             </div>
             <div className="btn-container">
-              <button
-                type="button"
+              <Link
                 className="icon-on-right gray-style"
-                onClick={() => {
-                  history.push(`/${typeName}/orders`);
-                }}
+                to={`/${typeName}/orders`}
               >
                 Ver compras realizadas <IoMdArrowRoundForward />
-              </button>
+              </Link>
             </div>
           </ModalContainer>
         )}

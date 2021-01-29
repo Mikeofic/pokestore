@@ -99,6 +99,15 @@ const CardContainer = styled.div`
       box-shadow: 0 10px 7px -12px rgba(0, 0, 0, 0.3);
       padding: 3px;
 
+      form label {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        max-width: 0;
+        max-width: 0;
+        position: absolute;
+      }
+
       form input {
         font-size: 1.6rem;
         font-weight: 500;

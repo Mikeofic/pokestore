@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import { FiMinus, FiShoppingCart } from 'react-icons/fi';
+import { v4 as uuid } from 'uuid';
 import CardContainer from './styles';
 import { useAppContext } from '../../AppProvider';
 import { typeIds, TypeNames } from '../../services/interfaces';
@@ -43,6 +44,7 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
   const [itemQuantity, setItemQuantity] = useState('1');
   const [typeId] = useState(typeIds[typeName].id);
   const [cardData, setCardData] = useState<PokemonData | null>(null);
+  const [input_id] = useState(uuid());
 
   useEffect(() => {
     (async () => {
@@ -183,7 +185,12 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
         </div>
         <div className="buy-container">
           <div className="quantity-container gradient" />
-          <button type="button" className="gradient" disabled>
+          <button
+            aria-label="Add Item to Cart"
+            type="button"
+            className="gradient"
+            disabled
+          >
             <FiShoppingCart />
             Adicionar
           </button>
@@ -205,7 +212,11 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
       </div>
       <div className="buy-container">
         <div className="quantity-container">
-          <button type="button" onClick={handleMinusClick}>
+          <button
+            aria-label="Reduce Quantity"
+            type="button"
+            onClick={handleMinusClick}
+          >
             <FiMinus />
           </button>
           <form
@@ -217,6 +228,7 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
           >
             <input
               type="number"
+              id={`card_quantity_${input_id}`}
               min={1}
               max={99}
               step={1}
@@ -228,12 +240,21 @@ const PokeCard: React.FC<PokerCardProps> = ({ url, typeName }) => {
                 }
               }}
             />
+            <label htmlFor={`card_quantity_${input_id}`}>Quantidade</label>
           </form>
-          <button type="button" onClick={handlePlusClick}>
+          <button
+            aria-label="Increase Quantity"
+            type="button"
+            onClick={handlePlusClick}
+          >
             <HiPlus />
           </button>
         </div>
-        <button type="button" onClick={handleAddToCart}>
+        <button
+          aria-label="Add Item to Cart"
+          type="button"
+          onClick={handleAddToCart}
+        >
           <FiShoppingCart />
           Adicionar
         </button>

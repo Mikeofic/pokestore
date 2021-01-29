@@ -64,7 +64,12 @@ const Modal: React.FC<ModalProps> = ({
           <>
             <Background onClick={handleCloseModal} />
             <div className="modal">{children}</div>
-            <button className="close" type="button" onClick={handleCloseModal}>
+            <button
+              aria-label="Close Modal"
+              className="close"
+              type="button"
+              onClick={handleCloseModal}
+            >
               <FiX size={35} />
             </button>
           </>

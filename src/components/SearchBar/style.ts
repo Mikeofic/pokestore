@@ -11,6 +11,15 @@ const SearchContainer = styled.form`
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.2s;
 
+  label {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    max-width: 0;
+    max-width: 0;
+    position: absolute;
+  }
+
   &:focus-within {
     box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.15), 0 0 0 5px rgba(0, 0, 0, 0.2);
   }
